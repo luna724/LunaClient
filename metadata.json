@@ -1,0 +1,8 @@
+{
+  "name": "LunaModules",
+  "creator": "luna724",
+  "description": "Our first module!",
+  "version": "1.0.0",
+  "entry": "index.js",
+  "requires": ["Vigilance", "GriffinOwO"]
+}
