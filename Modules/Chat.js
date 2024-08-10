@@ -1,6 +1,8 @@
 import Settings from "../menu"
 
 import AHPM_Optimizer_main from "./Chats/AHPM_Optimizer"
+import hideDeathMessage from "./Chats/hideDeathMessage";
+import { flipTrackHelper } from "./LunaAPI/flipTrackHelper";
 
 function noticeBloodRoomsFull() {
   if (!Settings.NoticeBloodRoomsFull) return;
@@ -14,8 +16,8 @@ function noticeBloodRoomsFull() {
   ChatLib.command(`pc ${Settings.MessageWhenBloodRoomsFull}`)
 }
 
-
 register("chat", (chat, event) => {
+  let index = "§f[§dLunaClient§f]:"
   // BloodRooms
   if (chat.removeFormatting() == "[BOSS] The Watcher: That will be enough for now.") {
     noticeBloodRoomsFull();
@@ -68,15 +70,40 @@ register("chat", (chat, event) => {
     const SMMatch = chat.match(SMPattern);
     if (SMMatch) {
       event.setCanceled(true);
-      buff = SMMatch[1];
-      ChatLib.chat(`§d[§2Sky Mall§f§d]§f: §d[§bNew buff§f§d]§f: §b${buff}`);
+      let buff = SMMatch[1];
+      let buff_message = "";
+
+      if (buff == "Gain +100 ⸕ Mining Speed.") {
+        buff_message = "Gain §a+100 §6⸕ Mining Speed.";
+      } 
+      else if (buff == "Gain 5x Titanium drops") {
+        buff_message = "Gain §a5x §9Titanium §fdrops."
+      }
+      else if (buff == "Gain +50 ☘ Mining Fortune.") {
+        buff_message = "Gain §a+50 §6☘ Mining Fortune";
+      }
+      else if (buff == "Gain +15% more Powder while mining.") {
+        buff_message = "Gain §a+15% §fmore §dPowder §fwhile mining.";
+      }
+      else if (buff == "Reduce Pickaxe Ability cooldown by 20%.") {
+        buff_message = "Reduce Pickaxe Ability cooldown by §a20%§f.";
+      }
+      else if (buff == "10x chance to find Golden and Diamond Goblins.") {
+        buff_message = "§a10x §fchance to find §6Golden §fand §bDiamond §fGoblins.";
+      }
+      else {
+        ChatLib.chat(`${index} §cUnsupported SkyMall Buff: ${buff}`);
+        buff_message = buff
+      }
+
+      ChatLib.chat(`§d[§bNew §2Sky Mall §bbuff§f§d]§f: ${buff_message}`);
     }
   };
 
   // Mute external XP earned message
-  ch = chat.removeFormatting()
+  let ch = chat.removeFormatting()
   if (Settings.externalXpMessageHider) {
-    if (ch.startsWith("You earned") && ch.endsWith("from playing Skyblock!")) {
+    if (ch.startsWith("You earned") && ch.endsWith("from playing SkyBlock!")) {
       event.setCanceled(true);
     }
   }
@@ -97,8 +124,46 @@ register("chat", (chat, event) => {
   
   // Autoback to island
   if (Settings.autoBacktoIsland) {
-    if (chat.removeFormatting() == "You cannot join SkyBlock from here!" || chat.removeFormatting() == "Unknown command. Type \"help\" for help. ('is')") {
-      ChatLib.command("l prototype")
+    if (chat.removeFormatting() == "You cannot join SkyBlock from here!" || chat.removeFormatting() == "You were spawned in Limbo.") {
+      ChatLib.command("l prototype");
+    }
+	if (chat.removeFormatting() == "Unknown command. Type \"help\" for help. ('is')") {
+	  event.setCanceled(true);
+    ChatLib.command("play sb");
+	}
+  }
+
+  // Hide death message
+  if (Settings.hideDeathMessage) {
+    hideDeathMessage(chat, event);
+  }
+  
+
+  // flipTrackHelper
+  if (Settings.LunaAPIFlipTrackHelper) {
+    flipTrackHelper(chat)
+  }
+
+  // Auto-rejoin Skyblock
+  if (Settings.AutoRejoinSkyblock) {
+    if (chat.removeFormatting() == "You were kicked while joining that server!") {
+      new Thread(() => {
+        Thread.sleep(444);
+        if (Settings.AutoRejoinSkyblockKickedMessage) {
+          ChatLib.command(`pc ${Settings.AutoRejoinSkyblockKickedMessageText}`);
+        }
+        Thread.sleep(5000); // 5秒待機
+        ChatLib.chat(`${index} Waiting for 60s..`);
+        Thread.sleep(65000) // 60秒待機
+        ChatLib.chat(`${index} Trying to rejoin`);
+        Thread.sleep(1000);
+        ChatLib.command("play sb");
+
+        Thread.sleep(500);
+        if (Settings.AutoRejoinSkyblockEndedMessage) {
+          ChatLib.command(`pc ${Settings.AutoRejoinSkyblockEndedMessageText}`);
+        }
+      }).start();
     }
   }
 
@@ -113,7 +178,7 @@ register("chat", (chat, event) => {
     "This block is already occupied!",
     "  ➤ You have reached your Hype limit! Add Hype to Prototype Lobby minigames by right-clicking with the Hype Diamond!",
     "You are still radiating with Generosity!"
-  ]
+  ];
   if (internal_blacklist.includes(chat)) {
     event.setCanceled(true)
   }

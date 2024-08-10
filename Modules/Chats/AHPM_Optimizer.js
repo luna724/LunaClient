@@ -29,8 +29,8 @@ export default function AHPM_Optimizer_main(message, event) {
   }
 
   if (typeof message !== 'undefined' && message !== null) {
-    const pattern = /^You claimed (.*) from (.*)'s auction!$/;
-    const match = message.match(pattern);
+    let pattern = /^You claimed (.*) from (.*)'s auction!$/;
+    let match = message.match(pattern);
     if (match) {
         event.setCanceled(true);
         // match2 プレイヤー名を処理
@@ -51,7 +51,5 @@ export default function AHPM_Optimizer_main(message, event) {
 
         ChatLib.chat(`§eClaimed §6${match[1]} §efrom${playerName}§e's auction!`);
     }
-} else {
-    console.log("[§dLC/AhPM_Optimizer.js§f]: §4Error: Message is undefined or null");
-}
+  }
 }
