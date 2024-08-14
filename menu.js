@@ -17,7 +17,7 @@ const Version = JSON.parse(FileLib.read(
 
 @Vigilant("LunaClient", `§zLunaClient (v${Version})`, {
   getCategoryComparator: () => (a,b) => {
-    const categories = ["General", "Dungeons", "Hider", "BinSniper", "LunaAPI Utils"];
+    const categories = ["General", "Dungeons", "Hider", "BinSniper", "LunaAPI Utils", "Garden Utils"];
     return categories.indexOf(a.name) - categories.indexOf(b.name);
   },
 })
@@ -302,6 +302,39 @@ class Settings {
     subcategory: "Macro"
   })
   AutoRejoinSkyblockEndedMessageText = "!warp";
+
+  @SelectorProperty({
+    name: "AutoMove",
+    description: "/lc_move to start. 100% Client Side",
+    category: "Garden Util",
+    subcategory: "Macro",
+    options: ["LeftMove", "RightMove", "ForwardMove", "Only hoverClick"] 
+  })
+  GardenAutoMove = 0;
+
+  @SwitchProperty({
+    name: "HoverClick",
+    description: "/lc_move to start. 100% Client side",
+    category: "Garden Util",
+    subcategory: "Macro",
+  })
+  GardenAutoMoveIncludesClick = true;
+
+  @SwitchProperty({
+    name: "AutoMove Safe mode",
+    description: "activate some ways to automatically disable AutoMove",
+    category: "Garden Util",
+    subcategory: "Macro"
+  })
+  GardenAutoMoveSafeMode = true;
+
+  @SwitchProperty({
+    name: "Hide Sacks message",
+    description: "While in garden",
+    category: "Garden Util",
+    subcategory: "Hide"
+  })
+  GardenHideSacksMessage = true;
 
   constructor() {
     this.initialize(this)

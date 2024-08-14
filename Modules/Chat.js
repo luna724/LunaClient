@@ -4,6 +4,8 @@ import AHPM_Optimizer_main from "./Chats/AHPM_Optimizer"
 import hideDeathMessage from "./Chats/hideDeathMessage";
 import { flipTrackHelper } from "./LunaAPI/flipTrackHelper";
 
+import { checkInWorld } from "../../GriffinOwO/utils/Location";
+
 function noticeBloodRoomsFull() {
   if (!Settings.NoticeBloodRoomsFull) return;
   // クライアントメッセージ
@@ -164,6 +166,15 @@ register("chat", (chat, event) => {
           ChatLib.command(`pc ${Settings.AutoRejoinSkyblockEndedMessageText}`);
         }
       }).start();
+    }
+  }
+
+  // Garden Hide Sacks message
+  if (Settings.GardenHideSacksMessage) {
+    if (checkInWorld("Garden")) {
+      if (chat.removeFormatting().startsWith("[Sacks] ")) {
+        event.setCanceled(true)
+      }
     }
   }
 
