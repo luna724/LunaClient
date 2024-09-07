@@ -178,6 +178,28 @@ register("chat", (chat, event) => {
     }
   }
 
+  // Auto-back trapper
+  if (Settings.FarmingAutoBackTrapper) {
+    if (chat.removeFormatting() == "Return to the Trapper soon to get a new animal to hunt!") {
+	  new Thread(() => {
+	  Thread.sleep(Settings.FarmingAutoWarpDelay);
+      ChatLib.command("warp trapper");
+	  }
+	  ).start()
+	  }
+  }
+
+  if (Settings.FarmingAutoWarpDesert) {
+    if (chat.removeFormatting().startsWith("[NPC] Trevor:")) {
+      if (chat.removeFormatting().endsWith("animal near the Desert Settlement.") || chat.removeFormatting().endsWith("animal near the Oasis.")) {
+        new Thread(() => {
+          Thread.sleep(Settings.FarmingAutoWarpDelay);
+          ChatLib.command("warp desert");
+        }).start()
+      }
+    }
+  }
+
   // Internal deleter (can't toggle)
   let internal_blacklist = [
     "Blacklisted modifications are a bannable offense!",

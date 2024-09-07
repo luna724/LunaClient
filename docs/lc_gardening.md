@@ -1,0 +1,60 @@
+## Auto Garden
+LunaClient / Auto Garden は以下のMODを要求します。
+- [LC-AutoMove](https://github.com/luna724/LC-AutoMove/releases): v2.2以上
+
+- `/lc_gardening help` でゲーム内ヘルプを表示
+
+### コマンド一覧
+全てのコマンドは `/lc_gardening` で開始します <br>
+
+- `/lcg gui` <br>
+プリセットに依存しない固定変数の設定があるメニュー <br>
+`/lcgui` でも開くことができる。
+
+- `/lcg <start/stop>` <br>
+Auto Gardenのスタート/ストップ <br>
+
+- `/lcg setxyz <trigger>` <br>
+現在地の X,Y,Z,Yaw,Pitch を現在のプリセットの最後に保存する <br>
+<trigger>は、その位置に到着した 500ms 後に移動する方向で、
+`/automove setdirection` の第二引数に入れられるので
+ここに代入される値は `/automove setdirection` が受け入れる値である必要がある。
+なお、到着処理の際に Yaw, Pitch は無視される
+
+#### TLDR:
+```plaintext
+<trigger> = l, r, f, b, rf, rb, lf, lb, ..
+```
+
+- `/lcg removexyz <targetKey>` <br>
+<targetKe>を現在のプリセットから削除する <br>
+
+- `/lcg listxyz` <br>
+現在のプリセットに登録されているキーとその値をリストアップする <br>
+
+- `/lcg getxyz <targetKey>` <br>
+<targetKey>の X,Y,Z,Yaw,Pitch を取得し表示する <br>
+
+- `/lcg preset <save/load/delete/rename/current/new> <targetPreset> (presetAfter)` <br>
+  - `save <targetPreset>` <br>
+  現在の設定でプリセットのセーブを行う。
+  同盟のプリセットがある場合は上書きされるので注意
+
+  - `load <targetPreset>` <br>  
+  プリセットの読み込みを行う。
+  ここで読み込まれたプリセットの値をもとに他すべての動作が行われる
+
+  - `delete <targetPreset>` <br>
+  プリセットの削除を行う。
+  バックアップ機能などはない
+
+  - `rename <targetPreset> <presetAfter>` <br>
+  プリセットの名前変更を行う。
+  変更先の名前がある場合は上書きされる。
+
+  - `current` <br>
+  現在選択されているプリセット名を表示する。
+
+  - `new <targetPreset>` <br>
+  全ての値が初期状態の新しいプリセットを作る
+  同名のプリセットがある場合はエラーを返す

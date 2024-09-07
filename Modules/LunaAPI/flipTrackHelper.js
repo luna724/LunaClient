@@ -58,6 +58,9 @@ function sendCheckMessage(price, substType, custom_message="[§abuy§f/§csell§
       .setClick("run_command", `/lunaclient_flip_tracker_track ${substType} ${price}`)
       .setHover("show_text", `Click to send "/coin ah ${price}" to LunaAPI!`)
   )
+  if (Settings.LunaAPIFlipTrackAlwaysTrue) {
+    ChatLib.command(`lunaclient_flip_tracker_track ${substType} ${price}`, true);
+  }
   ChatLib.chat(message);
 }
 

@@ -17,7 +17,7 @@ const Version = JSON.parse(FileLib.read(
 
 @Vigilant("LunaClient", `§zLunaClient (v${Version})`, {
   getCategoryComparator: () => (a,b) => {
-    const categories = ["General", "Dungeons", "Hider", "BinSniper", "LunaAPI Utils", "Garden Utils"];
+    const categories = ["General", "Dungeons", "Hider", "BinSniper", "LunaAPI Utils", "Farming", "OrderMade"];
     return categories.indexOf(a.name) - categories.indexOf(b.name);
   },
 })
@@ -264,6 +264,14 @@ class Settings {
   LunaAPIFlipTrackHelperCheckWhenOrderCancelled = true;
 
   @SwitchProperty({
+    name: "Always track your any item",
+    description: "",
+    category: "LunaAPI utils",
+    subcategory: "Flip track helper"
+  })
+  LunaAPIFlipTrackAlwaysTrue = false;
+
+  @SwitchProperty({
     name: "Auto-rejoin Skyblock",
     description: "when you got kicked to lobby, Auto-rejoin Skyblock",
     category: "General",
@@ -303,38 +311,48 @@ class Settings {
   })
   AutoRejoinSkyblockEndedMessageText = "!warp";
 
-  @SelectorProperty({
-    name: "AutoMove",
-    description: "/lc_move to start. 100% Client Side",
-    category: "Garden Util",
-    subcategory: "Macro",
-    options: ["LeftMove", "RightMove", "ForwardMove", "Only hoverClick"] 
-  })
-  GardenAutoMove = 0;
-
   @SwitchProperty({
-    name: "HoverClick",
-    description: "/lc_move to start. 100% Client side",
-    category: "Garden Util",
-    subcategory: "Macro",
+    name: "Auto-back Trapper",
+    description: "Auto-back to Trapper when trapper mobs died.",
+    category: "Farming",
+    subcategory: "Farming Islands"
   })
-  GardenAutoMoveIncludesClick = true;
-
-  @SwitchProperty({
-    name: "AutoMove Safe mode",
-    description: "activate some ways to automatically disable AutoMove",
-    category: "Garden Util",
-    subcategory: "Macro"
-  })
-  GardenAutoMoveSafeMode = true;
+  FarmingAutoBackTrapper = false;
 
   @SwitchProperty({
     name: "Hide Sacks message",
     description: "While in garden",
-    category: "Garden Util",
-    subcategory: "Hide"
+    category: "Farming",
+    subcategory: "Garden"
   })
   GardenHideSacksMessage = true;
+
+  // AutoGaden
+  @SwitchProperty({
+    name: "Auto-Garden",
+    description: "/lc_gardening to get started",
+    category: "Addos",
+    subcategory: "External Addons"
+  })
+  LunaAutoGarden = false;
+
+  @SwitchProperty({
+    name: "Auto-warp Desert Settlement",
+    description: "if Trevors locate animal in \"Oasis\" or \"Desert Settlement\", run /warp desert",
+    category: "Farming",
+    subcategory: "Farming Islands"
+  })
+  FarmingAutoWarpDesert = false;
+
+  @SliderProperty({
+    name: "Auto-warp/back delay",
+    description: "ms",
+    category: "Farming",
+    subcategory: "Farming Islands",
+    min: 50,
+    max: 2000
+  })
+  FarmingAutoWarpDelay = 450;
 
   constructor() {
     this.initialize(this)

@@ -1,0 +1,1 @@
+export const header = "§6[§2Auto-Garden§6]: §r§f";

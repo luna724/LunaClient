@@ -1,4 +1,5 @@
 import Settings from "../menu"
+import { AntiServerMoving } from "./AntiServerMoving";
 import AutobackIsland from "./AutomaticIsland";
 
 register("worldLoad", () => {
@@ -6,5 +7,6 @@ register("worldLoad", () => {
   ChatLib.chat(Settings.WorldLoadNoticeText);
   }
 
-  AutobackIsland()
+  AutobackIsland();
+  AntiServerMoving();
 })

@@ -1,76 +1,76 @@
-import Settings from "../menu";
+// import Settings from "../menu";
 
-class AutoMoveOpts {
-  isEnabled = false;
+// class AutoMoveOpts {
+//   isEnabled = false;
 
-  keyForward = null;
-  keyBackward = null;
-  keyRight = null;
-  keyLeft = null;
-  keyLeftClick = null;
-  dontMove = false;
-  targetKey = null;
-  clickActive = false;
+//   keyForward = null;
+//   keyBackward = null;
+//   keyRight = null;
+//   keyLeft = null;
+//   keyLeftClick = null;
+//   dontMove = false;
+//   targetKey = null;
+//   clickActive = false;
 
-  antiAntiMacro = null;
-  autoStop = 1800000; // (30minute)
-}
-const AutoMoveOpt = new AutoMoveOpts()
+//   antiAntiMacro = null;
+//   autoStop = 1800000; // (30minute)
+// }
+// const AutoMoveOpt = new AutoMoveOpts()
 
-const Registered = register("tick", () => {
-  if (!AutoMoveOpt.isEnabled) return;
-  let targetKey = AutoMoveOpt.targetKey;
+// const Registered = register("tick", () => {
+//   if (!AutoMoveOpt.isEnabled) return;
+//   let targetKey = AutoMoveOpt.targetKey;
 
-  if (targetKey == "key.left") {
+//   if (targetKey == "key.left") {
 
-  }
-  else if (targetKey == "key.right") {
-    Client.getMinecraft()?.gameSettings.keyBindRight.pressed = true;
-  }
-  else if (targetKey == "key.forward") {
-    Client.getMinecraft().gameSettings.keyBindForward.pressed = true;
-  }
+//   }
+//   else if (targetKey == "key.right") {
+//     Client.getMinecraft()?.gameSettings.keyBindRight.pressed = true;
+//   }
+//   else if (targetKey == "key.forward") {
+//     Client.getMinecraft().gameSettings.keyBindForward.pressed = true;
+//   }
 
-  if (AutoMoveOpt.clickActive) {
-    Client.getMinecraft()?.gameSettings.eyBindAttack.pressed = true;
-  }
-})
+//   if (AutoMoveOpt.clickActive) {
+//     Client.getMinecraft()?.gameSettings.eyBindAttack.pressed = true;
+//   }
+// })
 
-export function AutoMove() {
-  // 開始
-  // AutoMoveOpt を更新する
-  let targetKey = ["key.left", "key.right", "key.forward", ""][Settings.GardenAutoMove];
-  let binds = Client.getKeyBindFromDescription(targetKey);
+// export function AutoMove() {
+//   // 開始
+//   // AutoMoveOpt を更新する
+//   let targetKey = ["key.left", "key.right", "key.forward", ""][Settings.GardenAutoMove];
+//   let binds = Client.getKeyBindFromDescription(targetKey);
 
-  if (binds == null) {
-    AutoMoveOpt.dontMove = true;
-  }
-  else {
-    AutoMoveOpt.dontMove = false;
-  }
+//   if (binds == null) {
+//     AutoMoveOpt.dontMove = true;
+//   }
+//   else {
+//     AutoMoveOpt.dontMove = false;
+//   }
 
-  let clickBind = Client.getKeyBindFromDescription("key.attack");
-  AutoMoveOpt.keyLeftClick = clickBind;
-  AutoMoveOpt.keyBackward = Client.getKeyBindFromDescription("key.backward");
-  AutoMoveOpt.keyForward = Client.getKeyBindFromDescription("key.forward");
-  AutoMoveOpt.keyLeft = Client.getKeyBindFromDescription("key.left");
-  AutoMoveOpt.keyRight = Client.getKeyBindFromDescription("key.right");
-  AutoMoveOpt.targetKey = targetKey;
+//   let clickBind = Client.getKeyBindFromDescription("key.attack");
+//   AutoMoveOpt.keyLeftClick = clickBind;
+//   AutoMoveOpt.keyBackward = Client.getKeyBindFromDescription("key.backward");
+//   AutoMoveOpt.keyForward = Client.getKeyBindFromDescription("key.forward");
+//   AutoMoveOpt.keyLeft = Client.getKeyBindFromDescription("key.left");
+//   AutoMoveOpt.keyRight = Client.getKeyBindFromDescription("key.right");
+//   AutoMoveOpt.targetKey = targetKey;
 
-  AutoMoveOpt.antiAntiMacro = Settings.GardenAutoMoveSafeMode;
-  AutoMoveOpt.clickActive = Settings.GardenAutoMoveIncludesClick;
+//   AutoMoveOpt.antiAntiMacro = Settings.GardenAutoMoveSafeMode;
+//   AutoMoveOpt.clickActive = Settings.GardenAutoMoveIncludesClick;
 
-  let Mode = null;
+//   let Mode = null;
   
 
-  // 定義
-  Registered.register();
-}
+//   // 定義
+//   Registered.register();
+// }
 
-export function StopAutoMove() {
-  // 非定義
-  Registered.unregister();
-}
+// export function StopAutoMove() {
+//   // 非定義
+//   Registered.unregister();
+// }
 
 
 register("command", () => {

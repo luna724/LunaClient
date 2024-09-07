@@ -6,14 +6,16 @@ import "./Modules/BinSniper/index";
 import "./Modules/LunaAPI/flipTrackHelper";
 import "./Modules/AutoMove";
 import "./Modules/CommandShortcut";
+import "./Modules/AutoGarden/init";
+import "./Modules/AutoGarden/XYZ/module";
 
 import Settings from "./menu";
-import { request } from "axios";
+import { getResizedXYZ, getRotation } from "./Modules/AutoGarden/XYZ/module";
 
 register("command", () => {
   Settings.openGUI()
 }).setName('lunaclient').setAliases("lc", "luna")
 
 register("command", () => {
-  // Test command
-}).setName("lc_test")
+  ChatLib.chat(getRotation().toString());
+}).setName("lc_test");
