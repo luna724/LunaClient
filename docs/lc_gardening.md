@@ -58,3 +58,21 @@ Auto Gardenのスタート/ストップ <br>
   - `new <targetPreset>` <br>
   全ての値が初期状態の新しいプリセットを作る
   同名のプリセットがある場合はエラーを返す
+
+
+### 依存ファイル (引継ぎなど向け)
+#### - `/autogarden.json`
+現在読み込まれているプリセットの XYZManager情報を保持している <br>
+取得メゾット: `getConfig()`
+
+#### - `/auto_garden.json`
+AutoGardenの主要設定を保持する <br>
+取得メゾット: `getPrimaryConfig()`
+
+#### - `/auto_garden.session.json`
+トータルセッションの値を保持する <br>
+この設定はtickイベントにより読み込まれているので、軽量であることが重要 <br>
+取得メゾット: `getSessionConfig()`
+
+#### - `/auto_garden.presets.json`
+プリセットの保存ファイル

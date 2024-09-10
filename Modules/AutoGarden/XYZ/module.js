@@ -1,4 +1,4 @@
-import { header } from "../Identifier";
+import { header, xyzCollection } from "../Identifier";
 
 export function getXYZ() {
   // 現在のプレイヤーの XYZ をそのまま返す
@@ -75,8 +75,17 @@ export function getConfig() {
   return rawJson;
 }
 
+export function saveConfig(newcfg) {
+  const backup = getConfig();
+  console.log(
+    `[module.js:saveConfig]: Backup: ${JSON.stringify(backup)}`
+  );
+
+  FileLib.write("LunaClient", "autogarden.json", JSON.stringify(newcfg))
+}
+
 export function getNewKey() {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&_-=~^';
+  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
     
   // characters に応じた内容をランダム生成
   function generateRandomString() {
