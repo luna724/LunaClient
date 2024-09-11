@@ -33,7 +33,7 @@ const helpMessage = [
   "§a---------------------------------"
 ];
 function sendHelpMessage() {
-  for (help of helpMessage) {
+  for (let help of helpMessage) {
     ChatLib.chat(help);
   }
 }
@@ -43,14 +43,14 @@ const XYZManagements = [
 ];
 
 register("command", (...args) => {
-  if (args === undefined || args.length == 0) {
+  if (args === undefined || args.length === 0) {
     sendHelpMessage();
     return;
   }
 
   const arg1 = args[0]?.toLowerCase();
 
-  if (arg1 === null || arg1.toLocaleLowerCase() === "help") {
+  if (arg1 === undefined || arg1 === null) {
     sendHelpMessage();
     return;
   } 

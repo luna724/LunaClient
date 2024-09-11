@@ -26,12 +26,23 @@ function triggered(collection) {
 register("tick", (elapsed) => {
   // 有効状態なら実行
   if (!getStatus()) { return; }
+  if (Player?.getX() === undefined) {
+    console.log("Player object is not initialized yet.");
+    return;
+  }
+
   const cfg = getTemporaryConfig();
   const XYZCollections = cfg;
   const triggerXYZs = Object.values(XYZCollections).map(v => v[1]);
   
   // プレイヤーの現在地
-  const XYZ = getXYZ();
+  // try {
+  //   const XYZ = getXYZ();
+  // } catch (e) {
+  //   console.error("Failed in player XYZ: ", e);
+  //   return;
+  // }
+  // const XYZ = getXYZ();
   
   // XYZがtriggerXYZsに含まれているかチェック
   if (triggerXYZs.some(t => JSON.stringify(t) === JSON.stringify(XYZ))) {

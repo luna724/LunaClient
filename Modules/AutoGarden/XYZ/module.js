@@ -68,10 +68,15 @@ export function checkDirection(direction) {
 }
 
 export function getConfig() {
+  // 現在のプリセットの XYZ コンフィグを返す
   const rawJson = JSON.parse(
     FileLib.read("LunaClient", "autogarden.json")
   );
 
+  if (!rawJson || typeof rawJson !== "object") {
+    console.error("Invalid config object.");
+    return {};
+  }
   return rawJson;
 }
 

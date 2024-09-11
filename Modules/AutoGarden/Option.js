@@ -2,7 +2,8 @@ import { getConfig } from "./XYZ/module";
 // DO NOT IMPORT ANYTHING!
 
 export function getStatus() {
-  return getSessionConfig()["status"]
+  //return getSessionConfig()["status"]
+  return false;
 } 
 
 const temporaryConfig = null;
@@ -11,5 +12,5 @@ export function setTemporaryConfig(newcfg) {
 }
 
 export function getTemporaryConfig() {
-  return temporaryConfig;
+  return getConfig();
 }
