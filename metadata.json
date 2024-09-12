@@ -2,7 +2,7 @@
   "name": "LunaClient",
   "creator": "luna724",
   "description": "by luna, for luna",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "entry": "index.js",
   "requires": ["Vigilance", "GriffinOwO", "axios"]
 }

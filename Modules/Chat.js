@@ -110,13 +110,6 @@ register("chat", (chat, event) => {
     }
   }
 
-  // eventLevelUpHider
-  if (Settings.eventLevelUpHider) {
-    if (chat.startsWith("                       You are now Event Level") || chat.endsWith("Event Silver!")) {
-      event.setCanceled(true);
-    }  
-  }
-
   // donExpresso Hider
   if (Settings.donExpressoMute) {
     if (chat.removeFormatting().startsWith("[NPC] Don Expresso: ")) {

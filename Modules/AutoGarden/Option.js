@@ -1,16 +1,10 @@
-import { getConfig } from "./XYZ/module";
+import { getSessionConfig } from "./module";
 // DO NOT IMPORT ANYTHING!
 
 export function getStatus() {
-  //return getSessionConfig()["status"]
-  return false;
+  return getSessionConfig()["status"]
 } 
 
-const temporaryConfig = null;
-export function setTemporaryConfig(newcfg) {
-  temporaryConfig = newcfg;
-}
-
-export function getTemporaryConfig() {
-  return getConfig();
+export function antiAntiMacroStatus() {
+  return getSessionConfig()["antiAntiMacroStatus"]
 }

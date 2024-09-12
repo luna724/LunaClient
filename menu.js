@@ -15,9 +15,9 @@ const Version = JSON.parse(FileLib.read(
   "LunaClient", "metadata.json"
 )).version;
 
-@Vigilant("LunaClient", `§zLunaClient (v${Version})`, {
+@Vigilant("LunaClient", `§dLunaClient (v${Version})`, {
   getCategoryComparator: () => (a,b) => {
-    const categories = ["General", "Dungeons", "Hider", "BinSniper", "LunaAPI Utils", "Farming", "OrderMade"];
+    const categories = ["General", "Dungeons", "Hider", "LunaAPI Utils", "Farming"];
     return categories.indexOf(a.name) - categories.indexOf(b.name);
   },
 })
@@ -116,22 +116,6 @@ class Settings {
   })
   TreasureTalismanFlipTracker = false;
 
-  // Mute external XP earned message
-  @SwitchProperty({
-    name: "External XP earned message hider",
-    description: "Hide \"You earned 402 GEXP + 1,206 Event EXP from playing SkyBlock!\" message",
-    category: "Hider"
-  })
-  externalXpMessageHider = true;
-
-  // f-ing event
-  @SwitchProperty({
-    name: "[DEPRECATED]: Event Message hider",
-    description: "Hide hypixel Event (not sb) leveled-up message",
-    category: "Hider"
-  })
-  eventLevelUpHider = true;
-
   // don expresso
   @SwitchProperty({
     name: "Remove DON Expresso's talking",
@@ -143,11 +127,20 @@ class Settings {
   // Automatically back to island
   @SwitchProperty({
     name: "Automatically back to island",
-    description: "§l§cit is bannable?",
+    description: "",
     category: "General",
     subcategory: "Macro"
   })
   autoBacktoIsland = false;
+
+  @SelectorProperty({
+    name: "IslandType",
+    description: "Automatically back island type",
+    category: "General",
+    subcategory: "Macro",
+    options: ["/is", "/garden"]
+  })
+  autoBackIslandType = 0;
 
   // Hide death message
   @SwitchProperty({
@@ -163,64 +156,6 @@ class Settings {
     category: "Hider"
   })
   hideDeathMessageExceptDungeon = false;
-
-  // BinSniper
-  @TextProperty({
-    name: "Target Item",
-    description: "Target item name, use for /ahs {Target_item}",
-    category: "BinSniper"
-  })
-  BinSniperTargetItem = "God Potion";
-
-  @TextProperty({
-    name: "Max value",
-    description: "Snipe target max value (snipe < this)",
-    category: "BinSniper"
-  })
-  BinSniperMaxValue = "1.85M";
-  
-  @TextProperty({
-    name: "Min value",
-    description: "Snipe target min value (this < snipe)",
-    category: "BinSniper"
-  })
-  BinSniperMinValue = "850K";
-
-  @SwitchProperty({
-    name: "Stop at (purse < Min value)",
-    description: "",
-    category: "BinSniper"
-  })
-  BinSniperAutoStop = true;
-
-  @SwitchProperty({
-    name: "[beta]: Optimize Snipe function for Bin sleeping",
-    description: "this may occur Memory leak / broken BinSniper",
-    category: "BinSniper"
-  })
-  BinSniperSleepOptimization = false;
-
-  @TextProperty({
-    name: "[int] delay",
-    description: "Set sniper delay, This value should be integer.",
-    category: "BinSniper"
-  })
-  BinSniperDelay = "450"
-
-  // // BIN Snipe Helper
-  // @SwitchProperty({
-  //   name: "[WARN]: BIN Snipe Helper",
-  //   description: "utils for Sleeping BIN",
-  //   category: "General"
-  // })
-  // binSnipeHelper = false;
-
-  // @TextProperty({
-  //   name: "BIN Snipe Helper disable caps",
-  //   description: "BIN Snipe Helper will be disabled when (BIN prices > this)",
-  //   category: "General"
-  // })
-  // binSnipeHelperCap = "100M";
 
   // Flip track helper
   @SwitchProperty({
@@ -293,7 +228,7 @@ class Settings {
     category: "General",
     subcategory: "Macro"
   })
-  AutoRejoinSkyblockKickedMessageText = "Skyblock hates me!!!";
+  AutoRejoinSkyblockKickedMessageText = "kicked";
 
   @SwitchProperty({
     name: "Notice \"joined!\" to chat",
@@ -309,7 +244,7 @@ class Settings {
     category: "General",
     subcategory: "Macro"
   })
-  AutoRejoinSkyblockEndedMessageText = "!warp";
+  AutoRejoinSkyblockEndedMessageText = "joined";
 
   @SwitchProperty({
     name: "Auto-back Trapper",
@@ -326,15 +261,6 @@ class Settings {
     subcategory: "Garden"
   })
   GardenHideSacksMessage = true;
-
-  // AutoGaden
-  @SwitchProperty({
-    name: "Auto-Garden",
-    description: "/lc_gardening to get started",
-    category: "Addos",
-    subcategory: "External Addons"
-  })
-  LunaAutoGarden = false;
 
   @SwitchProperty({
     name: "Auto-warp Desert Settlement",
@@ -357,12 +283,10 @@ class Settings {
   constructor() {
     this.initialize(this)
     this.setCategoryDescription("General", "Hello, world!")
-    this.setCategoryDescription("BinSniper", "/lc_binsniper to Start Snipe!")
     this.addDependency("World load notifier text", "World load notifier")
     this.addDependency("Blood room full Message", "Send message when Blood rooms full")
     this.addDependency("Remove BIN sleeping notice", "Auction Purchased Message Optimizer")
     this.addDependency("Don't hide player death message while Dungeons", "Hide player death Message")
-    // this.addDependency("BIN Snipe Helper disable caps", "[WARN]: BIN Snipe Helper")
     this.addDependency("Check when you Cancelled buy order", "Track Bazaar")
     this.addDependency("Check when you Claimed buy/sell order", "Track Bazaar")
     this.addDependency("Check when buy/sell order Started", "Track Bazaar")

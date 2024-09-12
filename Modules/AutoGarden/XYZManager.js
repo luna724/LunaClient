@@ -100,5 +100,10 @@ export function Commands(trigger, args) {
         );
       }
     }
+    return;
+  }
+
+  if (trigger === "getxyz") {
+
   }
 }
