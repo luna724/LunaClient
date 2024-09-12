@@ -14,6 +14,7 @@ function triggered() {
   if (gui.autoDisconnectWhenTriggered) {
     ChatLib.command("skytils:limbo", true);
   }
+  ChatLib.command("ct load", true);
 }
 
 let previousXYZ = [0, -1, 0];  // 以前のXYZを保存する変数

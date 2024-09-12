@@ -22,7 +22,7 @@ class autoGardenSettings {
   @SwitchProperty({
     name: "Auto-Limbo when Anti-AntiMacro Triggered",
     description: "Required Skytils (/limbo",
-    categories: "AutoGarden",
+    category: "AutoGarden",
     subcategory: "Safety"
   })
   autoDisconnectWhenTriggered = false;

@@ -14,6 +14,7 @@ import { Commands } from "./XYZManager";
 import { startThreadforHandleXYZ } from "./antiAntiMacro";
 import { startAutoGarden, stopAutoGarden } from "./autoGarden";
 import { helpMessage } from "./Identifier";
+import gui from "./gui";
 
 function sendHelpMessage() {
   for (let help of helpMessage) {
@@ -46,10 +47,17 @@ register("command", (...args) => {
       startAutoGarden();
     } else if (arg1 === "stop") {
       stopAutoGarden();
+    } else if (arg1 === "gui") {
+      gui.openGUI();
     }
   }
 
 
 }).setName("lc_gardening").setAliases("lcg")
+
+register("command", () => {
+  ChatLib.command("lcg gui", true);
+}).setName("lcgui")
+
 
 startThreadforHandleXYZ();
