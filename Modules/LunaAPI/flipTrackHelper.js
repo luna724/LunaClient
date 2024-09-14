@@ -23,9 +23,9 @@ function sendPostData(command, k, s, v) {
   })
   .catch(error => {
     if (error.isAxiosError) {
-      ChatLib.chat("[§dLC§f]: §cHTTP Error: " + error.code + ": " + error.response.data);
+      //ChatLib.chat("[§dLC§f]: §cHTTP Error: " + error.code + ": " + error.response.data);
       } else {
-          ChatLib.chat("[§dLC§f]: §cError: " + error.message);
+          //ChatLib.chat("[§dLC§f]: §cError: " + error.message);
       }
     });
 }

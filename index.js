@@ -1,10 +1,11 @@
 import "./Modules/worldLoad";
-import "./Modules/TreasureTalismanFlipTracker";
 import "./Modules/Chats/AHPM_Optimizer";
 import "./Modules/Chat";
-import "./Modules/LunaAPI/flipTrackHelper";
 import "./Modules/AutoMove";
 import "./Modules/CommandShortcut";
+
+import "./Modules/LunaAPI/flipTrackHelper";
+import "./Modules/LunaAPI/TreasureTalisman";
 
 import "./Modules/AutoGarden/init";
 

@@ -199,8 +199,6 @@ register("chat", (chat, event) => {
     "Warping...",
     "Command Failed: This command is on cooldown! Try again in about a second!",
     "[MVP+] Mizuki_25ji joined the lobby!",
-    " >>> [MVP++] Mafuyu_25zi joined the lobby! <<<",
-    "[MVP+] Mafuyu_25zi joined the lobby!",
     "This block is already occupied!",
     "  ➤ You have reached your Hype limit! Add Hype to Prototype Lobby minigames by right-clicking with the Hype Diamond!",
     "You are still radiating with Generosity!"

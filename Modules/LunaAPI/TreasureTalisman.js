@@ -1,5 +1,5 @@
 import { request } from "axios";
-import Settings from "../menu"
+import Settings from "../../menu";
 
 // Pythonへデータを送信
 function sendPostRequest(coin) {
