@@ -9,21 +9,17 @@ import "./Option";
 import "./tick";
 import "./XYZManager";
 import "./gui";
+import "./presetManager";
 
-import { Commands } from "./XYZManager";
-import { startThreadforHandleXYZ } from "./antiAntiMacro";
-import { startAutoGarden, stopAutoGarden } from "./autoGarden";
-import { helpMessage } from "./Identifier";
+import { valuesNotEnough, XYZManageCommands } from "./XYZManager";
+import { startAutoGarden, stopAutoGarden, toggleAutoGarden } from "./autoGarden";
 import gui from "./gui";
-
-function sendHelpMessage() {
-  for (let help of helpMessage) {
-    ChatLib.chat(help);
-  }
-}
+import { sendHelpMessage } from "./module";
+import { presetManageCommands } from "./presetManager";
+import { commandUsage, header } from "./Identifier";
 
 const XYZManagements = [
-  "setxyz", "removexyz", "listxyz", "getxyz"
+  "setxyz", "removexyz", "listxyz", "getxyz", "currentxyz"
 ];
 
 register("command", (...args) => {
@@ -42,22 +38,25 @@ register("command", (...args) => {
   else {
     // args > 1
     if (XYZManagements.includes(arg1)) {
-      Commands(arg1, args);
+      XYZManageCommands(arg1, args);
+    } else if (arg1 === "preset") {
+      presetManageCommands(args);
     } else if (arg1 === "start") {
       startAutoGarden();
     } else if (arg1 === "stop") {
       stopAutoGarden();
     } else if (arg1 === "gui") {
       gui.openGUI();
+    } else if (arg1 === "toggle") {
+      toggleAutoGarden();
+    }
+    else {
+      valuesNotEnough();
+      ChatLib.chat(header + commandUsage);
     }
   }
-
-
-}).setName("lc_gardening").setAliases("lcg")
+}).setName("lc_gardening").setAliases("lcg");
 
 register("command", () => {
   ChatLib.command("lcg gui", true);
-}).setName("lcgui")
-
-
-startThreadforHandleXYZ();
+}).setName("lcgui");

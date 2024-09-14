@@ -9,8 +9,8 @@ export function valuesNotEnough() {
 
 
 // 管轄内のコマンドを処理する
-export function Commands(trigger, args) {
-  console.log("Commands in XYZManager called! trigger&args: "+trigger+args);
+export function XYZManageCommands(trigger, args) {
+  //console.log("Commands in XYZManager called! trigger&args: "+trigger+args);
 
   if (trigger === "setxyz") {
     if (args.length < 2) {
@@ -31,6 +31,10 @@ export function Commands(trigger, args) {
     let currentData = [
       newKey, XYZ, Rotation, direction
     ];
+
+    if (direction === "ERR") {
+      return;
+    }
 
     currentValue[newKey] = currentData;
     saveConfig(currentValue);
@@ -70,7 +74,7 @@ export function Commands(trigger, args) {
 
   if (trigger === "listxyz") {
     const config = getConfig();
-    console.log("Config:", config);
+    // console.log("Config:", config);
 
     if (!config || typeof config !== "object") {
       console.error("Invalid config object");
@@ -83,7 +87,7 @@ export function Commands(trigger, args) {
     ChatLib.chat(".");
     for (let key in config) {
       if (config.hasOwnProperty(key)) {  // 継承プロパティを除外する
-        console.log(`${key}: ${config[key]}`);
+        // console.log(`${key}: ${config[key]}`);
         let value = config[key];
 
         let xyz = value[1];
@@ -104,6 +108,73 @@ export function Commands(trigger, args) {
   }
 
   if (trigger === "getxyz") {
+    if (args.length < 2) {
+      valuesNotEnough();
+      ChatLib.chat(header + "§cRequired: /lcg getxyz <targetKey>");
+      return;
+    }
 
+    let keys = Object.keys(getConfig());
+    let key = args[1].toLowerCase();
+
+    if (!keys.includes(key)) {
+      ChatLib.chat(header + "§cThat keys NOT found. §7(Tip: keys only contains lowerCase)")
+      return;
+    }
+    
+    let currentValue = getConfig();
+    const keyValue = currentValue[key];
+
+    const xyz = keyValue[1];
+    const yp = keyValue[2];
+    const direction = keyValue[3];
+    let X = xyz[0];
+    let Y = xyz[1];
+    let Z = xyz[2];
+    let Yaw = yp[0]; 
+
+    ChatLib.chat(
+      `§7[§e${key}§7]: §r§7(X: §f${X}§7, Y: §f${Y}§7, Z: §f${Z}§7, Yaw: §f${Yaw}§7, Direction: §2${direction}§7)` 
+    );
+    return;
+  }
+
+  if (trigger === "currentxyz") {
+    let triggeredKey = null;
+    let XYZ = getResizedXYZ();
+    let currentValue = getConfig();
+
+    for (let key in currentValue) {
+      if (currentValue.hasOwnProperty(key)) {
+        let value = currentValue[key];
+        let configXYZ = value[1];
+
+        if (JSON.stringify(configXYZ) === JSON.stringify(XYZ)) {
+          triggeredKey = key;
+          break;
+        }
+      }
+    }
+
+    if (triggeredKey === null) {
+      ChatLib.chat(
+        header + `§9Triggered XYZ hasn't here!`
+      );
+      return;
+    }
+
+    let keyValue = currentValue[triggeredKey];
+    const xyz = keyValue[1];
+    const yp = keyValue[2];
+    const direction = keyValue[3];
+    let X = xyz[0];
+    let Y = xyz[1];
+    let Z = xyz[2];
+    let Yaw = yp[0]; 
+
+    ChatLib.chat(
+      header + `T§9first Triggered: §7[§a${triggeredKey}§7]: §r§7(X: §f${X}§7, Y: §f${Y}§7, Z: §f${Z}§7, Yaw: §f${Yaw}§7, Direction: §2${direction}§7)`
+    );
+    return;
   }
 }

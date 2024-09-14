@@ -30,3 +30,7 @@ export const helpMessage = [
   "§a- このテキストを表示             -",
   "§a---------------------------------"
 ];
+
+export const commandUsage = "/lcg <help/gui/start/stop/toggle/setxyz/removexyz/listxyz/currentxyz/getxyz/preset>";
+
+export let currentPreset = "__default";

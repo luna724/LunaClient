@@ -1,3 +1,4 @@
+import { handleXYZ } from "./antiAntiMacro";
 import { xyzCollection } from "./Identifier";
 import { getStatus } from "./Option"
 import { getConfig, getResizedXYZ, getXYZ } from "./XYZ/module";
@@ -44,7 +45,10 @@ register("tick", (elapsed) => {
     console.error("Failed in player XYZ: ", e);
     return;
   }
-  const XYZ = getResizedXYZ();
+  const rawXYZ = getXYZ();
+  const XYZ = getResizedXYZ(rawXYZ);
+
+  handleXYZ(rawXYZ);
   
   // XYZがtriggerXYZsに含まれているかチェック
   if (triggerXYZs.some(t => JSON.stringify(t) === JSON.stringify(XYZ))) {

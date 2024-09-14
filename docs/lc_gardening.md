@@ -11,20 +11,17 @@ LunaClient / Auto Garden は以下のMODを要求します。
 プリセットに依存しない固定変数の設定があるメニュー <br>
 `/lcgui` でも開くことができる。
 
-- `/lcg <start/stop>` <br>
+- `/lcg <start/stop>` / `/lcg toggle` <br>
 Auto Gardenのスタート/ストップ <br>
 
-- `/lcg setxyz <trigger>` <br>
+- `/lcg setxyz <trigger> (ignoreY)` <br>
 現在地の X,Y,Z,Yaw,Pitch を現在のプリセットの最後に保存する <br>
 <trigger>は、その位置に到着した 500ms 後に移動する方向で、
 `/automove setdirection` の第二引数に入れられるので
 ここに代入される値は `/automove setdirection` が受け入れる値である必要がある。
-なお、到着処理の際に Yaw, Pitch は無視される
-
-#### TLDR:
-```plaintext
-<trigger> = l, r, f, b, rf, rb, lf, lb, ..
-```
+なお、到着処理の際に Yaw, Pitch は無視される <br>
+`(ignoreY)` オプションで追加し、Y座標のチェックを無視する.
+方法は第二引数に ignorey と入れるだけ
 
 - `/lcg removexyz <targetKey>` <br>
 <targetKe>を現在のプリセットから削除する <br>
@@ -32,6 +29,9 @@ Auto Gardenのスタート/ストップ <br>
 - `/lcg listxyz` <br>
 現在のプリセットに登録されているキーとその値をリストアップする <br>
 
+- `/lcg currentxyz` <br>
+現在地XYZにてトリガーするキーを表示する <br>
+ 
 - `/lcg getxyz <targetKey>` <br>
 <targetKey>の X,Y,Z,Yaw,Pitch を取得し表示する <br>
 
@@ -46,11 +46,10 @@ Auto Gardenのスタート/ストップ <br>
 
   - `delete <targetPreset>` <br>
   プリセットの削除を行う。
-  バックアップ機能などはない
 
   - `rename <targetPreset> <presetAfter>` <br>
   プリセットの名前変更を行う。
-  変更先の名前がある場合は上書きされる。
+  変更先の名前がある場合はエラーを返す。
 
   - `current` <br>
   現在選択されているプリセット名を表示する。
@@ -65,14 +64,23 @@ Auto Gardenのスタート/ストップ <br>
 現在読み込まれているプリセットの XYZManager情報を保持している <br>
 取得メゾット: `getConfig()`
 
-#### - `/auto_garden.json`
+#### - `../LunaClientAutoGarden/config.toml`
 AutoGardenの主要設定を保持する <br>
-取得メゾット: `getPrimaryConfig()`
+取得メゾット: gui.js:autoGardenSettings
 
 #### - `/auto_garden.session.json`
-トータルセッションの値を保持する <br>
+プログラムのステータスを保持する <br>
 この設定はtickイベントにより読み込まれているので、軽量であることが重要 <br>
 取得メゾット: `getSessionConfig()`
 
-#### - `/auto_garden.presets.json`
-プリセットの保存ファイル
+#### - `/presets/auto_garden.presets.json`
+プリセットの保存ファイル <br>
+内部構造は以下のとおり
+
+```json
+{
+  "presetName": {"autogarden.json in this preset"},
+  "presetName2": {"autogarden.json in this preset"},
+  ..
+}
+```
