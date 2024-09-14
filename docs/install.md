@@ -3,9 +3,9 @@
 ### beta or release or Stable-Release from GitHub
 0. Install [ChatTriggers](https://www.chattriggers.com/) to Minecraft
 1. Download module zip from [releases](https://github.com/luna724/LunaClient/releases)
-3. Unzip and move to `YourInstance/config/ChatTriggers/modules/`
-3. if you want beta, Download zip from [here](https://github.com/luna724/LunaClient/archive/refs/heads/main.zip). and extract LunaClient-main directory and rename to LunaClient and move them
-4. Install requirements
+2. Unzip and move to `YourInstance/config/ChatTriggers/modules/`
+2. if you want beta, Download zip from [here](https://github.com/luna724/LunaClient/archive/refs/heads/main.zip). and extract LunaClient-main directory and rename to LunaClient and move them
+3. Install requirements
 ```plaintext
 Requirements:
 
