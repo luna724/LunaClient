@@ -1,5 +1,4 @@
 import { handleXYZ } from "./antiAntiMacro";
-import { xyzCollection } from "./Identifier";
 import { getStatus } from "./Option"
 import { getConfig, getResizedXYZ, getXYZ } from "./XYZ/module";
 

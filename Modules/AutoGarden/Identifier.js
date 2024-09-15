@@ -1,8 +1,5 @@
 export const header = "§6[§2Auto-Garden§6]: §r§f";
 
-// key for autogarden.json["xyzCollection"]
-export const xyzCollection = "xyzCollection"; 
-
 export const helpMessage = [
   "§a--- §dLunaClient §7/ §2Auto-Garden§a ---",
   "§a- 各機能詳細は README (/lc_readme) 参照-",

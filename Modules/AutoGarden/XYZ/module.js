@@ -1,4 +1,4 @@
-import { header, xyzCollection } from "../Identifier";
+import { header } from "../Identifier";
 
 export function getXYZ() {
   // 現在のプレイヤーの XYZ をそのまま返す

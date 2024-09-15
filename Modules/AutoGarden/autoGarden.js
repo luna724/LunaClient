@@ -1,5 +1,5 @@
 import { startTextConverterInAutoGarden, stopTextConverterInAutoGarden } from "./Chat";
-import gui from "./gui";
+import { autoGardenSetting } from "./gui";
 import { header } from "./Identifier";
 import { getSessionConfig, saveSessionConfig } from "./module";
 
@@ -11,7 +11,9 @@ export function startAutoGarden() {
   // ステータスを更新
   let sessionConfig = getSessionConfig();
   sessionConfig["status"] = true;
-  if (gui.enableAntiAntiMacro) { sessionConfig["antiAntiMacroStatus"] = true; }
+  if (autoGardenSetting.enableAntiAntiMacro) {
+    sessionConfig["antiAntiMacroStatus"] = true;
+  }
   saveSessionConfig(sessionConfig);
 
   // テキスト変換エンジンを開始

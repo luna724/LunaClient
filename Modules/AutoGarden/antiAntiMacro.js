@@ -2,7 +2,7 @@
 
 import { stopAutoGarden } from "./autoGarden";
 import { compareXYZ } from "./compare";
-import gui from "./gui";
+import { autoGardenSetting } from "./gui";
 import { antiAntiMacroStatus, getStatus } from "./Option";
 
 function triggered() {
@@ -11,8 +11,8 @@ function triggered() {
   // AutoGardenが有効なら、AutoGardenを停止する
   stopAutoGarden("§cStopped AutoGarden by Anti-AntiMacro");
   
-  if (gui.autoDisconnectWhenTriggered) {
-    ChatLib.command(gui.autoDisconnectWhenTriggeredCommand.replace(/^\/+|\/+$/g, ""), true);
+  if (autoGardenSetting.autoDisconnectWhenTriggered) {
+    ChatLib.command(autoGardenSetting.autoDisconnectWhenTriggeredCommand.replace(/^\/+|\/+$/g, ""), true);
   }
 }
 

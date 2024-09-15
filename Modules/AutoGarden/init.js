@@ -13,10 +13,10 @@ import "./presetManager";
 
 import { valuesNotEnough, XYZManageCommands } from "./XYZManager";
 import { startAutoGarden, stopAutoGarden, toggleAutoGarden } from "./autoGarden";
-import gui from "./gui";
 import { sendHelpMessage } from "./module";
 import { presetManageCommands } from "./presetManager";
 import { commandUsage, header } from "./Identifier";
+import { autoGardenSetting } from "./gui";
 
 const XYZManagements = [
   "setxyz", "removexyz", "listxyz", "getxyz", "currentxyz"
@@ -46,7 +46,7 @@ register("command", (...args) => {
     } else if (arg1 === "stop") {
       stopAutoGarden();
     } else if (arg1 === "gui") {
-      gui.openGUI();
+      autoGardenSetting.openGUI();
     } else if (arg1 === "toggle") {
       toggleAutoGarden();
     }

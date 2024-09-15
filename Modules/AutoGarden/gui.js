@@ -49,4 +49,4 @@ class autoGardenSettings {
   }
 }
 
-export default new autoGardenSettings();
+export const autoGardenSetting = new autoGardenSettings();

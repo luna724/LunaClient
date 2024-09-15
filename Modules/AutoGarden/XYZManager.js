@@ -1,4 +1,4 @@
-import { header, xyzCollection } from "./Identifier";
+import { header } from "./Identifier";
 import { getResizedRotation, getResizedXYZ, checkDirection, getConfig, getNewKey, saveConfig } from "./XYZ/module";
 
 export function valuesNotEnough() {
