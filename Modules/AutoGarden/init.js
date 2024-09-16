@@ -10,6 +10,7 @@ import "./tick";
 import "./XYZManager";
 import "./gui";
 import "./presetManager";
+import "./timer";
 
 import { valuesNotEnough, XYZManageCommands } from "./XYZManager";
 import { startAutoGarden, stopAutoGarden, toggleAutoGarden } from "./autoGarden";
@@ -17,6 +18,7 @@ import { sendHelpMessage } from "./module";
 import { presetManageCommands } from "./presetManager";
 import { commandUsage, header } from "./Identifier";
 import { autoGardenSetting } from "./gui";
+import { Timer } from "./timer";
 
 const XYZManagements = [
   "setxyz", "removexyz", "listxyz", "getxyz", "currentxyz"
@@ -49,6 +51,8 @@ register("command", (...args) => {
       autoGardenSetting.openGUI();
     } else if (arg1 === "toggle") {
       toggleAutoGarden();
+    } else if (arg1 === "timer") {
+      Timer(args);
     }
     else {
       valuesNotEnough();

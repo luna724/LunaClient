@@ -58,6 +58,10 @@ Auto Gardenのスタート/ストップ <br>
   全ての値が初期状態の新しいプリセットを作る
   同名のプリセットがある場合はエラーを返す
 
+- `/lcg timer <time:s> (aterCommand=lcg stop)` <br>
+<time:s> にて指定した秒数経過後、(afterCommand) のコマンドを実行する <br>
+(afterCommand) のコマンドは、クライアントサイドであり、`/`を含まないものである必要がある。 <br>
+
 
 ### 依存ファイル (引継ぎなど向け)
 #### - `/autogarden.json`

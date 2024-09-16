@@ -1,5 +1,5 @@
 import { handleXYZ } from "./antiAntiMacro";
-import { getStatus } from "./Option"
+import { antiAntiMacroStatus, getStatus } from "./Option"
 import { getConfig, getResizedXYZ, getXYZ } from "./XYZ/module";
 
 
@@ -47,7 +47,7 @@ register("tick", (elapsed) => {
   const rawXYZ = getXYZ();
   const XYZ = getResizedXYZ(rawXYZ);
 
-  handleXYZ(rawXYZ);
+  if (antiAntiMacroStatus()) { handleXYZ(rawXYZ); }
   
   // XYZがtriggerXYZsに含まれているかチェック
   if (triggerXYZs.some(t => JSON.stringify(t) === JSON.stringify(XYZ))) {

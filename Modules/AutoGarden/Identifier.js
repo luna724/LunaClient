@@ -2,7 +2,7 @@ export const header = "§6[§2Auto-Garden§6]: §r§f";
 
 export const helpMessage = [
   "§a--- §dLunaClient §7/ §2Auto-Garden§a ---",
-  "§a- 各機能詳細は README (/lc_readme) 参照-",
+  "§a- このヘルプは更新されていません。最新版は README (/lc_readme) 参照-",
   "§a- /lc_gardening start          -",
   "§a- スタートする                  -",
   "§a- /lc_gardening setxyz <trigger>",
@@ -28,5 +28,5 @@ export const helpMessage = [
   "§a---------------------------------"
 ];
 
-export const commandUsage = "/lcg <help/gui/start/stop/toggle/setxyz/removexyz/listxyz/currentxyz/getxyz/preset>";
+export const commandUsage = "/lcg <help/gui/start/stop/toggle/setxyz/removexyz/listxyz/currentxyz/getxyz/preset/timer>";
 export let autoGardenTextConverterEngine = false;
