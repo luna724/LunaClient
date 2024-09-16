@@ -26,7 +26,7 @@ export function handleXYZ(XYZ) {
   // 以前の XYZ と同じで、かつ delay を上回った場合
   if (compareXYZ(previousXYZ, XYZ)) {
     if (currentTime - previousTime >= delay) {
-      console.log("Same XYZ. Triggered");
+      // console.log("Same XYZ. Triggered");
       triggered();
     }
     return;

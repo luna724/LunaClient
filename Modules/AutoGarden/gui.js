@@ -43,7 +43,16 @@ class autoGardenSettings {
     subcategory: "Safety"
   })
   autoDisconnectWhenTriggeredCommand = "/skytils:limbo";
-
+  
+  // Chat Converter Engine
+  @SwitchProperty({
+    name: "convert LC-AutoMove message",
+    description: "convert compact style to LC-AutoMove message",
+    category: "AutoGarden",
+    subcategory: "Spam"
+  })
+  chatConverterEngine = true;
+  
   constructor() {
     this.initialize(this)
   }

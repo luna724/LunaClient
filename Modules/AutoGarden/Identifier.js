@@ -29,5 +29,4 @@ export const helpMessage = [
 ];
 
 export const commandUsage = "/lcg <help/gui/start/stop/toggle/setxyz/removexyz/listxyz/currentxyz/getxyz/preset>";
-
-export let currentPreset = "__default";
+export let autoGardenTextConverterEngine = false;

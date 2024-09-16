@@ -17,71 +17,71 @@ const Version = JSON.parse(FileLib.read(
 
 @Vigilant("LunaClient", `§dLunaClient (v${Version})`, {
   getCategoryComparator: () => (a,b) => {
-    const categories = ["General", "Dungeons", "Hider", "LunaAPI Utils", "Farming"];
+    const categories = ["General", "Dungeons", "Hider", "Farming"];
     return categories.indexOf(a.name) - categories.indexOf(b.name);
   },
 })
 class Settings {
-  // LunaAPI Utils Start
+  // // LunaAPI Utils Start
 
-  @SwitchProperty({
-    name: "Treasure Talisman Flip tracker",
-    description: "Track Treasure Talisman flip (/calcProfit treas)",
-    category: "LunaAPI utils",
-    subcategory: "/calcProfit"
-  })
-  TreasureTalismanFlipTracker = false;
+  // @SwitchProperty({
+  //   name: "Treasure Talisman Flip tracker",
+  //   description: "Track Treasure Talisman flip (/calcProfit treas)",
+  //   category: "LunaAPI utils",
+  //   subcategory: "/calcProfit"
+  // })
+  // TreasureTalismanFlipTracker = false;
   
-  // Flip track helper
-  @SwitchProperty({
-    name: "Flip track helper",
-    description: "track your flip with Lunapy bot",
-    category: "LunaAPI utils",
-    subcategory: "Flip track helper"
-  })
-  LunaAPIFlipTrackHelper = false;
+  // // Flip track helper
+  // @SwitchProperty({
+  //   name: "Flip track helper",
+  //   description: "track your flip with Lunapy bot",
+  //   category: "LunaAPI utils",
+  //   subcategory: "Flip track helper"
+  // })
+  // LunaAPIFlipTrackHelper = false;
 
-  @SwitchProperty({
-    name: "Track Bazaar",
-    description: "track your BZ insta-buy,buy/sell order",
-    category: "LunaAPI utils",
-    subcategory: "Flip track helper"
-  })
-  LunaAPIFlipTrackHelperBazaar = false;
+  // @SwitchProperty({
+  //   name: "Track Bazaar",
+  //   description: "track your BZ insta-buy,buy/sell order",
+  //   category: "LunaAPI utils",
+  //   subcategory: "Flip track helper"
+  // })
+  // LunaAPIFlipTrackHelperBazaar = false;
 
-  @SwitchProperty({
-    name: "Check when buy/sell order Started",
-    description: "",
-    category: "LunaAPI utils",
-    subcategory: "Flip track helper"
-  })
-  LunaAPIFlipTrackHelperCheckWhenOrder = false;
+  // @SwitchProperty({
+  //   name: "Check when buy/sell order Started",
+  //   description: "",
+  //   category: "LunaAPI utils",
+  //   subcategory: "Flip track helper"
+  // })
+  // LunaAPIFlipTrackHelperCheckWhenOrder = false;
 
-  @SwitchProperty({
-    name: "Check when you Claimed buy/sell order",
-    description: "",
-    category: "LunaAPI utils",
-    subcategory: "Flip track helper"
-  })
-  LunaAPIFlipTrackHelperCheckWhenOrderClaimed = true;
+  // @SwitchProperty({
+  //   name: "Check when you Claimed buy/sell order",
+  //   description: "",
+  //   category: "LunaAPI utils",
+  //   subcategory: "Flip track helper"
+  // })
+  // LunaAPIFlipTrackHelperCheckWhenOrderClaimed = true;
 
-  @SwitchProperty({
-    name: "Check when you Cancelled buy order",
-    description: "§cSell order aren't Supported!",
-    category: "LunaAPI utils",
-    subcategory: "Flip track helper"
-  })
-  LunaAPIFlipTrackHelperCheckWhenOrderCancelled = true;
+  // @SwitchProperty({
+  //   name: "Check when you Cancelled buy order",
+  //   description: "§cSell order aren't Supported!",
+  //   category: "LunaAPI utils",
+  //   subcategory: "Flip track helper"
+  // })
+  // LunaAPIFlipTrackHelperCheckWhenOrderCancelled = true;
 
-  @SwitchProperty({
-    name: "Always track your any item",
-    description: "",
-    category: "LunaAPI utils",
-    subcategory: "Flip track helper"
-  })
-  LunaAPIFlipTrackAlwaysTrue = false;
+  // @SwitchProperty({
+  //   name: "Always track your any item",
+  //   description: "",
+  //   category: "LunaAPI utils",
+  //   subcategory: "Flip track helper"
+  // })
+  // LunaAPIFlipTrackAlwaysTrue = false;
 
-  /* LunaAPI Utils End*/ 
+  // /* LunaAPI Utils End*/ 
   
 
   // General
@@ -292,10 +292,10 @@ class Settings {
     this.addDependency("Don't hide player death message while Dungeons", "Hide player death Message")
 
     /* LunaAPI Utils Start */
-    this.addDependency("Check when you Cancelled buy order", "Track Bazaar")
-    this.addDependency("Check when you Claimed buy/sell order", "Track Bazaar")
-    this.addDependency("Check when buy/sell order Started", "Track Bazaar")
-    this.addDependency("Track Bazaar", "Flip track helper")
+    // this.addDependency("Check when you Cancelled buy order", "Track Bazaar")
+    // this.addDependency("Check when you Claimed buy/sell order", "Track Bazaar")
+    // this.addDependency("Check when buy/sell order Started", "Track Bazaar")
+    // this.addDependency("Track Bazaar", "Flip track helper")
     /* LunaAPI Utils End */
 
     this.addDependency("Notice \"joined!\" to chat", "Auto-rejoin Skyblock")

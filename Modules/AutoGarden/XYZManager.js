@@ -1,4 +1,5 @@
 import { header } from "./Identifier";
+import { getCurrentPreset } from "./module";
 import { getResizedRotation, getResizedXYZ, checkDirection, getConfig, getNewKey, saveConfig } from "./XYZ/module";
 
 export function valuesNotEnough() {
@@ -28,6 +29,13 @@ export function XYZManageCommands(trigger, args) {
     let currentValue = config;
     let newKey = getNewKey();
     
+    if (args.length > 2) {
+      if (args[2].toLowerCase() === "ignorey") {
+        XYZ[1] = -1; // Y を -1 にする
+      }
+    }
+
+
     let currentData = [
       newKey, XYZ, Rotation, direction
     ];
@@ -39,8 +47,20 @@ export function XYZManageCommands(trigger, args) {
     currentValue[newKey] = currentData;
     saveConfig(currentValue);
 
+    let command = `/lcg removexyz ${newKey}`;
+    let message = new Message(
+      header + `§aSaved as §l${newKey}§r. §7(XYZ: ${XYZ}, Rotation: ${Rotation}, Direction: ${direction}) `,
+      new TextComponent("§c[Remove]")
+            .setClick(
+              "run_command", command
+            )
+            .setHover(
+              "show_text", `Click to run ${command}`
+            )
+    )
+
     ChatLib.chat(
-      header + `§aSaved as §l${newKey}§r. §7(XYZ: ${XYZ}, Rotation: ${Rotation}, Direction: ${direction})`
+      message
     );
     return;
   }
@@ -82,7 +102,7 @@ export function XYZManageCommands(trigger, args) {
     }
 
     ChatLib.chat(
-      header + "§aAll XYZ in current presets (${currentPresets})"
+      header + `§aAll XYZ in current presets (${getCurrentPreset()})`
     );
     ChatLib.chat(".");
     for (let key in config) {
@@ -99,8 +119,20 @@ export function XYZManageCommands(trigger, args) {
         let Z = xyz[2];
         let Yaw = yp[0]; 
 
+        let command = `/lcg removexyz ${key}`;
+        let message = new Message(
+          `§7[§e${key}§7]: §r§7(X: §f${X}§7, Y: §f${Y}§7, Z: §f${Z}§7, Yaw: §f${Yaw}§7, Direction: §2${direction}§7) `,
+          new TextComponent("§c[Remove]")
+            .setClick(
+              "run_command", command
+            )
+            .setHover(
+              "show_text", `Click to run ${command}`
+            )
+        );
+
         ChatLib.chat(
-          `§7[§e${key}§7]: §r§7(X: §f${X}§7, Y: §f${Y}§7, Z: §f${Z}§7, Yaw: §f${Yaw}§7, Direction: §2${direction}§7)` 
+          message
         );
       }
     }

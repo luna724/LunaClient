@@ -1,5 +1,5 @@
-import { currentPreset, header } from "./Identifier";
-import { getPresetJson, savePresetJson } from "./module";
+import { header } from "./Identifier";
+import { changeCurrentPreset, getCurrentPreset, getPresetJson, savePresetJson } from "./module";
 import { getConfig, saveConfig } from "./XYZ/module";
 import { valuesNotEnough } from "./XYZManager";
 
@@ -84,7 +84,7 @@ export function presetManageCommands(args) {
 
     presetJson["__default"] = currentValue;
     saveConfig(configValue);
-    currentPreset = presetName;
+    changeCurrentPreset(presetName);
 
     savePresetJson(presetJson);
 
@@ -96,7 +96,7 @@ export function presetManageCommands(args) {
 
   if (trigger === "current") {
     ChatLib.chat(
-      header + `§aCurrent Preset: ${currentPreset}`
+      header + `§aCurrent Preset: ${getCurrentPreset()}`
     );
     return;
   }

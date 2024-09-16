@@ -2,7 +2,7 @@ import Settings from "../menu"
 
 import AHPM_Optimizer_main from "./Chats/AHPM_Optimizer"
 import hideDeathMessage from "./Chats/hideDeathMessage";
-import { flipTrackHelper } from "./LunaAPI/flipTrackHelper";
+import { flipTrackHelper } from "./LunaAPI/flipTrackHelper.js.disabled";
 
 import { checkInWorld } from "../../GriffinOwO/utils/Location";
 

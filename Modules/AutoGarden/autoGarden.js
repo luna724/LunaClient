@@ -1,6 +1,5 @@
-import { startTextConverterInAutoGarden, stopTextConverterInAutoGarden } from "./Chat";
 import { autoGardenSetting } from "./gui";
-import { header } from "./Identifier";
+import { autoGardenTextConverterEngine, header } from "./Identifier";
 import { getSessionConfig, saveSessionConfig } from "./module";
 
 export function startAutoGarden() {
@@ -17,7 +16,7 @@ export function startAutoGarden() {
   saveSessionConfig(sessionConfig);
 
   // テキスト変換エンジンを開始
-  startTextConverterInAutoGarden();
+  autoGardenTextConverterEngine = true;
 
   // とりま開始
   ChatLib.command("automove start", true);
@@ -36,7 +35,7 @@ export function stopAutoGarden(stopText="§7Stopped AutoGarden") {
   sessionConfig["antiAntiMacroStatus"] = false;
   saveSessionConfig(sessionConfig);
 
-  stopTextConverterInAutoGarden();
+  autoGardenTextConverterEngine = false;
 
   ChatLib.command("automove stop", true);
 }

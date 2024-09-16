@@ -1,4 +1,4 @@
-import { helpMessage } from "./Identifier";
+import { header, helpMessage } from "./Identifier";
 
 export function getSessionConfig() {
   // auto_garden.session.json を返す
@@ -38,4 +38,33 @@ export function savePresetJson(newcfg) {
   );
 
   FileLib.write("LunaClient", "presets/auto_garden.presets.json", JSON.stringify(newcfg));
+}
+
+export function changeCurrentPreset(currentPreset) {
+  let sessionConfig = getSessionConfig();
+  const presetJson = getPresetJson();
+  const presets = Object.keys(presetJson);
+  
+  if (!presets.includes(currentPreset)) {
+    console.log(
+      `[ERR]: [module.js:changeCurrentPreset]: new CurrentPreset aren't in preset.json! (${currentPreset})`
+    );
+
+    ChatLib.chat(
+      header + `§can error occurred in preset System. see console for more details.`
+    );
+    currentPreset = "__default";
+  }
+  
+  console.log(
+    `[module.js:changeCurrentPreset]: Preset Changed!: ${currentPreset}`
+  );
+
+  sessionConfig["currentPreset"] = currentPreset;
+  savePresetJson(sessionConfig);
+}
+
+export function getCurrentPreset() {
+  const sessionConfig = getSessionConfig();
+  return sessionConfig["currentPreset"];
 }
