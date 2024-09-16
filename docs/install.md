@@ -5,13 +5,14 @@
 1. Download module zip from [releases](https://github.com/luna724/LunaClient/releases)
 2. Unzip and move to `YourInstance/config/ChatTriggers/modules/`
 3. if you want beta, Download zip from [here](https://github.com/luna724/LunaClient/archive/refs/heads/main.zip). and extract LunaClient-main directory and rename to LunaClient and move them
-4. Install requirements
+4. Install requirements [(why "Vigilance" is not required?)](/docs/GriffinOwO.md)
 ```plaintext
 Requirements:
 
 /ct import GriffinOwO
-/ct import axios
-/ct import ServerTick
+/ct import axios  (LunaClient v1.1.1 and below)
+/ct import Vigilance (not required.)
+/ct import ServerTick  (currently not required.)
 ```
 5. reload ChatTrigger Module (`/ct load`)
 6. installation done! `/lc` to open menu
