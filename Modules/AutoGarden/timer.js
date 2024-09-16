@@ -21,6 +21,7 @@ export function Timer(args) {
     ChatLib.chat(header + "§c<time:sec> must be Integer (e.g. 30)");
     return;
   }
+  time *= 1000
 
   // 新規スレッドで終わるまで待機
   const AutoGardenTimerThread = new Thread(
