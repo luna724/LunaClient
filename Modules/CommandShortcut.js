@@ -11,6 +11,6 @@ register("command", () => {
 	ChatLib.command("l");
 }).setName("lobby", true);
 
-register("lc_readme", () => {
+register("command", () => {
 	ChatLib.chat("§f[§dLunaClient§f]: README:§7 https://github.com/luna724/LunaClient/blob/main/README.md")
-})
+}).setName("lc_readme");
