@@ -11,7 +11,7 @@ export default function AutobackIsland() {
     targetIslandWarpCommand = "is";
     islandWorldName = "Your Island";
   } else if (Settings.autoBackIslandType === 1) {
-    targetIslandWarpCommand = "garden";
+    targetIslandWarpCommand = "warp garden";
     islandWorldName = "Garden"
   }
   
