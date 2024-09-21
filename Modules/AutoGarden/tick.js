@@ -1,4 +1,5 @@
 import { handleXYZ } from "./antiAntiMacro";
+import { compareXYZ } from "./compare";
 import { antiAntiMacroStatus, getStatus } from "./Option"
 import { getConfig, getResizedXYZ, getXYZ } from "./XYZ/module";
 
@@ -50,10 +51,10 @@ register("tick", (elapsed) => {
   if (antiAntiMacroStatus()) { handleXYZ(rawXYZ); }
   
   // XYZがtriggerXYZsに含まれているかチェック
-  if (triggerXYZs.some(t => JSON.stringify(t) === JSON.stringify(XYZ))) {
+  if (triggerXYZs.some(t => compareXYZ(t, XYZ))) {
     // 一致した場合、XYZCollectionsの値を取得
     const triggeredXYZ = Object.entries(XYZCollections).find(([key, value]) => 
-      JSON.stringify(value[1]) === JSON.stringify(XYZ));
+      compareXYZ(value[1], XYZ));
 
     triggered(triggeredXYZ);
   }
