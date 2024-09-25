@@ -1,4 +1,3 @@
-import { registerEventListener } from "../../../GriffinOwO/utils/EventListener";
 import { autoGardenSetting } from "./gui";
 
 const colored = "§6[§2Auto-Garden§6]: §r§7";
@@ -8,10 +7,8 @@ function send(message) {
   ChatLib.chat(message);
 }
 
-
-registerEventListener(() => autoGardenSetting.chatConverterEngine,
-  register("chat",
-    (chat, event) => {
+export function ChatAutoGarden(chat, event) {
+      if (!autoGardenSetting.chatConverterEngine) { return; }
       chat = chat.removeFormatting();
 
       // 移動方向変更
@@ -57,5 +54,3 @@ registerEventListener(() => autoGardenSetting.chatConverterEngine,
         event.setCanceled(true);
       }
     }
-  ).setCriteria("${chat}")
-);

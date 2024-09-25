@@ -5,6 +5,7 @@ import hideDeathMessage from "./Chats/hideDeathMessage";
 import { flipTrackHelper } from "./LunaAPI/flipTrackHelper.js.disabled";
 
 import { checkInWorld } from "../../GriffinOwO/utils/Location";
+import { ChatAutoGarden } from "./AutoGarden/Chat";
 
 function noticeBloodRoomsFull() {
   if (!Settings.NoticeBloodRoomsFull) return;
@@ -19,6 +20,8 @@ function noticeBloodRoomsFull() {
 }
 
 register("chat", (chat, event) => {
+  const rawChat = chat;
+
   let index = "§f[§dLunaClient§f]:"
   // BloodRooms
   if (chat.removeFormatting() == "[BOSS] The Watcher: That will be enough for now.") {
@@ -192,6 +195,8 @@ register("chat", (chat, event) => {
       }
     }
   }
+
+  ChatAutoGarden(rawChat, event);
 
   // Internal deleter (can't toggle)
   let internal_blacklist = [

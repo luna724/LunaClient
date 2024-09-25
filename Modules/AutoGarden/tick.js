@@ -1,10 +1,11 @@
 import { handleXYZ } from "./antiAntiMacro";
 import { compareXYZ } from "./compare";
 import { antiAntiMacroStatus, getStatus } from "./Option"
+import { handlePest, pestCheck } from "./pest";
 import { getConfig, getResizedXYZ, getXYZ } from "./XYZ/module";
 
 
-function triggered(collection) {
+function XYZMatched(collection) {
   collection = collection[1]; // 値を摘出
 
   const Rotation = collection[2];
@@ -49,6 +50,7 @@ register("tick", (elapsed) => {
   const XYZ = getResizedXYZ(rawXYZ);
 
   if (antiAntiMacroStatus()) { handleXYZ(rawXYZ); }
+  if (pestCheck()) { handlePest(); }
   
   // XYZがtriggerXYZsに含まれているかチェック
   if (triggerXYZs.some(t => compareXYZ(t, XYZ))) {
@@ -56,6 +58,6 @@ register("tick", (elapsed) => {
     const triggeredXYZ = Object.entries(XYZCollections).find(([key, value]) => 
       compareXYZ(value[1], XYZ));
 
-    triggered(triggeredXYZ);
+    XYZMatched(triggeredXYZ);
   }
 })

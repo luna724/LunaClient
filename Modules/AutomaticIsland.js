@@ -1,5 +1,5 @@
 import Settings from "../menu"
-import { checkInZone, checkInWorld } from "../../GriffinOwO/utils/Location"
+import { checkInWorld } from "./Location";
 
 export default function AutobackIsland() {
   if (!Settings.autoBacktoIsland) return;
