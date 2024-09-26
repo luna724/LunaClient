@@ -1,4 +1,5 @@
 ## Installation
+<h1><center> RECOMMEND TO INSTALL BETA!!! </center></h1>
 
 ### beta or release or Stable-Release from GitHub
 0. Install [ChatTriggers](https://www.chattriggers.com/) to Minecraft
