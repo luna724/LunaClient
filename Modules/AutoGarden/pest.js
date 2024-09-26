@@ -1,5 +1,7 @@
 import { ScoreboardGetByString } from "../scoreboard";
+import { stopAutoGarden } from "./autoGarden";
 import { autoGardenSetting } from "./gui";
+import { header } from "./Identifier";
 
 class Pests {
   pestCount = 0;
@@ -43,9 +45,6 @@ function getPestCount(gatherMethod="scoreboard") {
   return pestCount;
 }
 
-
-
-
 /**
  * check PestTracker is active
  * 
@@ -72,11 +71,16 @@ export function handlePest() {
   const pestAllowStop = autoGardenSetting.pestAllowedInAutoStop; 
 
   if (pestCount >= pestAllowWarn) {
-    ChatLib.chat("[PestTracker]: WARN");
+    World.playSound("mob.cat.meow", 100, 1.15);
+    Client.showTitle(`§ePest Counts reached ${pestCount.toString()}!`)
+    
+    Thread.sleep(50);
   }
 
   if (pestCount === pestAllowStop || (pestCount >= pestAllowWarn && pestAllowStop === -1)) {
-    ChatLib.chat("[PestTracker]: STOP");
-    ChatLib.command("lcg stop", true);
+    ChatLib.chat(header + `§c[PestTracker]: reached ${pestCount}`);
+    stopAutoGarden("§cStopped AutoGarden by Pest counts");
+    return;
   }
+
 }
