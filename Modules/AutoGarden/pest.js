@@ -16,6 +16,7 @@ export const PestInfo = new Pests();
 function getPestCount(gatherMethod="scoreboard") {
   gatherMethod = gatherMethod.toLowerCase();
   let pestCountString = "";
+  let pestCount = 0;
 
   if (gatherMethod === "scoreboard") {
     pestCountString = ScoreboardGetByString("⏣");
@@ -31,10 +32,15 @@ function getPestCount(gatherMethod="scoreboard") {
       pestCountString = "0"
     }
 
-    ChatLib.chat(pestCountString);
+    //ChatLib.chat(pestCountString);
   }
 
+  const stringConvertable = /^\d+$/.test(pestCountString);
+  if (stringConvertable) {
+    pestCount = parseInt(pestCountString);
+  }
 
+  return pestCount;
 }
 
 
@@ -47,7 +53,6 @@ function getPestCount(gatherMethod="scoreboard") {
  **/
 export function pestCheck() {
   const Option = autoGardenSetting.pestTracker;
-  getPestCount()
 
   return Option;
 }
@@ -59,5 +64,19 @@ export function pestCheck() {
  * @returns {void}
  */
 export function handlePest() {
+  const pestCount = getPestCount();
 
+  if (pestCount === 0) { return; }
+
+  const pestAllowWarn = autoGardenSetting.pestAllowed;
+  const pestAllowStop = autoGardenSetting.pestAllowedInAutoStop; 
+
+  if (pestCount >= pestAllowWarn) {
+    ChatLib.chat("[PestTracker]: WARN");
+  }
+
+  if (pestCount === pestAllowStop || (pestCount >= pestAllowWarn && pestAllowStop === -1)) {
+    ChatLib.chat("[PestTracker]: STOP");
+    ChatLib.command("lcg stop", true);
+  }
 }
