@@ -9,16 +9,16 @@ export const PestInfo = new Pests();
 
 /**
  * get Pests count from two-way method.
- * Available: scoreboard (ignoreCase)
- * COMING SOON: TabList    
+ * Available: Scoreboard (ignoreCase)
+ * 
  * @param {String} gatherMethod 
  */
 function getPestCount(gatherMethod="scoreboard") {
   gatherMethod = gatherMethod.toLowerCase();
-  let pestCountString = "0";
+  let pestCountString = "";
 
   if (gatherMethod === "scoreboard") {
-    pestCountString = ScoreboardGetByString("⏣")
+    pestCountString = ScoreboardGetByString("⏣");
 
     pestCountString = pestCountString.replace(
       " ⏣ The Garde🌠n", ""
@@ -34,7 +34,7 @@ function getPestCount(gatherMethod="scoreboard") {
     ChatLib.chat(pestCountString);
   }
 
-  
+
 }
 
 
@@ -47,7 +47,7 @@ function getPestCount(gatherMethod="scoreboard") {
  **/
 export function pestCheck() {
   const Option = autoGardenSetting.pestTracker;
-  getPestCount();
+  getPestCount()
 
   return Option;
 }

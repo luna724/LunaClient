@@ -8,18 +8,22 @@ export const Scoreboardln = new ScoreboardTracker();
 /**
  * get Specify lines Scoreboard String by Text
  * 
- * @param {String} trigger 
- * @param {String[]} lns 
+ * @param {String} trigger Trigger string
+ * @param {String} fail SpecLine === undefined: return fail
+ * @param {Array} lns Scoreboard.getLines() custom value
  * @returns {String}
  */
 export function ScoreboardGetByString(
-  trigger, lns=null
+  trigger, fail="", lns=null
 ) {
-  if (lns == null) { lns = Scoreboardln.currentBoard }
+  if (lns === null) { lns = Scoreboardln.currentBoard }
 
   const SpecLine = lns.find(
     (line) => line.getName().includes(trigger)
   );
+
+  if (SpecLine === undefined) { return ""; }
+
   return SpecLine.getName().removeFormatting();
 }
 

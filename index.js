@@ -10,6 +10,7 @@ import "./Modules/CommandShortcut";
 import "./Modules/AutoGarden/init";
 
 import Settings from "./menu";
+import { getPestCount } from "./Modules/AutoGarden/pest";
 
 register("command", () => {
   Settings.openGUI()
@@ -17,5 +18,5 @@ register("command", () => {
 
 
 register("command", () => {
-  ChatLib.chat("No Response.");
+  ChatLib.chat(getPestCount());
 }).setName("lc_test")
