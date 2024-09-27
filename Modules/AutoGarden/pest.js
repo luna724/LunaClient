@@ -77,7 +77,7 @@ export function handlePest() {
     //Client.showTitle(`§ePest Counts reached ${pestCount.toString()}!`)
     
     ChatLib.chat(`§ePest Counts reached ${pestCount.toString()}!`);
-    Thread.sleep(50);
+    // Thread.sleep(50);
   }
 
   if (pestCount === pestAllowStop || (pestCount >= pestAllowWarn && pestAllowStop === -1)) {
