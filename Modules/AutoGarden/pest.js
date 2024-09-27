@@ -5,7 +5,8 @@ import { header } from "./Identifier";
 
 class Pests {
   pestCount = 0;
-  pestPlots = [];
+  repellentType = ""; // MAX or Normal
+  repellentRemain = "";
 }
 export const PestInfo = new Pests();
 
@@ -42,6 +43,7 @@ function getPestCount(gatherMethod="scoreboard") {
     pestCount = parseInt(pestCountString);
   }
 
+  PestInfo.pestCount = pestCount;
   return pestCount;
 }
 
@@ -72,8 +74,9 @@ export function handlePest() {
 
   if (pestCount >= pestAllowWarn) {
     World.playSound("mob.cat.meow", 100, 1.15);
-    Client.showTitle(`§ePest Counts reached ${pestCount.toString()}!`)
+    //Client.showTitle(`§ePest Counts reached ${pestCount.toString()}!`)
     
+    ChatLib.chat(`§ePest Counts reached ${pestCount.toString()}!`);
     Thread.sleep(50);
   }
 
@@ -82,5 +85,9 @@ export function handlePest() {
     stopAutoGarden("§cStopped AutoGarden by Pest counts");
     return;
   }
-
 }
+
+
+/**
+ * Pest Repellent Check
+ */
