@@ -17,12 +17,13 @@ export function ScoreboardGetByString(
   trigger, fail="", lns=null
 ) {
   if (lns === null) { lns = Scoreboardln.currentBoard }
+  if (lns === undefined) { return fail; }
 
   const SpecLine = lns.find(
     (line) => line.getName().includes(trigger)
   );
 
-  if (SpecLine === undefined) { return ""; }
+  if (SpecLine === undefined) { return fail; }
 
   return SpecLine.getName().removeFormatting();
 }

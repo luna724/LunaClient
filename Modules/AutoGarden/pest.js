@@ -1,4 +1,5 @@
 import { ScoreboardGetByString } from "../scoreboard";
+import { TabListGetByString } from "../tab";
 import { stopAutoGarden } from "./autoGarden";
 import { autoGardenSetting } from "./gui";
 import { header } from "./Identifier";
@@ -47,6 +48,15 @@ function getPestCount(gatherMethod="scoreboard") {
   return pestCount;
 }
 
+function setAvailable() {
+  let rawString = "def";
+
+  rawString = TabListGetByString("Repe", "failed.");
+
+  ChatLib.chat(rawString);
+}
+
+
 /**
  * check PestTracker is active
  * 
@@ -59,6 +69,18 @@ export function pestCheck() {
 }
 
 /**
+ * check Repellent is active
+ * 
+ * @returns {boolean}
+ */
+export function repellentCheck() {
+  const Option = autoGardenSetting.warnPestRepellentExpired;
+
+  return Option;
+}
+
+
+/**
  * PestTracker Main
  * call from tick.js
  * 
@@ -66,6 +88,8 @@ export function pestCheck() {
  */
 export function handlePest() {
   const pestCount = getPestCount();
+
+  setAvailable();
 
   if (pestCount === 0) { return; }
 
@@ -91,3 +115,6 @@ export function handlePest() {
 /**
  * Pest Repellent Check
  */
+export function handleRepellent() {
+  
+}

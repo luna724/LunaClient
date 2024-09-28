@@ -5,6 +5,10 @@ import { compareXYZ } from "./compare";
 import { autoGardenSetting } from "./gui";
 import { antiAntiMacroStatus, getStatus } from "./Option";
 
+let previousXYZ = [0, -1, 0];  // 以前のXYZを保存する変数
+let previousTime = 0;    // 前回処理が実行された時間を保存する
+const delay = 3000;      // 3秒間同じ XYZ を無視する
+
 function triggered() {
   if (!getStatus()) { return; }
   if (!antiAntiMacroStatus()) { return; }
@@ -14,11 +18,9 @@ function triggered() {
   if (autoGardenSetting.autoDisconnectWhenTriggered) {
     ChatLib.command(autoGardenSetting.autoDisconnectWhenTriggeredCommand.replace(/^\/+|\/+$/g, ""), true);
   }
-}
 
-let previousXYZ = [0, -1, 0];  // 以前のXYZを保存する変数
-let previousTime = 0;    // 前回処理が実行された時間を保存する
-const delay = 3000;      // 3秒間同じ XYZ を無視する
+  previousXYZ = [-1, -1, -1];
+}
 
 export function handleXYZ(XYZ) { 
   const currentTime = Date.now();  // 現在のタイムスタンプを取得
