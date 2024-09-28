@@ -49,7 +49,7 @@ Requirements:
 
 
 ### 安定版でLunaAPI系統モジュールなしバージョンを ChatTriggers から入手する
-<strong><center> 現在利用不可能です! </center></strong>
+<strong><center> 現在利用不可能 </center></strong>
 0. [ChatTriggers](https://www.chattriggers.com/)を導入
 1. ゲーム内で以下のコマンドを入力 `/ct import LunaClient`
 2. `/lc`でメニューが開けば成功です
