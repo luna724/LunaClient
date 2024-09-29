@@ -15,7 +15,7 @@ import "./timer";
 import { valuesNotEnough, XYZManageCommands } from "./XYZManager";
 import { startAutoGarden, stopAutoGarden, toggleAutoGarden } from "./autoGarden";
 import { sendHelpMessage } from "./module";
-import { presetManageCommands } from "./presetManager";
+import { collectPresetFromInternet, presetManageCommands } from "./presetManager";
 import { commandUsage, header } from "./Identifier";
 import { autoGardenSetting } from "./gui";
 import { Timer } from "./timer";
@@ -53,6 +53,8 @@ register("command", (...args) => {
       toggleAutoGarden();
     } else if (arg1 === "timer") {
       Timer(args);
+    } else if (arg1 === "collect") {
+      collectPresetFromInternet(args);
     }
     else {
       valuesNotEnough();

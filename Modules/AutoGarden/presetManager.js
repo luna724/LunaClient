@@ -182,3 +182,138 @@ export function presetManageCommands(args) {
     ChatLib.command(`lcg preset load ${presetName}`, true);
   }
 }
+
+
+
+/** From below, use for Preset Collecting 
+*/
+import { request } from "axios";
+
+/**
+ *  
+ * @param {string} user 
+ * @param {string} repo 
+ * @param {string} branch 
+ * @param {string} at 
+ * @param {string} fn 
+ * 
+ * @returns {Object} JSON.parse() outputs (JSON.parse(collected_files[f]))
+ */
+function collectPresetFromGitHub(
+  fn="lcgWheatFarmPreset20240929", repo="luna724/luna724", branch="main", at="data/lcg.preset/"
+) {
+  const dataDir = `https://raw.githubusercontent.com/${repo}/${branch}/${at}${fn}.lcg.presets.json`
+
+  // リクエストを作成
+  request({
+    url: dataDir,
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+    .then(response => {
+      const obj = response.data; // 取得したJSONデータ
+    })
+    .catch(error => {
+      ChatLib.chat(header + "§cRequest failed.  maybe.. Files not found?")
+      console.error(error);
+    });
+  
+  
+  try {
+    const response = JSON.parse(obj);
+    ChatLib.chat(header + "§7Request successfully completed");
+    return response;
+  }
+  catch (error) {
+    ChatLib.chat(header + "§cRequest failed. see console for more information");
+
+    console.error(
+      `LunaClient/AutoGarden/PresetManager Failed parsing JSON.\n
+      Object information: typeof ${typeof obj}
+      Error: ${error.toString()}
+      
+      create issue at luna724/LunaClient with this message for help to fix this error` 
+    );
+    return null;
+  }
+}
+
+
+/**
+ * returns video preset data for presetName 
+ * @param {String} presetName 
+ */
+function VideoPreset(presetName) {
+  const available = [
+    "wheat"
+  ];
+
+  if (!available.includes(presetName.toLowerCase())) {
+    ChatLib.chat(header + "§cUnknown VideoPreset: "+presetName);
+    return null;
+  }
+
+  const data = {
+    "wheat": "lcgWheatFarmPreset20240929"
+
+  };
+
+  const targetFn = data[presetName.toLowerCase()];
+  return targetFn;
+}
+
+function collectPreset(
+  preset="custom", saveName="", customRepo="Example/repo", customDir="directory/example", customFile="customFile"
+) {
+  if (preset !== "custom") {
+    const compressd = VideoPreset(preset);
+    // user, repo, branch, at, fn
+
+    if (compressd === null) { return; } 
+    const obj = collectPresetFromGitHub(
+      compressd
+    );
+
+    if (obj === null) { return; }
+
+    const presetData = obj.f;
+    const title = obj.title;
+    const fn = obj.fn;
+
+    if (saveName === "") { saveName = title; }
+
+    ChatLib.chat(header + "§aCollected object for "+fn+"!");
+    
+    ChatLib.command("lcg preset save __TMP__", true);
+    Thread.sleep(50);
+    
+    saveConfig(presetData);
+    ChatLib.command(`lcg preset save ${saveName}`, true);
+    Thread.sleep(50);
+
+    ChatLib.command("lcg preset load __TMP__", true);
+
+    ChatLib.chat(header+"§aCompleted!");
+    ChatLib.command(`lcg preset load ${saveName}`, true);
+    return;
+  }
+
+}
+
+export function collectPresetFromInternet(args) {
+  if (args.length < 2) {
+    valuesNotEnough();
+    ChatLib.chat(header + "§cRequired: /lcg collect <Name> (saveName)");
+    return;
+  }
+  const name = args[1];
+  let saveName = "";
+
+  if (args.length < 3) {
+    saveName = args[2];
+  }
+
+  collectPreset(name, saveName);
+}
