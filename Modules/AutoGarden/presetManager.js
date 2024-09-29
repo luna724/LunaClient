@@ -300,6 +300,14 @@ function collectPreset(
   } 
   catch (error) {
     ChatLib.chat(header + "§cLoad failed.  maybe.. Files not found or Files not correctly?");
+    
+    console.error(
+      `LunaClient/AutoGarden/PresetManager Failed parsing JSON.\n
+      Object information: objStr: ${objStr.toString()}
+      Error: ${error.toString()}
+      
+      create issue at luna724/LunaClient with this message for help to fix this error` 
+    );
   }
 
   // if (preset !== "custom") {
