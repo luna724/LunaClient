@@ -265,7 +265,7 @@ function VideoPreset(presetName) {
 }
 
 function collectPreset(
-  preset="custom", saveName="", customRepo="Example/repo", customDir="directory/example", customFile="customFile"
+  preset="custom", saveName="" //, customRepo="Example/repo", customDir="directory/example", customFile="customFile"
 ) {
   if (preset !== "custom") {
     const compressd = VideoPreset(preset);

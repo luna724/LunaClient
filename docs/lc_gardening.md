@@ -62,6 +62,10 @@ Auto Gardenのスタート/ストップ <br>
 <time:s> にて指定した秒数経過後、(afterCommand) のコマンドを実行する <br>
 (afterCommand) のコマンドは、クライアントサイドであり、`/`を含まないものである必要がある。 <br>
 
+- `/lcg collect <Name> <SaveName>` <br>
+<Name>にて指定したプリセットを取得する。 <br>
+現在、`luna724/luna724`空の取得しかサポートしていない <br>
+
 
 ### 依存ファイル (引継ぎなど向け)
 #### - `/autogarden.json`
