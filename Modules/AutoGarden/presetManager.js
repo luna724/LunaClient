@@ -205,9 +205,14 @@ function collectPresetFromGitHub(
   const dataDir = `https://raw.githubusercontent.com/${repo}/${branch}/${at}${fn}.lcg.presets.json`
 
   // リクエストを作成
+  const agent = new https.Agent({
+    rejectUnauthorized: false
+  });
+  
   request({
     url: dataDir,
     method: "GET",
+    httpsAgent: agent,
     headers: {
       'Content-Type': 'application/json',
     }
@@ -265,18 +270,12 @@ function VideoPreset(presetName) {
 }
 
 function collectPreset(
-  preset="custom", saveName="" //, customRepo="Example/repo", customDir="directory/example", customFile="customFile"
+  fn="relpath/from/LunaClient/loader", saveName="" //, customRepo="Example/repo", customDir="directory/example", customFile="customFile"
 ) {
-  if (preset !== "custom") {
-    const compressd = VideoPreset(preset);
-    // user, repo, branch, at, fn
-
-    if (compressd === null) { return; } 
-    const obj = collectPresetFromGitHub(
-      compressd
-    );
-
-    if (obj === null) { return; }
+  // collect from files
+  try {
+    const objStr = FileLib.read("LunaClient", `loader/${fn}.lcg.presets.json`);
+    const obj = JSON.parse(objStr);
 
     const presetData = obj.f;
     const title = obj.title;
@@ -297,15 +296,49 @@ function collectPreset(
 
     ChatLib.chat(header+"§aCompleted!");
     ChatLib.command(`lcg preset load ${saveName}`, true);
-    return;
+  return;
+  } 
+  catch (error) {
+    ChatLib.chat(header + "§cLoad failed.  maybe.. Files not found or Files not correctly?");
   }
 
-}
+  // if (preset !== "custom") {
+  //   const compressd = VideoPreset(preset);
+  //   // user, repo, branch, at, fn
+
+  //   if (compressd === null) { return; } 
+  //   const obj = collectPresetFromGitHub(
+  //     compressd
+  //   );
+
+  //   if (obj === null) { return; }
+
+  //   const presetData = obj.f;
+  //   const title = obj.title;
+  //   const fn = obj.fn;
+
+  // if (saveName === "") { saveName = title; }
+
+  // ChatLib.chat(header + "§aCollected object for "+fn+"!");
+  
+  // ChatLib.command("lcg preset save __TMP__", true);
+  // Thread.sleep(50);
+  
+  // saveConfig(presetData);
+  // ChatLib.command(`lcg preset save ${saveName}`, true);
+  // Thread.sleep(50);
+
+  // ChatLib.command("lcg preset load __TMP__", true);
+
+  // ChatLib.chat(header+"§aCompleted!");
+  // ChatLib.command(`lcg preset load ${saveName}`, true);
+  // return;
+  }
 
 export function collectPresetFromInternet(args) {
   if (args.length < 2) {
     valuesNotEnough();
-    ChatLib.chat(header + "§cRequired: /lcg collect <Name> (saveName)");
+    ChatLib.chat(header + "§cRequired: /lcg collect <fn> (saveName)");
     return;
   }
   const name = args[1];

@@ -64,7 +64,7 @@ Auto Gardenのスタート/ストップ <br>
 
 - `/lcg collect <Name> <SaveName>` <br>
 <Name>にて指定したプリセットを取得する。 <br>
-現在、`luna724/luna724`空の取得しかサポートしていない <br>
+対象ファイルは `LunaClient/loader`にある `.lcg.presets.json`ファイルでなければならない。 <br>
 
 
 ### 依存ファイル (引継ぎなど向け)
