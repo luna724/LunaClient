@@ -274,7 +274,7 @@ function collectPreset(
 ) {
   // collect from files
   try {
-    const objStr = FileLib.read("LunaClient", `loader/${fn}.lcg.presets.json`);
+    const objStr = FileLib.read("LunaClient", `${fn}.lcg.presets.json`);
     const obj = JSON.parse(objStr);
 
     const presetData = obj.f;
