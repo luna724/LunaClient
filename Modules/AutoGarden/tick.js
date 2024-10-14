@@ -18,6 +18,12 @@ function XYZMatched(collection) {
   // 停止
   ChatLib.command("automove stop", true);
 
+  if (afterMove.toLowerCase() === "spawn") {
+    ChatLib.command("gd", true);
+    ChatLib.command(`automove rotateYaw senddatatolunaclient ${Yaw.toString()} 2`, true);
+    return;
+  }
+
   // 設定の変更
   ChatLib.command(`automove setdirection ${afterMove}`, true);
 

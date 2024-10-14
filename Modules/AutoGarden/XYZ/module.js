@@ -58,10 +58,13 @@ export function checkDirection(direction) {
   if (direction == "reset") {
     return "reset";
   }
+  if (direction == "spawn") {
+    return "spawn";
+  }
   
   let regex = new RegExp(`^[${availableChar}]+$`);
   if (!regex.test(direction)) {
-    ChatLib.chat(header + "\"direction\" can only contain l or r or f or b or \"reset\". but got " + direction);
+    ChatLib.chat(header + "\"direction\" can only contain l, r, f, b, \"reset\" and \"spawn\". but got " + direction);
     return "ERR";
   }
   return direction;

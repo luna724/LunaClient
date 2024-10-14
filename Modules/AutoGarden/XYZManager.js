@@ -35,7 +35,6 @@ export function XYZManageCommands(trigger, args) {
       }
     }
 
-
     let currentData = [
       newKey, XYZ, Rotation, direction
     ];
@@ -204,8 +203,20 @@ export function XYZManageCommands(trigger, args) {
     let Z = xyz[2];
     let Yaw = yp[0]; 
 
+    let command = `/lcg removexyz ${triggeredKey}`;
+    let message = new Message(
+      header + `§9first Triggered: §7[§a${triggeredKey}§7]: §r§7(X: §f${X}§7, Y: §f${Y}§7, Z: §f${Z}§7, Yaw: §f${Yaw}§7, Direction: §2${direction}§7)`,
+      new TextComponent(" §c[Remove]")
+            .setClick(
+              "run_command", command
+            )
+            .setHover(
+              "show_text", `Click to run ${command}`
+            )
+    )
+
     ChatLib.chat(
-      header + `T§9first Triggered: §7[§a${triggeredKey}§7]: §r§7(X: §f${X}§7, Y: §f${Y}§7, Z: §f${Z}§7, Yaw: §f${Yaw}§7, Direction: §2${direction}§7)`
+      message
     );
     return;
   }

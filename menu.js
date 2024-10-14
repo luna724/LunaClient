@@ -135,6 +135,22 @@ class Settings {
   })
   sendMessageWhenBloodRoomsFull = true;
 
+  // Throttled
+  @SwitchProperty({
+    name: "Send message when menu Throttled",
+    description: "is safe?",
+    category: "Dungeons",
+    subcategory: "Info"
+  })
+  sendMessageWhenThrottled = true;
+
+  @TextProperty({
+    name: "messages Throttled",
+    category: "Dungeons",
+    subcategory: "Info"
+  })
+  messageThrottled = "Throttled!"
+
   @TextProperty({
     name: "Blood room full Message",
     description: "",

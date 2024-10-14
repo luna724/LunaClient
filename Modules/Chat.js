@@ -196,6 +196,12 @@ register("chat", (chat, event) => {
     }
   }
 
+  if (Settings.sendMessageWhenThrottled) {
+    if (chat.removeFormatting() === "This menu has been throttled! Please slow down...") {
+      ChatLib.command(`pc ${Settings.messageThrottled}`);
+    }
+  }
+
   ChatAutoGarden(rawChat, event);
 
   // Internal deleter (can't toggle)
