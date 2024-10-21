@@ -74,9 +74,7 @@ export function pestCheck() {
  * @returns {boolean}
  */
 export function repellentCheck() {
-  const Option = autoGardenSetting.warnPestRepellentExpired;
-
-  return Option;
+  return false;
 }
 
 
