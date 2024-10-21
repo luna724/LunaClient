@@ -1,5 +1,5 @@
 ## Installation
-<h1><center> RECOMMEND TO INSTALL BETA!!! </center></h1>
+<h1><center> RECOMMEND TO INSTALL Stable-1.1.3 or [New Reopsitory](https://github.com/luna724/LunaClientOnCT)!!! </center></h1>
 
 ### beta or release or Stable-Release from GitHub
 0. Install [ChatTriggers](https://www.chattriggers.com/) to Minecraft
@@ -10,7 +10,6 @@
 ```plaintext
 Requirements:
 
-/ct import ServerTick 
 /ct import Vigilance
 
 /ct import GriffinOwO (LunaClient v1.1.2 and below)
@@ -20,15 +19,9 @@ Requirements:
 6. installation done! `/lc` to open menu
 
 
-### Stable-Release & Without LunaAPI Module from ChatTriggers
-<strong><center> CURRENTLY UNAVAILABLE! </center></strong>
-
-0. Install [ChatTriggers](https://www.chattriggers.com/) to Minecraft
-1. enter command in Minecraft `/ct import LunaClient`
-2. installation done! `/lc` to open menu
-
-
 ## インストール方法
+<h1><center> Stable-1.1.3 または [New Reopsitory](https://github.com/luna724/LunaClientOnCT) のインストールを推奨します!!! </center></h1>
+
 ### ベータ、リリース、または安定版リリースをGitHubから
 0. [ChatTriggers](https://www.chattriggers.com/)を導入
 1. モジュールのZIPファイルを[リリース](https://github.com/luna724/LunaClient/releases)からダウンロードする
@@ -38,7 +31,6 @@ Requirements:
 ```plaintext
 前提モジュール
 
-/ct import ServerTick 
 /ct import Vigilance
 
 /ct import GriffinOwO (LunaClient v1.1.2以前)
@@ -46,10 +38,3 @@ Requirements:
 ```
 5. `/ct load`にてモジュールの再読み込みを行う
 6. `/lc`でメニューが開けば成功です
-
-
-### 安定版でLunaAPI系統モジュールなしバージョンを ChatTriggers から入手する
-<strong><center> 現在利用不可能 </center></strong>
-0. [ChatTriggers](https://www.chattriggers.com/)を導入
-1. ゲーム内で以下のコマンドを入力 `/ct import LunaClient`
-2. `/lc`でメニューが開けば成功です
