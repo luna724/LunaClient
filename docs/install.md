@@ -1,5 +1,5 @@
 ## Installation
-<h1><center> RECOMMEND TO INSTALL Stable-1.1.3 or [New Reopsitory](https://github.com/luna724/LunaClientOnCT)!!! </center></h1>
+<h1><center> RECOMMEND TO INSTALL Stable-1.1.4 or [New Reopsitory](https://github.com/luna724/LunaClientOnCT)!!! </center></h1>
 
 ### beta or release or Stable-Release from GitHub
 0. Install [ChatTriggers](https://www.chattriggers.com/) to Minecraft
@@ -20,7 +20,7 @@ Requirements:
 
 
 ## インストール方法
-<h1><center> Stable-1.1.3 または [New Reopsitory](https://github.com/luna724/LunaClientOnCT) のインストールを推奨します!!! </center></h1>
+<h1><center> Stable-1.1.4 または [New Reopsitory](https://github.com/luna724/LunaClientOnCT) のインストールを推奨します!!! </center></h1>
 
 ### ベータ、リリース、または安定版リリースをGitHubから
 0. [ChatTriggers](https://www.chattriggers.com/)を導入
