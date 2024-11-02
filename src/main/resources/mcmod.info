@@ -1,16 +1,18 @@
 [
   {
-    "modid": "lunaclient",
-    "name": "LunaClient",
-    "description": "My Module collection for Hypixel/Skyblock",
-    "version": "2.0",
-    "mcversion": "1.8.9",
-    "url": "",
-    "updateUrl": "",
-    "authorList": ["luna724"],
-    "credits": "Thanks ChatGPT for building basic code",
-    "logoFile": "",
-    "screenshots": [],
-    "dependencies": []
+	"modid": "lunaclient",
+	"name": "LunaClient",
+	"description": "for luna_, by luna_.",
+	"version": "${version}",
+	"mcversion": "${mcversion}",
+	"url": "",
+	"updateUrl": "",
+	"authorList": [
+	  "appable", "luna724", "GPT4o (OpenAI)"
+	],
+	"credits": "appable: providing this Template\nChatGPT: making base code and code improvements",
+	"logoFile": "",
+	"screenshots": [],
+	"dependencies": []
   }
 ]

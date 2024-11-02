@@ -1,4 +1,6 @@
-build
-.idea
-.gradle
-run
+.idea/
+.vscode/
+run/
+build/
+.gradle/
+
