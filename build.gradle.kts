@@ -63,7 +63,9 @@ dependencies {
 
     // For serialization: remove if not needed
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.moandjiezana.toml:toml4j:0.7.2")
 
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")

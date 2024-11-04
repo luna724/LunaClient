@@ -31,6 +31,9 @@ class Gardening {
         Gardening.configDirectory = directory
         Gardening.config = luna724.iloveichika.gardening.Config
         Gardening.sessionPth = File(Gardening.configDirectory, "auto_garden.session.json").toPath()
+
+        val tomlConfigManager = TomlConfigManager(File(File(File(event.modConfigurationDirectory, "lunaclient"), event.modMetadata.modId), "adminConfig.toml"))
+        Gardening.adminConfig = tomlConfigManager.config
     }
 
     @SubscribeEvent
@@ -44,5 +47,6 @@ class Gardening {
         lateinit var config: luna724.iloveichika.gardening.Config
         lateinit var metadata: ModMetadata
         lateinit var sessionPth: Path
+        lateinit var adminConfig: AdminConfig
     }
 }

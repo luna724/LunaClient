@@ -21,7 +21,7 @@ fun swapMovement(
 }
 
 fun tickAutoGarden() {
-    if (isEnable() || isSessionOptionEmpty()) return
+    if (autoGardenIsEnable() || isSessionOptionEmpty()) return
 
     // XYZの取得に失敗したら、一致しないXYZを生成する
     val currentXYZ: List<Double> = getCurrentXYZ() ?: listOf(0.0, -999.0, 0.0)

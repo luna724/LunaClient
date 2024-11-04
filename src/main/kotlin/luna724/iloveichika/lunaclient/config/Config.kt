@@ -51,7 +51,7 @@ object Config : Vigilant(
         println("Metadata Name: ${LunaClient.metadata.name}")
 
 
-//        addDependency("World load notifier text", "World load notifier")
-//        addDependency("Always add header to chat", "Always add header")
+        addDependency("worldLoadNotifierText", "WorldLoadNotifier")
+        addDependency("alwaysHeaderOnChats", "alwaysHeaderOnClientChats")
     }
 }

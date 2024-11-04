@@ -63,3 +63,19 @@ fun checkXYZisIn(xyzLists: List<List<Double>>, targetXYZ: List<Double>, toleranc
     }
     return Pair(false, -1)
 }
+
+/**
+ * XYZ同士を指定した誤差を許容しながら取得する
+ */
+fun compareXYZ(xyz1: List<Double>, xyz2: List<Double>,
+               tolerance: Double = 0.5, toleranceY: Double = 0.01): Boolean {
+    val x1 = xyz1[0]; val y1 = xyz1[1]; val z1 = xyz1[2]
+    val x2 = xyz2[0]; val y2 = xyz2[1]; val z2 = xyz2[2]
+
+    if (
+        areDoublesApproximatelyEqual(x1, x2, tolerance) &&
+        areDoublesApproximatelyEqual(y1, y2, toleranceY) &&
+        areDoublesApproximatelyEqual(z1, z2, tolerance)
+    ) return true
+    return false
+}
