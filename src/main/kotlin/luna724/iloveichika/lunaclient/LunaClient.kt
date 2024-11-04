@@ -29,7 +29,7 @@ class LunaClient {
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
         metadata = event.modMetadata
-        val directory = File(event.modConfigurationDirectory, event.modMetadata.modId)
+        val directory = File(event.modConfigurationDirectory, "lunaclient")
         directory.mkdirs()
         configDirectory = directory
         persistentData = PersistentData.load()
