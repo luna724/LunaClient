@@ -1,0 +1,13 @@
+# mods.toml
+modLoader="forge"
+loaderVersion="[1.8.9]"
+license="AGPL"
+[[mods]]
+modId="lunaclient"
+version="0"
+displayName="LunaClient"
+
+[[mods]]
+modId="autogarden"
+version="0"
+displayName="LunaClient/Gardening"
