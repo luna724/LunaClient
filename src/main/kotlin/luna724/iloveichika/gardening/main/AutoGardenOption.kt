@@ -11,7 +11,7 @@ class AutoGardenOption {
         /**
          * AutoGardenが有効か否か
          */
-        var isEnabled: Boolean = false;
+        var isEnabled: Boolean = true;
 
         /**
          * AutoGardenのセッション設定

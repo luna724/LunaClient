@@ -3,6 +3,8 @@ package luna724.iloveichika.lunaclient
 import luna724.iloveichika.lunaclient.commands.ExampleCommand
 import luna724.iloveichika.lunaclient.config.Config
 import com.examplemod.config.PersistentData
+import com.sun.security.ntlm.Client
+import luna724.iloveichika.lunaclient.commands.SimplyLimbo
 import luna724.iloveichika.lunaclient.modules.debug_info.onPlayerLogged
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
@@ -39,6 +41,7 @@ class LunaClient {
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent) {
         ClientCommandHandler.instance.registerCommand(ExampleCommand())
+        ClientCommandHandler.instance.registerCommand(SimplyLimbo())
 
         listOf(
             this
@@ -55,6 +58,7 @@ class LunaClient {
     companion object {
         val mc: Minecraft = Minecraft.getMinecraft()
         var currentGui: GuiScreen? = null
+        var isPlayerJoining: Boolean = false
 
         lateinit var configDirectory: File
         lateinit var config: Config
@@ -68,6 +72,12 @@ class LunaClient {
 
     @SubscribeEvent
     fun onPlayerJoin(event: PlayerEvent.PlayerLoggedInEvent) {
+        LunaClient.isPlayerJoining = true
         onPlayerLogged()
+    }
+
+    @SubscribeEvent
+    fun onPlayerLogout(event: PlayerEvent.PlayerLoggedOutEvent) {
+        LunaClient.isPlayerJoining = false
     }
 }

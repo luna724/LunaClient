@@ -20,7 +20,7 @@ fun getCurrentXYZ(decimalPlace: Int = 2): List<Double>? {
     val posX = player?.posX
     val posY = player?.posY
     val posZ = player?.posZ
-    if (posX == null || posY == null || posZ == null) return getCurrentXYZ()
+    if (posX == null || posY == null || posZ == null) return null
 
 
     val posXRounded = roundDown(posX, decimalPlace)

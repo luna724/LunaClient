@@ -7,8 +7,10 @@ import luna724.iloveichika.lunaclient.LunaClient.Companion.currentGui
 import luna724.iloveichika.lunaclient.config.Config
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.ModMetadata
+import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
@@ -36,6 +38,13 @@ class Gardening {
         Gardening.adminConfig = tomlConfigManager.config
     }
 
+    @Mod.EventHandler
+    fun onInit(event: FMLInitializationEvent) {
+        val aamInstances: AntiAntiMacro = AntiAntiMacro()
+
+        MinecraftForge.EVENT_BUS.register(aamInstances)
+    }
+
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
         tickAutoGarden()
@@ -48,5 +57,11 @@ class Gardening {
         lateinit var metadata: ModMetadata
         lateinit var sessionPth: Path
         lateinit var adminConfig: AdminConfig
+
+        val HEADER: String = "§6[§2Auto-Garden§6]§f: "
+
+        fun openGUI() {
+            LunaClient.currentGui = config.gui()
+        }
     }
 }

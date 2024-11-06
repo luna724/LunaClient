@@ -10,7 +10,6 @@ data class sessionOpt(
 )    // coordinates: [X,Y,Z], orientation: [Yaw, Pitch], direction: anyDirection (literalString)
 
 
-
 fun loadSessionOptAsCorrectSyntax(): Map<String, sessionOpt>? {
     val gson = Gson()
     val jsonString = File(sessionPth.toUri()).readText()
