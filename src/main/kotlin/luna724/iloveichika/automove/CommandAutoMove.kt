@@ -4,7 +4,6 @@ import net.minecraft.command.CommandBase
 import net.minecraft.command.ICommandSender
 import net.minecraft.util.BlockPos
 import net.minecraft.util.ChatComponentText
-import java.util.*
 
 class CommandAutoMove(private val autoMove: AutoMove) : CommandBase() {
     private val helpMessage: String
@@ -45,7 +44,7 @@ class CommandAutoMove(private val autoMove: AutoMove) : CommandBase() {
             autoMove.settings.autoMoveEnabled = false
 
             val msg = "[§dLC-AutoMove§f]: §6AutoMove Stopped."
-            autoMove.AutoMovingStop()
+            stopAutoMove()
             sender.addChatMessage(ChatComponentText(msg))
         } else if ("toggle".equals(args[0], ignoreCase = true)) {
             autoMove.settings.autoMoveEnabled = !autoMove.settings.autoMoveEnabled
@@ -54,7 +53,7 @@ class CommandAutoMove(private val autoMove: AutoMove) : CommandBase() {
                 msg = "[§dLC-AutoMove§f]: §6AutoMove Started."
             } else {
                 msg = "[§dLC-AutoMove§f]: §6AutoMove Stopped."
-                autoMove.AutoMovingStop()
+                stopAutoMove()
             }
             sender.addChatMessage(ChatComponentText(msg))
         } else if ("hoverclick".equals(args[0], ignoreCase = true)) {
@@ -66,45 +65,12 @@ class CommandAutoMove(private val autoMove: AutoMove) : CommandBase() {
             } //      sender.addChatMessage(new ChatComponentText(msg));
             sender.addChatMessage(ChatComponentText(msg))
         } else if ("setdirection".equals(args[0], ignoreCase = true)) {
-            /*
-            /automove setdirection <l/r/f/b/..>
-            /automove setdirection <l/r/f/b> 通常状態
-            /automove setdirection lrf 左右前
-            /automove setdirection リセット
-            */
-
             if (args.size < 2) {
                 autoMove.settings.autoMoveDirection = 0
                 val msg = "[§dLC-AutoMove§f]: §6Changed direction to §a§lNaN"
                 sender.addChatMessage(ChatComponentText(msg))
             } else {
-                autoMove.settings.autoMoveDirection = 0
-                val key = args[1].lowercase(Locale.getDefault())
-                if (args[1].equals("reset", ignoreCase = true)) {
-                    val msg = "[§dLC-AutoMove§f]: §6Changed direction to §a§lNaN"
-                    sender.addChatMessage(ChatComponentText(msg))
-                }
-
-                val availableChar: List<String> = mutableListOf("f", "b", "r", "l")
-                if (!containsOnlyAvailableChars(key, availableChar)) {
-                    val msg = "[§dLC-AutoMove§f]: §cUnknown args§f: $key"
-                    sender.addChatMessage(ChatComponentText(msg))
-                    return
-                }
-
-                // あるならそれに変換する
-                if (key.contains("l")) autoMove.settings.autoMoveDirection =
-                    autoMove.settings.autoMoveDirection or autoMove.DIRECTION_LEFT
-                if (key.contains("r")) autoMove.settings.autoMoveDirection =
-                    autoMove.settings.autoMoveDirection or autoMove.DIRECTION_RIGHT
-                if (key.contains("f")) autoMove.settings.autoMoveDirection =
-                    autoMove.settings.autoMoveDirection or autoMove.DIRECTION_FORWARD
-                if (key.contains("b")) autoMove.settings.autoMoveDirection =
-                    autoMove.settings.autoMoveDirection or autoMove.DIRECTION_BACKWARD
-
-                val moveDirections = autoMove.movingKey
-                val msg = "[§dLC-AutoMove§f]: §6Changed direction to §a§l$moveDirections"
-                sender.addChatMessage(ChatComponentText(msg))
+                changeDirection(args[1], sender)
             }
         } else if ("safemode".equals(args[0], ignoreCase = true)) {
             autoMove.settings.autoMoveStopWhenServerSwap = !autoMove.settings.autoMoveStopWhenServerSwap
@@ -167,13 +133,5 @@ class CommandAutoMove(private val autoMove: AutoMove) : CommandBase() {
     }
 
     companion object {
-        private fun containsOnlyAvailableChars(input: String, availableChar: List<String>): Boolean {
-            for (c in input.lowercase(Locale.getDefault()).toCharArray()) {
-                if (!availableChar.contains(c.toString())) {
-                    return false
-                }
-            }
-            return true
-        }
     }
 }

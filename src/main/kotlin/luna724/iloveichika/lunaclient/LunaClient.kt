@@ -46,6 +46,9 @@ class LunaClient {
         listOf(
             this
         ).forEach(MinecraftForge.EVENT_BUS::register)
+        sentErrorOccurred(
+            "Mods Initialized"
+        )
     }
 
     @SubscribeEvent

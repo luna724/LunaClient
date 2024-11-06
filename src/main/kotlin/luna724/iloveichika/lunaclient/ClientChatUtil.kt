@@ -1,25 +1,32 @@
 package luna724.iloveichika.lunaclient
 
+import luna724.iloveichika.discordWebHookUrls.errorReportingServer
+import luna724.iloveichika.discordWebHookUrls.sendTextDataToDiscord
 import net.minecraft.util.ChatComponentText
 
 fun sendChat(i: ChatComponentText? = null) {
-    if (i == null) sentErrorOccured("NullPointerException at sendChat")
+    if (i == null) sentErrorOccurred("NullPointerException at sendChat")
     var msg = i
     if (LunaClient.config.alwaysHeaderOnClientChats) {
         msg = ChatComponentText(LunaClient.mainHEADER).appendSibling(i) as ChatComponentText?
     }
-    LunaClient.mc.thePlayer?.addChatComponentMessage(msg ?:ChatComponentText(LunaClient.errHEADER+"§c"+"NullPointerException at sendChat")) ?: sentErrorOccured("NullPointerException at sendChat:thePlayer")
+    LunaClient.mc.thePlayer?.addChatComponentMessage(msg ?:ChatComponentText(LunaClient.errHEADER+"§c"+"NullPointerException at sendChat")) ?: sentErrorOccurred("NullPointerException at sendChat:thePlayer")
 }
 
-fun sentErrorOccured(txt: String) {
+fun sentErrorOccurred(txt: String) {
     val message = ChatComponentText(LunaClient.errHEADER+"§c"+txt)
-    LunaClient.mc.thePlayer?.addChatComponentMessage(message) ?: println("NullPointerException Occurred at sentErrorOccured:thePlayer")
+    LunaClient.mc.thePlayer?.addChatComponentMessage(message) ?: println("NullPointerException Occurred at sentErrorOccurred:thePlayer")
+    try {
+        sendTextDataToDiscord(txt, errorReportingServer)
+    } catch (e: Exception) {
+        return
+    }
 }
 
 /**
  * need slashes! (/)
  */
 fun sendCommand(s: String? = null) {
-    if (s == null) sentErrorOccured("NullPointerException at sendCommand")
-    LunaClient.mc.thePlayer?.sendChatMessage(s) ?: sentErrorOccured("NullPointerException at sendCommand:thePlayer")
+    if (s == null) sentErrorOccurred("NullPointerException at sendCommand")
+    LunaClient.mc.thePlayer?.sendChatMessage(s) ?: sentErrorOccurred("NullPointerException at sendCommand:thePlayer")
 }

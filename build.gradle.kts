@@ -66,6 +66,9 @@ dependencies {
 
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.moandjiezana.toml:toml4j:0.7.2")
+    implementation("org.apache.commons:commons-lang3:3.10")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.8.11")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.8.11")
 
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")

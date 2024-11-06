@@ -1,7 +1,7 @@
 package luna724.iloveichika.gardening.main
 
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
-import luna724.iloveichika.lunaclient.sentErrorOccured
+import luna724.iloveichika.lunaclient.sentErrorOccurred
 
 fun runCmd(command: String) {
     mc.thePlayer.sendChatMessage(
@@ -27,7 +27,7 @@ fun tickAutoGarden() {
     val currentXYZ: List<Double> = getCurrentXYZ() ?: listOf(0.0, -999.0, 0.0)
     val sessionOpt: Map<String, sessionOpt>? = getSessionOption()
     sessionOpt ?: run {
-        sentErrorOccured("NullPointerException at AutoGarden:getSessionOption()")
+        sentErrorOccurred("NullPointerException at AutoGarden:getSessionOption()")
         return
     }
     val xyzLists: List<List<Double>> = convertSessionOptToXYZLists(sessionOpt)

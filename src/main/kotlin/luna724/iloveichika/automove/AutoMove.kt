@@ -1,5 +1,6 @@
 package luna724.iloveichika.automove
 
+import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import net.minecraft.client.Minecraft
 import net.minecraft.client.settings.KeyBinding
 import net.minecraftforge.event.world.WorldEvent
@@ -14,7 +15,6 @@ class AutoMove(val settings: Settings, val rotationManager: RotationManager) {
     private val keyBinds: IntArray
         get() {
             /*0=Forward, 1=Backward, 2=Left, 3=Right, 4=Attack*/
-            val mc = Minecraft.getMinecraft()
             val binds = IntArray(5)
             binds[0] = mc.gameSettings.keyBindForward.keyCode
             binds[1] = mc.gameSettings.keyBindBack.keyCode
@@ -30,16 +30,16 @@ class AutoMove(val settings: Settings, val rotationManager: RotationManager) {
             val keyBytes: Int = settings.autoMoveDirection
             val directions: MutableList<String> = ArrayList()
 
-            if ((keyBytes and DIRECTION_LEFT) != 0) {
+            if ((keyBytes and left) != 0) {
                 directions.add("Left")
             }
-            if ((keyBytes and DIRECTION_RIGHT) != 0) {
+            if ((keyBytes and right) != 0) {
                 directions.add("Right")
             }
-            if ((keyBytes and DIRECTION_FORWARD) != 0) {
+            if ((keyBytes and forward) != 0) {
                 directions.add("Forward")
             }
-            if ((keyBytes and DIRECTION_BACKWARD) != 0) {
+            if ((keyBytes and backward) != 0) {
                 directions.add("Backward")
             }
 
@@ -48,22 +48,10 @@ class AutoMove(val settings: Settings, val rotationManager: RotationManager) {
         }
 
     // 各移動方向用のフラグ値
-    var DIRECTION_LEFT: Int = 1 // 0001
-    var DIRECTION_RIGHT: Int = 2 // 0010
-    var DIRECTION_FORWARD: Int = 4 // 0100
-    var DIRECTION_BACKWARD: Int = 8 // 1000
-    val Identifier: String = "§7[§dLunaAPI§7]:§7§f "
-
-    fun AutoMovingStop() {
-        println("Stopping AutoMoving..")
-        val keyCodes = keyBinds
-
-        KeyBinding.setKeyBindState(keyCodes[0], false)
-        KeyBinding.setKeyBindState(keyCodes[1], false)
-        KeyBinding.setKeyBindState(keyCodes[2], false)
-        KeyBinding.setKeyBindState(keyCodes[3], false)
-        KeyBinding.setKeyBindState(keyCodes[4], false)
-    }
+    var left: Int = 1 // 0001
+    var right: Int = 2 // 0010
+    var forward: Int = 4 // 0100
+    var backward: Int = 8 // 1000
 
     @SubscribeEvent
     fun onClientTick(event: ClientTickEvent?) {
@@ -72,13 +60,14 @@ class AutoMove(val settings: Settings, val rotationManager: RotationManager) {
             return
         }
 
-        val mc = Minecraft.getMinecraft()
         // GUIが開いている場合は動作を行わない
         if (mc.currentScreen != null) {
+            // TODO: Vigilance GUI など、クライアントサイドGUIを許可する設定を追加
+
             //System.out.println("Current screen != null!. Current screen: " + mc.currentScreen.toString());
             return
         }
-        val player = Minecraft.getMinecraft().thePlayer ?: return
+        val player = mc.thePlayer ?: return
 
         val movingKeys = movingKey
         val keyCodes = keyBinds
@@ -113,12 +102,10 @@ class AutoMove(val settings: Settings, val rotationManager: RotationManager) {
             return
         }
 
-        println("Stopped AutoMoving by Safety Module.")
-        settings.autoMoveEnabled = false
-        AutoMovingStop()
-    }
-
-    fun sendDataToLunaClient(request: String, args: Array<String>): String {
-        return ""
+        if (settings.autoMoveEnabled) {
+            println("Stopped AutoMoving by Safety Module.")
+            settings.autoMoveEnabled = false
+            stopAutoMove()
+        }
     }
 }

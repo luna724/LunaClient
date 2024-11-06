@@ -5,6 +5,7 @@ import luna724.iloveichika.gardening.Gardening.Companion.config
 import luna724.iloveichika.gardening.main.*
 import luna724.iloveichika.lunaclient.LunaClient
 import luna724.iloveichika.lunaclient.sendCommand
+import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 
@@ -46,10 +47,31 @@ class AntiAntiMacro {
         println("XYZ updated, Delay timer reset")
     }
 
+    private fun anyGuestJoined(): String? {
+        return null
+    }
+
 
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
-        if (!isEnable()) return
-        xyzChecker()
+        try {
+            if (!isEnable()) return
+            xyzChecker()
+
+            // ここから先はnullが返された場合、そこで処理を強制停止する
+            anyGuestJoined() ?: return
+        }
+        catch (npe: NullPointerException) {
+            sentErrorOccurred("NullPointerException in AntiAntiMacro.kt:onTick")
+            if (!adminConfig.antiAntiMacroKeepException) {
+                stopAutoGarden()
+            }
+        }
+        catch (e: Exception) {
+            sentErrorOccurred("An Error Occurred in Anti-AntiMacro (AntiAntiMacro.kt:onTick)")
+            if (!adminConfig.antiAntiMacroKeepException) {
+                stopAutoGarden()
+            }
+        }
     }
 }
