@@ -1,4 +1,5 @@
-- `/automove <REQUEST> senddatatolunaclient` <br/>
+# この機能は統合により全廃止されました。
+# この機能が必要な場合、AutoMoveを独自ビルドしたものをご使用ください
 
 ## Request lists
 全てのパターンは以下の開始と終了パターンを持っています。 <br>
