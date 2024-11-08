@@ -8,9 +8,9 @@ import net.minecraft.util.ChatComponentText
  *
  */
 private fun worldLoadNotifier() {
-    if (!LunaClient.config.WorldLoadNotifier) return
+    if (!LunaClient.vigilanceConfig.WorldLoadNotifier) return
 
-    val sendMessage = ChatComponentText(LunaClient.config.worldLoadNotifierText)
+    val sendMessage = ChatComponentText(LunaClient.vigilanceConfig.worldLoadNotifierText)
     sendChat(sendMessage)
 }
 

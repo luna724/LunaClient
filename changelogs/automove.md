@@ -1,0 +1,3 @@
+- [rotationChanger]: InstantModeを追加
+- [Commands]: /automove setdirection での方向指定の柔軟性を追加
+- [Commands]: /gd を AutoMoveに組み込み

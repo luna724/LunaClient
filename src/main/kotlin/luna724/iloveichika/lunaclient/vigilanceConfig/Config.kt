@@ -1,4 +1,4 @@
-package luna724.iloveichika.lunaclient.config
+package luna724.iloveichika.lunaclient.vigilanceConfig
 
 import gg.essential.vigilance.Vigilant
 import gg.essential.vigilance.data.Property

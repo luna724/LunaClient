@@ -1,14 +1,15 @@
 package luna724.iloveichika.lunaclient
 
-import luna724.iloveichika.lunaclient.commands.ExampleCommand
-import luna724.iloveichika.lunaclient.config.Config
-import com.examplemod.config.PersistentData
-import com.sun.security.ntlm.Client
-import luna724.iloveichika.lunaclient.commands.SimplyLimbo
+import luna724.iloveichika.lunaclient.commands.CommandManager
+import luna724.iloveichika.lunaclient.vigilanceConfig.Config
+import luna724.iloveichika.lunaclient.vigilanceConfig.PersistentData
+import luna724.iloveichika.lunaclient.config.ConfigManager
+import luna724.iloveichika.lunaclient.config.categories.ModConfig
 import luna724.iloveichika.lunaclient.modules.debug_info.onPlayerLogged
+import luna724.iloveichika.lunaclient.utils.ScoreboardUtil
+import luna724.iloveichika.lunaclient.utils.TabListUtil
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
-import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.ModMetadata
@@ -22,7 +23,7 @@ import java.io.File
 @Mod(
     modid = "lunaclient",
     name = "LunaClient",
-    version = "2.0",
+    version = LunaClient.VERSION,
     useMetadata = true,
     clientSideOnly = true
 )
@@ -35,20 +36,23 @@ class LunaClient {
         directory.mkdirs()
         configDirectory = directory
         persistentData = PersistentData.load()
-        config = Config
+        vigilanceConfig = Config
+
+        tabListUtil = TabListUtil()
+        scoreboardUtil = ScoreboardUtil()
+
+        CommandManager()
     }
 
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent) {
-        ClientCommandHandler.instance.registerCommand(ExampleCommand())
-        ClientCommandHandler.instance.registerCommand(SimplyLimbo())
-
         listOf(
             this
         ).forEach(MinecraftForge.EVENT_BUS::register)
-        sentErrorOccurred(
-            "Mods Initialized"
-        )
+
+        configManager = ConfigManager()
+        MinecraftForge.EVENT_BUS.register(configManager)
+        sentErrorOccurred("[test]: Mods Initialized!")
     }
 
     @SubscribeEvent
@@ -64,13 +68,23 @@ class LunaClient {
         var isPlayerJoining: Boolean = false
 
         lateinit var configDirectory: File
-        lateinit var config: Config
+        lateinit var vigilanceConfig: Config
         lateinit var persistentData: PersistentData
+        lateinit var configManager: ConfigManager
 
         lateinit var metadata: ModMetadata
 
         const val errHEADER = "§4[§dLunaClient§4]§c:"
         const val mainHEADER = "§7[§dLunaClient§7]§f:"
+        const val VERSION = "2.0"
+
+        // Utils
+        lateinit var tabListUtil: TabListUtil
+        lateinit var scoreboardUtil: ScoreboardUtil
+
+        // config
+        val config: ModConfig
+            get() = configManager.config ?: error("config is null")
     }
 
     @SubscribeEvent

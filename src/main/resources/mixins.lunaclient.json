@@ -1,6 +1,6 @@
 {
   "package": "luna724.iloveichika.lunaclient.mixin",
-  "refmap": "mixins.examplemod.refmap.json",
+  "refmap": "mixins.lunaclient.refmap.json",
   "minVersion": "0.7",
   "compatibilityLevel": "JAVA_8",
   "client": [

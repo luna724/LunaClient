@@ -25,5 +25,10 @@ class AutoGardenOption {
          */
         val emptySessionOption: Map<String, sessionOpt> = gson.fromJson("{}", mapType)
 
+        /**
+         * Anti-AntiMacro Invalid Teleport のステータス
+         * adminConfig.antiAntiMacroStopAtInvalidTeleport が True である必要がある
+         */
+        var enableInvalidTeleportDetector: Boolean = true
     }
 }

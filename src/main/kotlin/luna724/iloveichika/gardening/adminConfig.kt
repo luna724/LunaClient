@@ -32,7 +32,7 @@ data class AdminConfig(
     val antiAntiMacroStopAtDetectPlayerOnNearYou: Boolean = true ,
     /**Server Closing event detected from Chat&Scoreboard*/
     val antiAntiMacroStopAtServerClosingDetected: Boolean = false ,
-    /**Detect from scoreboard*/
+    /**Detect from tablist*/
     val antiAntiMacroStopAtAnyGuestJoined: Boolean = true ,
     /**SystemTime Changes may break this feature*/
     val antiAntiMacroStopAtnSecondsNotTriggered: Boolean = true ,
@@ -45,6 +45,9 @@ data class AdminConfig(
     val antiAntiMacroFloorDetecterIgnoreAir: Boolean = false ,
     /**各動作ごとに一定確率で停止する物を有効化する*/
     val antiAntiMacroStopAtRandomly: Boolean = false ,
+
+    /**YawChangerに用いる ticksTakenの値 */
+    val yawChangingTime: Int = 2,
     )
 
 class TomlConfigManager(private val configFile: File) {

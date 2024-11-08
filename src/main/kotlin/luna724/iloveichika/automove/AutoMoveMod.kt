@@ -17,7 +17,6 @@ class AutoMoveMod {
         val configFile = File(event.modConfigurationDirectory, "luna724_automove.cfg")
         autoMoveSettings = Settings(configFile)
 
-
         // AutoMoveを初期化
         val rotationManager: RotationManager = RotationManager()
         autoMoveInstance = AutoMove(autoMoveSettings, rotationManager) // autoMove の初期化
@@ -31,6 +30,7 @@ class AutoMoveMod {
     fun init(event: FMLInitializationEvent?) {
         // クライアントサイドのコマンドを登録
         ClientCommandHandler.instance.registerCommand(CommandAutoMove(autoMoveInstance))
+        ClientCommandHandler.instance.registerCommand(gdCommand())
     }
 
     companion object {

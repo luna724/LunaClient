@@ -1,7 +1,8 @@
-import org.jetbrains.kotlin.ir.backend.js.compile
+import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.archivesName
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.10"
+    kotlin("jvm") version "1.9.0"
 
     // For serialization: remove if not needed
     kotlin("plugin.serialization") version "1.7.10"
@@ -14,6 +15,7 @@ plugins {
 }
 
 group = "luna724.iloveichika.lunaclient"
+archivesName = "LunaClient"
 version = "2.0"
 
 java {
@@ -21,6 +23,12 @@ java {
 }
 
 kotlin {
+    sourceSets.all {
+        languageSettings {
+            languageVersion = "2.0"
+            enableLanguageFeature("BreakContinueInInlineLambdas")
+        }
+    }
     jvmToolchain {
         languageVersion.set(JavaLanguageVersion.of(8))
     }
@@ -32,15 +40,15 @@ loom {
             property("mixin.debug", "true")
             property("asmhelper.verbose", "true")
             arg("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
-            arg("--mixin", "mixins.examplemods.json")
+            arg("--mixin", "mixins.lunaclient.json")
         }
     }
     forge {
         pack200Provider.set(dev.architectury.pack200.java.Pack200Adapter())
-        mixinConfig("mixins.examplemod.json")
+        mixinConfig("mixins.lunaclient.json")
     }
     mixin {
-        defaultRefmapName.set("mixins.examplemod.refmap.json")
+        defaultRefmapName.set("mixins.lunaclient.refmap.json")
     }
 }
 
@@ -52,37 +60,73 @@ repositories {
     mavenCentral()
     maven("https://repo.spongepowered.org/maven/")
     maven("https://repo.sk1er.club/repository/maven-public")
+
+    // If you don't want to log in with your real minecraft account, remove this line
+    maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
+
+    maven("https://repo.nea.moe/releases")
+    maven("https://maven.notenoughupdates.org/releases")
 }
 
 val shadowImpl: Configuration by configurations.creating {
     configurations.implementation.get().extendsFrom(this)
 }
 
+val shadowModImpl: Configuration by configurations.creating {
+    configurations.modImplementation.get().extendsFrom(this)
+}
+
+val devenvMod: Configuration by configurations.creating {
+    isTransitive = false
+    isVisible = false
+}
+
 dependencies {
     // Dependencies
-
-    // For serialization: remove if not needed
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
-
-    implementation("com.google.code.gson:gson:2.10.1")
-    implementation("com.moandjiezana.toml:toml4j:0.7.2")
-    implementation("org.apache.commons:commons-lang3:3.10")
-    implementation("com.fasterxml.jackson.core:jackson-core:2.8.11")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.8.11")
+    shadowImpl("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+    shadowImpl("com.google.code.gson:gson:2.10.1")
+    shadowImpl("com.moandjiezana.toml:toml4j:0.7.2")
+    shadowImpl("org.apache.commons:commons-lang3:3.10")
+    shadowImpl("com.fasterxml.jackson.core:jackson-core:2.8.11")
+    shadowImpl("com.fasterxml.jackson.core:jackson-databind:2.8.11")
 
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
-    shadowImpl("org.spongepowered:mixin:0.7.11-SNAPSHOT") { isTransitive = false }
-    annotationProcessor("org.spongepowered:mixin:0.8.4-SNAPSHOT")
+    // Mixin
+    shadowImpl("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
+        isTransitive = false
+    }
+    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT")
 
+    // login to hypixel
+    runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
+
+    // essential
     shadowImpl("gg.essential:loader-launchwrapper:1.1.3")
     implementation("gg.essential:essential-1.8.9-forge:3662")
+
+    // other
+    implementation(kotlin("stdlib-jdk8"))
+    shadowImpl("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3") {
+        exclude(group = "org.jetbrains.kotlin")
+    }
+
+    shadowModImpl(libs.moulconfig)
+    devenvMod(variantOf(libs.moulconfig) { classifier("test") })
+
+    shadowImpl(libs.libautoupdate)
+    shadowImpl("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
+
 }
 
-tasks {
-    processResources {
+tasks.compileJava {
+    dependsOn(tasks.processResources)
+}
+
+
+tasks.processResources {
         filesMatching("mcmod.info") {
             expand(
                 mapOf(
@@ -93,7 +137,7 @@ tasks {
                 )
             )
         }
-    }
+        rename("(.+_at.cfg)", "META-INF/$1")
 }
 
 tasks.withType(JavaCompile::class) {
@@ -101,11 +145,13 @@ tasks.withType(JavaCompile::class) {
 }
 
 tasks.withType(Jar::class) {
+    archiveBaseName.set("LunaClient")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest.attributes.run {
         this["FMLCorePluginContainsFMLMod"] = "true"
         this["ForceLoadAsMod"] = "true"
 
-        this["MixinConfigs"] = "mixins.examplemod.json"
+        this["MixinConfigs"] = "mixins.lunaclient.json"
 
         this["TweakClass"] = "gg.essential.loader.stage0.EssentialSetupTweaker"
         this["TweakOrder"] = "0"
@@ -119,19 +165,41 @@ tasks.named<JavaExec>("runClient") {
 }
 
 val remapJar by tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
-    archiveClassifier.set("all")
+    archiveClassifier.set("")
     from(tasks.shadowJar)
     input.set(tasks.shadowJar.get().archiveFile)
 }
 
+tasks.jar {
+    archiveClassifier.set("without-deps")
+    destinationDirectory.set(layout.buildDirectory.dir("badjars"))
+}
+
 tasks.shadowJar {
+    destinationDirectory.set(layout.buildDirectory.dir("badjars"))
     archiveClassifier.set("all-dev")
-    configurations = listOf(shadowImpl)
+    configurations = listOf(shadowImpl, shadowModImpl)
     doLast {
         configurations.forEach {
             println("Config: ${it.files}")
         }
+        exclude("META-INF/versions/**")
+
+
     }
+    // If you want to include other dependencies and shadow them, you can relocate them in here
+    relocate("io.github.moulberry.moulconfig", "luna724.iloveichika.shade.moulconfig")
+    relocate("moe.nea.libautoupdate", "luna724.iloveichika.shade.libautoupdate")
+}
+
+tasks.jar {
+    archiveClassifier.set("nodeps")
+    destinationDirectory.set(layout.buildDirectory.dir("badjars"))
 }
 
 tasks.assemble.get().dependsOn(tasks.remapJar)
+
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}

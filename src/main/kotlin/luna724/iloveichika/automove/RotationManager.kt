@@ -1,5 +1,6 @@
 package luna724.iloveichika.automove
 
+import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import net.minecraft.client.Minecraft
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
@@ -10,6 +11,7 @@ class RotationManager() {
     private var startYaw = 0f
     private var ticksRemaining = 0
     private var enableYawChanger = false
+    private var instaChange = false
 
     /*
    プレイヤーの Yaw をいじるクラス
@@ -32,6 +34,7 @@ class RotationManager() {
             this.startYaw = player.rotationYaw
             this.targetYaw = Yaw
             this.ticksRemaining = ticksTaken
+            if (this.ticksRemaining <= 0) this.instaChange = true
         }
     }
 
@@ -45,8 +48,14 @@ class RotationManager() {
         if (!enableYawChanger) {
             return
         }
+
+        if (instaChange) {
+            mc.thePlayer?.rotationYaw = targetYaw
+            endsYawChanger()
+            return
+        }
         if (ticksRemaining > 0) {
-            val player = Minecraft.getMinecraft().thePlayer
+            val player = mc.thePlayer
             if (player != null) {
                 var yawStep = targetYaw - startYaw
 

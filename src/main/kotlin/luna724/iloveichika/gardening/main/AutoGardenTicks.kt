@@ -1,24 +1,35 @@
 package luna724.iloveichika.gardening.main
 
+import luna724.iloveichika.automove.RotationManager
+import luna724.iloveichika.automove.changeDirection
+import luna724.iloveichika.automove.startAutoMove
+import luna724.iloveichika.automove.stopAutoMove
+import luna724.iloveichika.gardening.Gardening.Companion.adminConfig
+import luna724.iloveichika.gardening.Gardening.Companion.config
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.lunaclient.sentErrorOccurred
-
-fun runCmd(command: String) {
-    mc.thePlayer.sendChatMessage(
-        "/lc_automove:automove "+command
-    )
-}
-
-
+import kotlin.random.Random
 
 fun swapMovement(
     yaw: Double, pitch: Double, movements: String
 ) {
-    Thread {
-        runCmd("")
+    Thread { //TODO: ANtiAntiMacroチェックのいくつかはここに追加される
+        stopAutoMove()
+        if (config.antiAntiMacroMainToggle) Thread.sleep(adminConfig.antiAntiMacroMethodCooldown + Random.nextInt(0, 101))
 
+        // Stop At Invalid Teleport を /gd による予期されるテレポートを無視するように
+        if (movements == "spawn") AutoGardenOption.enableInvalidTeleportDetector = false
+        changeDirection(movements)
+        if (config.antiAntiMacroMainToggle) Thread.sleep(adminConfig.antiAntiMacroMethodCooldown + Random.nextInt(0, 101))
+
+        RotationManager().startYawChanger(yaw.toFloat(), adminConfig.yawChangingTime)
+        if (config.antiAntiMacroMainToggle) Thread.sleep(adminConfig.antiAntiMacroMethodCooldown + Random.nextInt(0, 101))
+
+        startAutoMove()
     }.start()
 }
+
+private var lastTriggered: Long? = null
 
 fun tickAutoGarden() {
     if (autoGardenIsEnable() || isSessionOptionEmpty()) return
@@ -44,4 +55,17 @@ fun tickAutoGarden() {
 
     val movements: String = checkDirectionsCorrectly(matchedSessionOpt.direction) ?: "reset"
     swapMovement(yaw, pitch, movements)
+
+    // Anti-AntiMacro StopAt n seconds Not Triggered
+    val currentTime: Long = System.currentTimeMillis()
+    val resizedLastTime: Long = lastTriggered ?: currentTime
+    if ((currentTime - resizedLastTime) >= adminConfig.antiAntiMacroStopAtnSecondsNotTriggeredMS)
+        if (adminConfig.antiAntiMacroStopAtnSecondsNotTriggered) {
+            lastTriggered = null
+            stopAutoGarden("§cStopped AutoGarden by Anti-AntiMacro nSecondsNotTriggered")
+        }
+    lastTriggered = currentTime
+
+    // Anti-AntiMacro StopAt Invalid Teleport
+    AutoGardenOption.enableInvalidTeleportDetector = true
 }

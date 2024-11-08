@@ -1,7 +1,6 @@
-package com.examplemod.config
+package luna724.iloveichika.lunaclient.vigilanceConfig
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 import kotlinx.serialization.json.Json
 import java.io.File
 import kotlinx.serialization.encodeToString
