@@ -52,7 +52,6 @@ class LunaClient {
 
         configManager = ConfigManager()
         MinecraftForge.EVENT_BUS.register(configManager)
-        sentErrorOccurred("[test]: Mods Initialized!")
     }
 
     @SubscribeEvent

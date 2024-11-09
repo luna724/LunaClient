@@ -72,6 +72,8 @@ class AntiAntiMacro {
     fun onTick(event: TickEvent.ClientTickEvent) {
         try {
             if (!isEnable()) return
+            if (mc.thePlayer == null) return
+            if (!LunaClient.isPlayerJoining) return
             xyzChecker()
 
             // ここから先はnullが返された場合、そこで処理を強制停止する
