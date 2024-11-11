@@ -1,4 +1,4 @@
-- [v2番インストール方法はこちら / How to Installation (v2)](docs/how2install.md)
+- [v2番インストール方法はこちら / How to Installation (v2)](/docs/how2install.md)
 
 
 ## Installation
