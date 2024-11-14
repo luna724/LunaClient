@@ -21,7 +21,7 @@ class ScoreboardUtil {
         val title: String = obj.displayName
         val scoreLists = scoreboard.getSortedScores(obj)
         val scoreboardValues = scoreLists.map { value ->
-            value?.playerName ?: ""
+            value.playerName ?: ""
         }
         return Pair(title, scoreboardValues)
     }

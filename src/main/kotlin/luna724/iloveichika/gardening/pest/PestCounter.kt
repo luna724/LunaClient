@@ -8,6 +8,7 @@ import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraft.util.EnumChatFormatting
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
+import java.util.*
 
 data class PestInfo(
     var pestCount: Int = 0, var repellentType: String = "", var bonusRemain: String = ""
@@ -24,27 +25,22 @@ class PestCounter {
         val currentScoreboard = scoreboardUtil.getScoreboardValues()
         val (match, currentAreaText) = tabListUtil.findObjRegex(currentTabList, "Area:.*")
         if (!match) {
-            sentErrorOccurred("Current Area Cannot found (AreaRaw: $currentAreaText)"); return
+            //sentErrorOccurred("Current Area Cannot found (AreaRaw: $currentAreaText)");
+            return
         }
         if (!EnumChatFormatting.getTextWithoutFormattingCodes(currentAreaText).contains("Garden")) {
-            sentErrorOccurred("Current Area aren't Garden: ($currentAreaText)")
+            //sentErrorOccurred("Current Area aren't Garden: ($currentAreaText)")
             return
         }
 
         // Garden にいるなら
-        var (locateFound, locateString) = scoreboardUtil.findObjRegex(currentScoreboard, "⏣.*")
+        var (locateFound, locateString) = tabListUtil.findObjRegex(currentTabList, "Alive:.*")
         if (!locateFound) {
-            sentErrorOccurred("Exception in Parsing current area p2"); return
+            sentErrorOccurred("Exception in Parsing current area p2 ($currentTabList)"); return
         }
         locateString = EnumChatFormatting.getTextWithoutFormattingCodes(locateString).replace(
-            " ⏣ The Garde🌠n", ""
+            "Alive: ", ""
         )
-        locateString = if (" ൠ " in locateString) {
-            locateString.replace("ൠ x", "");
-        }
-        else {
-            "0"
-        }
         val pestCount: Int = locateString.toIntOrNull() ?: -1
         if (pestCount == -1) {
             sentErrorOccurred("Failed Parsing PestCount (result: $locateString)")
@@ -53,28 +49,35 @@ class PestCounter {
         pestInfo.pestCount = pestCount
 
         // Repellent Type
-        var (repellentFound, repellentString) = tabListUtil.findObjRegex(currentTabList, "^ Repellent: (.*)")
+        var (repellentFound, repellentString) = tabListUtil.findObjRegex(currentTabList, "Repellent:.*")
         if (!repellentFound) {
             sentErrorOccurred("Repellent Status Couldn't Found")
             return
         }
         repellentString = EnumChatFormatting.getTextWithoutFormattingCodes(repellentString).replace(
-            "Repellent: ", ""
-        )
+                "Repellent: ", ""
+            ).lowercase(Locale.getDefault())
         val repellentStatus: Boolean = repellentString.contains("(")
-        val repellentType: String = if (!repellentStatus) {
+        var repellentType: String? = if (!repellentStatus) {
             "INACTIVE"
         }
-        else if (repellentString.contains("MAX")) {
+        else if (repellentString.contains("max")) {
             "MAX"
         }
-        else {
+        else if (repellentString.contains("regular")) {
             "REGULAR"
+        }
+        else {
+            null
+        }
+        if (repellentType == null) {
+            sentErrorOccurred("Unknown Repellent Status ($repellentString)")
+            repellentType = "INACTIVE"
         }
         pestInfo.repellentType = repellentType
 
         // BONUS
-        var (bonusFound, bonusString) = tabListUtil.findObjRegex(currentTabList, "^ Bonus: (.*")
+        var (bonusFound, bonusString) = tabListUtil.findObjRegex(currentTabList, "Bonus:.*")
         if (!bonusFound) {
             sentErrorOccurred("Bonus Status Couldn't Found")
             return
@@ -90,6 +93,6 @@ class PestCounter {
         val bonusRemain = EnumChatFormatting.getTextWithoutFormattingCodes(bonusString)
         pestInfo.bonusRemain = bonusRemain
 
-        println(pestInfo.pestCount.toString() + " and " + pestInfo.repellentType + " and " + pestInfo.bonusRemain)
+        //println(pestInfo.pestCount.toString() + " and " + pestInfo.repellentType + " and " + pestInfo.bonusRemain)
     }
 }
