@@ -88,12 +88,12 @@ class LunaClient {
 
     @SubscribeEvent
     fun onPlayerJoin(event: PlayerEvent.PlayerLoggedInEvent) {
-        LunaClient.isPlayerJoining = true
+        isPlayerJoining = true
         onPlayerLogged()
     }
 
     @SubscribeEvent
     fun onPlayerLogout(event: PlayerEvent.PlayerLoggedOutEvent) {
-        LunaClient.isPlayerJoining = false
+        isPlayerJoining = false
     }
 }

@@ -1,6 +1,8 @@
 package luna724.iloveichika.gardening
 
 import luna724.iloveichika.gardening.main.tickAutoGarden
+import luna724.iloveichika.gardening.pest.PestCounter
+import luna724.iloveichika.gardening.pest.PestInfo
 import luna724.iloveichika.lunaclient.LunaClient
 import luna724.iloveichika.lunaclient.LunaClient.Companion.currentGui
 import net.minecraft.client.Minecraft
@@ -33,13 +35,17 @@ class Gardening {
 
         val tomlConfigManager = TomlConfigManager(File(File(File(event.modConfigurationDirectory, "lunaclient"), event.modMetadata.modId), "adminConfig.toml"))
         adminConfig = tomlConfigManager.config
+        val pestCounter = PestCounter()
+        pestInfo = pestCounter.config
     }
 
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent) {
         val aamInstances: AntiAntiMacro = AntiAntiMacro()
+        val pestCounter = PestCounter()
 
         MinecraftForge.EVENT_BUS.register(aamInstances)
+        MinecraftForge.EVENT_BUS.register(pestCounter)
     }
 
     @SubscribeEvent
@@ -54,6 +60,7 @@ class Gardening {
         lateinit var metadata: ModMetadata
         lateinit var sessionPth: Path
         lateinit var adminConfig: AdminConfig
+        lateinit var pestInfo: PestInfo
 
         const val HEADER: String = "§6[§2Auto-Garden§6]§f: "
 
