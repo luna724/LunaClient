@@ -11,7 +11,7 @@ class AutoGardenOption {
          * AutoGardenのセッション設定
          * nullの場合空として扱うために、AutoGardenGetOpt.kt:getSessionOption 関数で取得することを推奨
          */
-        var sessionOption: Map<String, SessionOpt>? = null
+        var sessionOption: LinkedHashMap<String, SessionOpt>? = null
 
         /**
          * Anti-AntiMacro Invalid Teleport のステータス

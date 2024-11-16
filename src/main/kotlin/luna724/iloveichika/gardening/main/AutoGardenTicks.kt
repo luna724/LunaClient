@@ -35,7 +35,7 @@ fun tickAutoGarden() {
 
     // XYZの取得に失敗したら、一致しないXYZを生成する
     val currentXYZ: List<Double> = getCurrentXYZ() ?: listOf(0.0, -999.0, 0.0)
-    val sessionOpt: Map<String, SessionOpt>? = getSessionOption()
+    val sessionOpt: LinkedHashMap<String, SessionOpt>? = getSessionOption()
     sessionOpt ?: run {
         sentErrorOccurred("NullPointerException at AutoGarden:getSessionOption()")
         return

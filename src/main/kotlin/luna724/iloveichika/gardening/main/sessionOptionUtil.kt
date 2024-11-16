@@ -9,20 +9,26 @@ import java.io.File
 
 @Serializable
 data class SessionOpt(
-    val coordinates: List<Double>, val orientation: List<Double>, val direction: String
-)    // coordinates: [X,Y,Z], orientation: [Yaw, Pitch], direction: anyDirection (literalString)
+    val coordinates: List<Double>, val orientation: List<Double>, val direction: String, val changePitch: Boolean = false
+)    // coordinates: [X,Y,Z], orientation: [Yaw, Pitch], direction: anyDirection (literalString), changePitch: changePitch
 
 
-fun loadSessionOpt(): Map<String, SessionOpt> {
+fun loadSessionOpt(): LinkedHashMap<String, SessionOpt> {
     if (!File(sessionPth.toUri()).exists()) {
         File(sessionPth.toUri()).writeText("{}")
-        return emptyMap()
+        return LinkedHashMap()
     }
     val jsonString = File(sessionPth.toUri()).readText()
     return Json.decodeFromString(jsonString)
 }
 
-fun saveSessionOpt(sessionOption: Map<String, SessionOpt>) {
+fun saveSessionOpt(sessionOption: LinkedHashMap<String, SessionOpt>) {
     val jsonString = Json.encodeToString(sessionOption)
     File(sessionPth.toUri()).writeText(jsonString)
+}
+
+fun addSessionOpt(key: String, sessionOpt: SessionOpt) {
+    val s = loadSessionOpt()
+    s[key] = sessionOpt
+    saveSessionOpt(s)
 }

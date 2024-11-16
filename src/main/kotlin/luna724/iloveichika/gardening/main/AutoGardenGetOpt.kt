@@ -1,8 +1,8 @@
 package luna724.iloveichika.gardening.main
 
-fun getSessionOption(): Map<String, SessionOpt>? {
-    val dataMap: Map<String, SessionOpt> = loadSessionOpt()
-    val currentSessionOption: Map<String, SessionOpt>? = AutoGardenOption.sessionOption
+fun getSessionOption(): LinkedHashMap<String, SessionOpt>? {
+    val dataMap: LinkedHashMap<String, SessionOpt> = loadSessionOpt()
+    val currentSessionOption: LinkedHashMap<String, SessionOpt>? = AutoGardenOption.sessionOption
 
     if (dataMap == currentSessionOption) return currentSessionOption
     if (dataMap.isEmpty()) return null

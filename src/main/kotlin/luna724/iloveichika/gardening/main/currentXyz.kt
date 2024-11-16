@@ -5,6 +5,7 @@ import net.minecraft.client.entity.EntityPlayerSP
 import kotlin.math.abs
 import kotlin.math.floor
 import kotlin.math.pow
+import kotlin.math.round
 
 
 fun areDoublesApproximatelyEqual(double1: Double, double2: Double, tolerance: Double): Boolean {
@@ -16,11 +17,10 @@ fun roundDown(value: Double, decimalPlaces: Int): Double {
 }
 
 fun getCurrentXYZ(decimalPlace: Int = 2): List<Double>? {
-    val player: EntityPlayerSP? = Gardening.mc.thePlayer
-    val posX = player?.posX
-    val posY = player?.posY
-    val posZ = player?.posZ
-    if (posX == null || posY == null || posZ == null) return null
+    val player: EntityPlayerSP = Gardening.mc.thePlayer ?: return null
+    val posX = player.posX
+    val posY = player.posY
+    val posZ = player.posZ
 
 
     val posXRounded = roundDown(posX, decimalPlace)
@@ -30,7 +30,14 @@ fun getCurrentXYZ(decimalPlace: Int = 2): List<Double>? {
     return listOf(posXRounded, posYRounded, posZRounded)
 }
 
-fun convertSessionOptToXYZLists(sessionOpts: Map<String, SessionOpt>): List<List<Double>>  {
+fun getCurrentRotation(decimalPlace: Int = 1): List<Double>? {
+    val player: EntityPlayerSP = Gardening.mc.thePlayer ?: return null
+    val yaw = roundDown(player.rotationYaw.toDouble(), decimalPlace)
+    val pitch = roundDown(player.rotationPitch.toDouble(), decimalPlace)
+    return listOf(yaw, pitch)
+}
+
+fun convertSessionOptToXYZLists(sessionOpts: LinkedHashMap<String, SessionOpt>): List<List<Double>>  {
     val xyzLists: MutableList<List<Double>> = mutableListOf()
     for ((k, v: SessionOpt) in sessionOpts) {
         xyzLists.add(v.coordinates)
@@ -79,3 +86,4 @@ fun compareXYZ(xyz1: List<Double>, xyz2: List<Double>,
     ) return true
     return false
 }
+
