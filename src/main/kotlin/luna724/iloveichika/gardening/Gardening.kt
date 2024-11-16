@@ -1,5 +1,6 @@
 package luna724.iloveichika.gardening
 
+import luna724.iloveichika.automove.gdCommand
 import luna724.iloveichika.gardening.main.loadSessionOpt
 import luna724.iloveichika.gardening.main.tickAutoGarden
 import luna724.iloveichika.gardening.pest.PestCounter
@@ -7,6 +8,7 @@ import luna724.iloveichika.gardening.pest.PestInfo
 import luna724.iloveichika.lunaclient.LunaClient
 import luna724.iloveichika.lunaclient.LunaClient.Companion.currentGui
 import net.minecraft.client.Minecraft
+import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.ModMetadata
@@ -38,12 +40,19 @@ class Gardening {
         adminConfig = tomlConfigManager.config
         val pestCounter = PestCounter()
         pestInfo = pestCounter.config
+
+        val gdCommand = gdCommand()
+        val commandLCG = Command()
+
+        ClientCommandHandler.instance.registerCommand(gdCommand)
+        ClientCommandHandler.instance.registerCommand(commandLCG)
     }
 
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent) {
         val aamInstances: AntiAntiMacro = AntiAntiMacro()
         val pestCounter = PestCounter()
+
 
         MinecraftForge.EVENT_BUS.register(aamInstances)
         MinecraftForge.EVENT_BUS.register(pestCounter)

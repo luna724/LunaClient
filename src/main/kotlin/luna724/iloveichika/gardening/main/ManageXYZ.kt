@@ -21,7 +21,7 @@ class ManageXYZ {
         )
     }
 
-    private fun makeRemove(base: ChatComponentText, key: String): IChatComponent {
+    fun makeRemove(base: ChatComponentText, key: String): IChatComponent {
         val command = "/lcg removexyz ${key}"
         val remove = ChatComponentText("[Remove]").apply {
             chatStyle = ChatStyle()
@@ -87,7 +87,7 @@ class ManageXYZ {
     ) {
         if (args.size < 2) {
             sendError("removeXYZ requires a positional argument (/lcg removexyz <targetKey>)")
-
+            return
         }
     }
 

@@ -14,7 +14,7 @@ class ScoreboardUtil {
         val obj: ScoreObjective? = scoreboard?.getObjectiveInDisplaySlot(1)
         obj ?: run {
             // scoreboardが存在しないなら
-            sentErrorOccurred("Scoreboard not found. it will maybe cause any errors", report = false)
+            // sentErrorOccurred("Scoreboard not found. it will maybe cause any errors", report = false)
             return Pair("", listOf())
         }
 

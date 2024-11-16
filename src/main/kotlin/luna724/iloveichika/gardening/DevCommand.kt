@@ -1,18 +1,15 @@
 package luna724.iloveichika.gardening
 
 import luna724.iloveichika.lunaclient.sendChat
-import luna724.iloveichika.gardening.main.ManageXYZ
+import luna724.iloveichika.gardening.dev.ManageXYZ
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraft.command.CommandBase
 import net.minecraft.command.ICommandSender
 import net.minecraft.util.ChatComponentText
 import java.util.*
 
-class Command : CommandBase() {
-    private val commandName: String = "lcg"
-    private val commandTriggerArgs: List<String> = listOf(
-        "setxyz", "removexyz", "listxyz", "currentxyz"
-    )
+class DevCommand : CommandBase() {
+    private val commandName: String = "lcg-dev"
 
     override fun canCommandSenderUseCommand(sender: ICommandSender?): Boolean {
         return true
@@ -23,7 +20,7 @@ class Command : CommandBase() {
     }
 
     override fun getCommandUsage(sender: ICommandSender?): String {
-        return "/$commandName $commandTriggerArgs"
+        return "/$commandName"
     }
 
     override fun processCommand(sender: ICommandSender, args: Array<String>) {
@@ -37,24 +34,21 @@ class Command : CommandBase() {
             val trigger: String = args[0].lowercase(Locale.getDefault())
             val manageXYZ = ManageXYZ()
 
-            if (!commandTriggerArgs.contains(trigger)) {
-                sentErrorOccurred("Unknown trigger: $trigger")
-                return
-            }
-
             if (trigger.equals("setxyz", ignoreCase = true)) {
                 manageXYZ.setXYZ(sender, args)
                 return
             }
             if (trigger.equals("removexyz", ignoreCase = true)) {
-                manageXYZ.removeXYZ(sender, args)
+                //manageXYZ.removeXYZ(sender, args)
                 return
             }
             if (trigger.equals("listxyz", ignoreCase = true)) {
-                manageXYZ.listXYZ(sender, args)
+                //manageXYZ.listXYZ(sender, args)
+                return
             }
             if (trigger.equals("currentxyz", ignoreCase = true)) {
-                manageXYZ.currentXYZ(sender, args)
+                //manageXYZ.currentXYZ(sender, args)
+                return
             }
         }
         catch (e: Throwable) {
