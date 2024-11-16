@@ -34,7 +34,7 @@ class AutoMoveMod {
     }
 
     companion object {
-        const val MODID: String = "lc_automove"
+        const val MODID: String = "automove"
         const val NAME: String = "LC-AutoMove"
         const val VERSION: String = "2.4"
 

@@ -1,24 +1,28 @@
 package luna724.iloveichika.gardening.main
 
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import luna724.iloveichika.gardening.Gardening.Companion.sessionPth
 import java.io.File
 
-data class sessionOpt(
+@Serializable
+data class SessionOpt(
     val coordinates: List<Double>, val orientation: List<Double>, val direction: String
 )    // coordinates: [X,Y,Z], orientation: [Yaw, Pitch], direction: anyDirection (literalString)
 
 
-fun loadSessionOptAsCorrectSyntax(): Map<String, sessionOpt>? {
-    val gson = Gson()
+fun loadSessionOpt(): Map<String, SessionOpt> {
+    if (!File(sessionPth.toUri()).exists()) {
+        File(sessionPth.toUri()).writeText("{}")
+        return emptyMap()
+    }
     val jsonString = File(sessionPth.toUri()).readText()
-    val mapType = object : TypeToken<Map<String, sessionOpt>>() {}.type
-    return gson.fromJson(jsonString, mapType)
+    return Json.decodeFromString(jsonString)
 }
 
-fun saveSessionOpt(sessionOption: Map<String, sessionOpt>) {
-    val gson = Gson()
-    val jsonString = gson.toJson(sessionOption)
+fun saveSessionOpt(sessionOption: Map<String, SessionOpt>) {
+    val jsonString = Json.encodeToString(sessionOption)
     File(sessionPth.toUri()).writeText(jsonString)
 }

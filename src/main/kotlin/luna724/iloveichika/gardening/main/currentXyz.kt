@@ -30,9 +30,9 @@ fun getCurrentXYZ(decimalPlace: Int = 2): List<Double>? {
     return listOf(posXRounded, posYRounded, posZRounded)
 }
 
-fun convertSessionOptToXYZLists(sessionOpts: Map<String, sessionOpt>): List<List<Double>>  {
+fun convertSessionOptToXYZLists(sessionOpts: Map<String, SessionOpt>): List<List<Double>>  {
     val xyzLists: MutableList<List<Double>> = mutableListOf()
-    for ((k, v: sessionOpt) in sessionOpts) {
+    for ((k, v: SessionOpt) in sessionOpts) {
         xyzLists.add(v.coordinates)
     }
     return xyzLists

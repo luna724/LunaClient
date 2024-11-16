@@ -1,5 +1,6 @@
 package luna724.iloveichika.gardening
 
+import luna724.iloveichika.gardening.main.loadSessionOpt
 import luna724.iloveichika.gardening.main.tickAutoGarden
 import luna724.iloveichika.gardening.pest.PestCounter
 import luna724.iloveichika.gardening.pest.PestInfo
@@ -46,6 +47,8 @@ class Gardening {
 
         MinecraftForge.EVENT_BUS.register(aamInstances)
         MinecraftForge.EVENT_BUS.register(pestCounter)
+
+        loadSessionOpt()
     }
 
     @SubscribeEvent

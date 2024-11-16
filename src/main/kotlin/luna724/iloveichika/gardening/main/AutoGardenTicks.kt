@@ -6,7 +6,6 @@ import luna724.iloveichika.automove.startAutoMove
 import luna724.iloveichika.automove.stopAutoMove
 import luna724.iloveichika.gardening.Gardening.Companion.adminConfig
 import luna724.iloveichika.gardening.Gardening.Companion.config
-import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import kotlin.random.Random
 
@@ -36,7 +35,7 @@ fun tickAutoGarden() {
 
     // XYZの取得に失敗したら、一致しないXYZを生成する
     val currentXYZ: List<Double> = getCurrentXYZ() ?: listOf(0.0, -999.0, 0.0)
-    val sessionOpt: Map<String, sessionOpt>? = getSessionOption()
+    val sessionOpt: Map<String, SessionOpt>? = getSessionOption()
     sessionOpt ?: run {
         sentErrorOccurred("NullPointerException at AutoGarden:getSessionOption()")
         return
