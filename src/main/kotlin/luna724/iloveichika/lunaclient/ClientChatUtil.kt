@@ -13,7 +13,13 @@ fun sendChat(i: ChatComponentText? = null) {
     LunaClient.mc.thePlayer?.addChatComponentMessage(msg ?:ChatComponentText(LunaClient.errHEADER+"§c"+"NullPointerException at sendChat")) ?: sentErrorOccurred("NullPointerException at sendChat:thePlayer")
 }
 
+var previousErrorMessage: String? = null
 fun sentErrorOccurred(txt: String, report: Boolean = true) {
+    if (previousErrorMessage == txt) {
+        println("duplicated error in $txt")
+        return
+    }
+    previousErrorMessage = txt
     val message = ChatComponentText(LunaClient.errHEADER+"§c"+txt)
     LunaClient.mc.thePlayer?.addChatComponentMessage(message) ?: println("NullPointerException Occurred at sentErrorOccurred:thePlayer")
 

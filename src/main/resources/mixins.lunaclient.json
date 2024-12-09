@@ -1,8 +1,12 @@
 {
+  "required": true,
   "package": "luna724.iloveichika.lunaclient.mixin",
   "refmap": "mixins.lunaclient.refmap.json",
-  "minVersion": "0.7",
+  "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
+  "mixins": [
+      "MixinMinecraft"
+    ],
   "client": [
 	"MixinGuiMainMenu"
   ]

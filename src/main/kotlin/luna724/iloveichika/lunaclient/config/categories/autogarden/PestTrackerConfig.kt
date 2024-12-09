@@ -18,7 +18,7 @@ class PestTrackerConfig {
     @ConfigEditorSlider(minValue = 0f, maxValue = 8f, minStep = 1f)
     var stopAtPestSpawned: Float = 5f
 
-    @ConfigOption(name = "Announce \"Auto-Garden Stopped by. PestCount\" in Other GUI", desc = "")
+    @ConfigOption(name = "Announce Window", desc = "Announce \"Auto-Garden Stopped by. PestCount\" in Other GUI")
     @Expose
     @ConfigEditorBoolean
     var stopAnnounceInOtherGUI: Boolean = false

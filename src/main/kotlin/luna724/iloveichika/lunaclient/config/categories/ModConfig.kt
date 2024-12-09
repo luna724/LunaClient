@@ -11,10 +11,13 @@ class ModConfig : Config() {
     }
 
     override fun saveNow() {
-        LunaClient.configManager.save();
+        LunaClient.configManager.save()
     }
 
     @Expose
     @Category(name = "AutoGarden", desc = "AutoGarden's Config")
-    var autoGardenCategory: AutoGarden = AutoGarden();
+    var autoGardenCategory: AutoGarden = AutoGarden()
+
+//    @Expose
+//    @Category(name = "AutoMove",)
 }
