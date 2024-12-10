@@ -1,6 +1,6 @@
 ## Warning
-this mods includes `LC-AutoMove`. <br/>
-if you install LC-AutoMove.jar to mods, it will be conflict
+- 現在LunaClient v2 と v1.1.4 は同時に導入可能ですが、コマンドの競合を起こします
+- LunaClient ポート `localhost:3333` をpythonとの対話に使用します
 
 ## Documentations
 - [Installations](/docs/install.md)

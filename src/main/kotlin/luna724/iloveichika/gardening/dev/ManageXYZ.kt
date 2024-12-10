@@ -1,6 +1,6 @@
 package luna724.iloveichika.gardening.dev
 
-import luna724.iloveichika.gardening.Gardening.Companion.mc
+import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.gardening.main.ManageXYZ
 import luna724.iloveichika.gardening.main.SessionOpt
 import luna724.iloveichika.gardening.main.addSessionOpt
@@ -10,20 +10,20 @@ import net.minecraft.util.ChatComponentText
 import java.util.*
 
 class ManageXYZ {
-    private val HEADER: String = "§7[§7ManageXYZ§7]§f7: "
+    private val header: String = "§7[§7ManageXYZ§7]§f7: "
     private val normalManager: ManageXYZ = ManageXYZ()
     /**コマンド実行失敗*/
     private fun sendError(e: String) {
         mc.thePlayer.addChatComponentMessage(
             ChatComponentText(
-                HEADER+e
+                header+e
             )
         )
     }
     fun setXYZ(
         sender: ICommandSender, args: Array<String>
     ) {
-        if (!(args.size == 9)) {
+        if (args.size != 9) {
             sendError("Arguments incorrectly")
             return
         }

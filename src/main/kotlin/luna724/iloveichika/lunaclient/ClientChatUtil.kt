@@ -8,9 +8,9 @@ fun sendChat(i: ChatComponentText? = null) {
     if (i == null) sentErrorOccurred("NullPointerException at sendChat")
     var msg = i
     if (LunaClient.vigilanceConfig.alwaysHeaderOnClientChats) {
-        msg = ChatComponentText(LunaClient.mainHEADER).appendSibling(i) as ChatComponentText?
+        msg = ChatComponentText(LunaClient.MAINHEADER).appendSibling(i) as ChatComponentText?
     }
-    LunaClient.mc.thePlayer?.addChatComponentMessage(msg ?:ChatComponentText(LunaClient.errHEADER+"§c"+"NullPointerException at sendChat")) ?: sentErrorOccurred("NullPointerException at sendChat:thePlayer")
+    LunaClient.mc.thePlayer?.addChatComponentMessage(msg ?:ChatComponentText(LunaClient.ERRHEADER+"§c"+"NullPointerException at sendChat")) ?: sentErrorOccurred("NullPointerException at sendChat:thePlayer")
 }
 
 var previousErrorMessage: String? = null
@@ -20,7 +20,7 @@ fun sentErrorOccurred(txt: String, report: Boolean = true) {
         return
     }
     previousErrorMessage = txt
-    val message = ChatComponentText(LunaClient.errHEADER+"§c"+txt)
+    val message = ChatComponentText(LunaClient.ERRHEADER+"§c"+txt)
     LunaClient.mc.thePlayer?.addChatComponentMessage(message) ?: println("NullPointerException Occurred at sentErrorOccurred:thePlayer")
 
     if (!report) return

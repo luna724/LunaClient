@@ -1,6 +1,6 @@
 package luna724.iloveichika.gardening.main
 
-import luna724.iloveichika.gardening.Gardening.Companion.mc
+import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.lunaclient.utils.generateUniqueBase64Key
 import net.minecraft.command.ICommandSender
 import net.minecraft.event.ClickEvent
@@ -51,6 +51,8 @@ class ManageXYZ {
             sendError("setXYZ requires a positional argument (/lcg setxyz <direction>)")
             return
         }
+        // 条件がそろった場合、setXYZ.py を呼び出す
+
         val direction: String = checkDirectionsCorrectly(args[1]) ?: return
         var ignoreY = false
         var changePitch = false

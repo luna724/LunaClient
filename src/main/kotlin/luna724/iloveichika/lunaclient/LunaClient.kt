@@ -1,11 +1,13 @@
 package luna724.iloveichika.lunaclient
 
+import luna724.iloveichika.gardening.Gardening
 import luna724.iloveichika.lunaclient.commands.CommandManager
 import luna724.iloveichika.lunaclient.vigilanceConfig.Config
 import luna724.iloveichika.lunaclient.vigilanceConfig.PersistentData
 import luna724.iloveichika.lunaclient.config.ConfigManager
 import luna724.iloveichika.lunaclient.config.categories.ModConfig
 import luna724.iloveichika.lunaclient.modules.debug_info.onPlayerLogged
+import luna724.iloveichika.lunaclient.python.PythonAPI
 import luna724.iloveichika.lunaclient.utils.ScoreboardUtil
 import luna724.iloveichika.lunaclient.utils.TabListUtil
 import net.minecraft.client.Minecraft
@@ -18,6 +20,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.PlayerEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
+import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
 import java.io.File
 
 @Mod(
@@ -37,9 +41,13 @@ class LunaClient {
         configDirectory = directory
         persistentData = PersistentData.load()
         vigilanceConfig = Config
+        gardening = Gardening()
+        gardening.preInit(event)
 
         tabListUtil = TabListUtil()
         scoreboardUtil = ScoreboardUtil()
+
+        python = PythonAPI()
 
         CommandManager()
     }
@@ -50,8 +58,12 @@ class LunaClient {
             this
         ).forEach(MinecraftForge.EVENT_BUS::register)
 
+        gardening.onInit(event)
         configManager = ConfigManager()
         MinecraftForge.EVENT_BUS.register(configManager)
+        MinecraftForge.EVENT_BUS.register(gardening)
+
+        logger.info("LunaClient successfully initialized.")
     }
 
     @SubscribeEvent
@@ -65,7 +77,9 @@ class LunaClient {
         val mc: Minecraft = Minecraft.getMinecraft()
         var currentGui: GuiScreen? = null
         var isPlayerJoining: Boolean = false
+        val logger: Logger = LogManager.getLogger("LunaClient")
 
+        lateinit var gardening: Gardening
         lateinit var configDirectory: File
         lateinit var vigilanceConfig: Config
         lateinit var persistentData: PersistentData
@@ -73,13 +87,16 @@ class LunaClient {
 
         lateinit var metadata: ModMetadata
 
-        const val errHEADER = "§4[§dLunaClient§4]§c:"
-        const val mainHEADER = "§7[§dLunaClient§7]§f:"
+        const val ERRHEADER = "§4[§dLunaClient§4]§c:"
+        const val MAINHEADER = "§7[§dLunaClient§7]§f:"
         const val VERSION = "2.0"
 
         // Utils
         lateinit var tabListUtil: TabListUtil
         lateinit var scoreboardUtil: ScoreboardUtil
+
+        // Python
+        lateinit var python: PythonAPI
 
         // config
         val config: ModConfig

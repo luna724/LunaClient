@@ -89,6 +89,7 @@ dependencies {
     shadowImpl("org.apache.commons:commons-lang3:3.10")
     shadowImpl("com.fasterxml.jackson.core:jackson-core:2.8.11")
     shadowImpl("com.fasterxml.jackson.core:jackson-databind:2.8.11")
+    shadowImpl("com.squareup.okhttp3:okhttp:4.10.0")
 
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")

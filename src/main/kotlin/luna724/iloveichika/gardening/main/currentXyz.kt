@@ -1,6 +1,6 @@
 package luna724.iloveichika.gardening.main
 
-import luna724.iloveichika.gardening.Gardening
+import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import net.minecraft.client.entity.EntityPlayerSP
 import kotlin.math.abs
 import kotlin.math.floor
@@ -17,7 +17,7 @@ fun roundDown(value: Double, decimalPlaces: Int): Double {
 }
 
 fun getCurrentXYZ(decimalPlace: Int = 2): List<Double>? {
-    val player: EntityPlayerSP = Gardening.mc.thePlayer ?: return null
+    val player: EntityPlayerSP = mc.thePlayer ?: return null
     val posX = player.posX
     val posY = player.posY
     val posZ = player.posZ
@@ -31,7 +31,7 @@ fun getCurrentXYZ(decimalPlace: Int = 2): List<Double>? {
 }
 
 fun getCurrentRotation(decimalPlace: Int = 1): List<Double>? {
-    val player: EntityPlayerSP = Gardening.mc.thePlayer ?: return null
+    val player: EntityPlayerSP = mc.thePlayer ?: return null
     val yaw = roundDown(player.rotationYaw.toDouble(), decimalPlace)
     val pitch = roundDown(player.rotationPitch.toDouble(), decimalPlace)
     return listOf(yaw, pitch)
