@@ -1,11 +1,9 @@
 package luna724.iloveichika.gardening
 
 import luna724.iloveichika.automove.gdCommand
-import luna724.iloveichika.gardening.main.loadSessionOpt
-import luna724.iloveichika.gardening.main.tickAutoGarden
+import luna724.iloveichika.gardening.util.loadSessionOpt
 import luna724.iloveichika.gardening.pest.PestCounter
 import luna724.iloveichika.gardening.pest.PestInfo
-import luna724.iloveichika.lunaclient.LunaClient.Companion.currentGui
 import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.ModMetadata
@@ -19,20 +17,21 @@ import java.nio.file.Path
 class Gardening {
     fun preInit(event: FMLPreInitializationEvent) {
         metadata = event.modMetadata
-        val directory =  File(File(event.modConfigurationDirectory, "lunaclient"), event.modMetadata.modId)
+        val directory =  File(File(event.modConfigurationDirectory, "lunaclient"), "autogarden")
         directory.mkdirs()
         configDirectory = directory
-        config = Config
-        sessionPth = File(configDirectory, "auto_garden.session.json").toPath()
+        currentSettingJsonPath = File(configDirectory, "auto_garden.current.json").toPath()
 
-        val tomlConfigManager = TomlConfigManager(File(File(File(event.modConfigurationDirectory, "lunaclient"), event.modMetadata.modId), "adminConfig.toml"))
+        val tomlConfigManager = TomlConfigManager(File(File(File(event.modConfigurationDirectory, "lunaclient"), "autogarden"), "adminConfig.toml"))
         adminConfig = tomlConfigManager.config
         val pestCounter = PestCounter()
         pestInfo = pestCounter.config
 
         val gdCommand = gdCommand()
         val commandLCG = Command()
+        val devCommand = DevCommand()
 
+        ClientCommandHandler.instance.registerCommand(devCommand)
         ClientCommandHandler.instance.registerCommand(gdCommand)
         ClientCommandHandler.instance.registerCommand(commandLCG)
     }
@@ -40,8 +39,9 @@ class Gardening {
     fun onInit(event: FMLInitializationEvent) {
         val aamInstances = AntiAntiMacro()
         val pestCounter = PestCounter()
+        autoGarden = AutoGarden()
 
-
+        MinecraftForge.EVENT_BUS.register(autoGarden)
         MinecraftForge.EVENT_BUS.register(aamInstances)
         MinecraftForge.EVENT_BUS.register(pestCounter)
 
@@ -50,21 +50,18 @@ class Gardening {
 
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
-        tickAutoGarden()
+//        tickAutoGarden()
     }
 
     companion object {
         lateinit var configDirectory: File
-        lateinit var config: Config
         lateinit var metadata: ModMetadata
-        lateinit var sessionPth: Path
+        lateinit var currentSettingJsonPath: Path
         lateinit var adminConfig: AdminConfig
         lateinit var pestInfo: PestInfo
+        lateinit var autoGarden: AutoGarden
 
         const val HEADER: String = "§6[§2Auto-Garden§6]§f: "
 
-        fun openGUI() {
-            currentGui = config.gui()
-        }
     }
 }

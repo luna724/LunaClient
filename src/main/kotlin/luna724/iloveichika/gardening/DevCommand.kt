@@ -9,7 +9,7 @@ import net.minecraft.util.ChatComponentText
 import java.util.*
 
 class DevCommand : CommandBase() {
-    private val commandName: String = "lcg-dev"
+    private val commandName: String = "lcg_dev"
 
     override fun canCommandSenderUseCommand(sender: ICommandSender?): Boolean {
         return true
@@ -37,6 +37,9 @@ class DevCommand : CommandBase() {
             if (trigger.equals("setxyz", ignoreCase = true)) {
                 manageXYZ.setXYZ(sender, args)
                 return
+            }
+            if (trigger.equals("start", ignoreCase = true)) {
+                AutoGardenCurrent.isEnabled = true
             }
             if (trigger.equals("removexyz", ignoreCase = true)) {
                 //manageXYZ.removeXYZ(sender, args)

@@ -1,11 +1,13 @@
-package luna724.iloveichika.gardening.main;
+package luna724.iloveichika.gardening;
 
-class AutoGardenOption {
+import luna724.iloveichika.gardening.util.SessionOpt
+
+class AutoGardenCurrent {
     companion object {
         /**
          * AutoGardenが有効か否か
          */
-        var isEnabled: Boolean = true;
+        var isEnabled: Boolean = false;
 
         /**
          * AutoGardenのセッション設定

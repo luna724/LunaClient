@@ -1,11 +1,11 @@
 package luna724.iloveichika.gardening.main
 
+import luna724.iloveichika.gardening.util.SessionOpt
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import net.minecraft.client.entity.EntityPlayerSP
 import kotlin.math.abs
 import kotlin.math.floor
 import kotlin.math.pow
-import kotlin.math.round
 
 
 fun areDoublesApproximatelyEqual(double1: Double, double2: Double, tolerance: Double): Boolean {
@@ -37,6 +37,10 @@ fun getCurrentRotation(decimalPlace: Int = 1): List<Double>? {
     return listOf(yaw, pitch)
 }
 
+/**
+ * SessionOptを座標のリストに変換する
+ *
+ */
 fun convertSessionOptToXYZLists(sessionOpts: LinkedHashMap<String, SessionOpt>): List<List<Double>>  {
     val xyzLists: MutableList<List<Double>> = mutableListOf()
     for ((k, v: SessionOpt) in sessionOpts) {
@@ -45,6 +49,10 @@ fun convertSessionOptToXYZLists(sessionOpts: LinkedHashMap<String, SessionOpt>):
     return xyzLists
 }
 
+/**
+ * XYZリストに targetXYZ が含まれるかどうかをチェックし、一致した場合
+ * @return: true と 一致したリストのインデックスを返す
+ */
 fun checkXYZisIn(xyzLists: List<List<Double>>, targetXYZ: List<Double>, tolerance: Double = 0.25, forceTolerance: Boolean = false): Pair<Boolean, Int> {
     // TODO: 値を設定から取得
     var toleranceXZ = 0.25

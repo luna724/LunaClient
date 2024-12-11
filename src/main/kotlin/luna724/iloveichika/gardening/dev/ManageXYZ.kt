@@ -2,8 +2,8 @@ package luna724.iloveichika.gardening.dev
 
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.gardening.main.ManageXYZ
-import luna724.iloveichika.gardening.main.SessionOpt
-import luna724.iloveichika.gardening.main.addSessionOpt
+import luna724.iloveichika.gardening.util.SessionOpt
+import luna724.iloveichika.gardening.util.addSessionOpt
 import luna724.iloveichika.gardening.main.checkDirectionsCorrectly
 import net.minecraft.command.ICommandSender
 import net.minecraft.util.ChatComponentText

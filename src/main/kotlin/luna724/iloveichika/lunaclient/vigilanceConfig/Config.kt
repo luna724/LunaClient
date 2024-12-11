@@ -12,13 +12,13 @@ object Config : Vigilant(
     File(LunaClient.configDirectory, "config.toml"),
     LunaClient.metadata.name
 ) {
-    @Property(
-        type = PropertyType.BUTTON, name = "LunaClient / Auto-Garden",
-        description = "Open Auto-Garden GUI",
-        category = "Extension", placeholder = "open GUI"
-    )
-    @Suppress("unused")
-    private fun openGardenGui() { Gardening.openGUI()}
+//    @Property(
+//        type = PropertyType.BUTTON, name = "LunaClient / Auto-Garden",
+//        description = "Open Auto-Garden GUI",
+//        category = "Extension", placeholder = "open GUI"
+//    )
+//    @Suppress("unused")
+//    private fun openGardenGui() { Gardening.openGUI()}
 
     @Property(
         type = PropertyType.SWITCH, name = "World load notifier",

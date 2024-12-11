@@ -19,7 +19,6 @@ class PythonAPI {
 
             File(pythonDir, "userScript").mkdirs()
             internalScript.mkdirs()
-            makeAll()
 
             val venv = File(pythonDir, "venv")
             if (!(venv.exists() && venv.isDirectory)) {
@@ -57,41 +56,6 @@ class PythonAPI {
             else {
                 LunaClient.logger.warn("venv already exists.")
             }
-        }
-
-        private fun makeAll() {
-            // リソース内にあるpythonファイルをすべて internalScript にコピー
-            // ディレクトリ構造を維持し、インポートを可能にする
-            if (!internalScript.exists()) {
-                internalScript.mkdirs()
-            }
-
-            // クラスローダーからリソースのリストを取得
-            val resourceBase = "/python"
-            val classLoader = object {}.javaClass.classLoader
-
-            classLoader.getResourceAsStream(resourceBase.removePrefix("/"))?.use { stream ->
-                val tempDir = Files.createTempDirectory("python_resources").toFile()
-                tempDir.deleteOnExit()
-
-                val resourceDir = File(tempDir, "python")
-                resourceDir.mkdirs()
-
-                // ストリームの内容を一時ディレクトリに展開
-                Files.copy(stream, resourceDir.toPath(), StandardCopyOption.REPLACE_EXISTING)
-
-                // 再帰的にコピー
-                resourceDir.walkTopDown().forEach { file ->
-                    if (file.isFile && file.extension == "py") {
-                        val relativePath = file.relativeTo(resourceDir).path
-                        val targetFile = File(internalScript, relativePath)
-                        targetFile.parentFile.mkdirs()
-                        Files.copy(file.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING)
-                    }
-                }
-            }
-
-            LunaClient.logger.info("All Python scripts copied to ${internalScript.absolutePath}")
         }
     }
 

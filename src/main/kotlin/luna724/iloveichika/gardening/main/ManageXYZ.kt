@@ -1,5 +1,8 @@
 package luna724.iloveichika.gardening.main
 
+import luna724.iloveichika.gardening.util.SessionOpt
+import luna724.iloveichika.gardening.util.addSessionOpt
+import luna724.iloveichika.gardening.util.loadSessionOpt
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.lunaclient.utils.generateUniqueBase64Key
 import net.minecraft.command.ICommandSender
@@ -77,7 +80,8 @@ class ManageXYZ {
 
         addSessionOpt(key, SessionOpt(
             xyz, rotation, direction, changePitch
-        ))
+        )
+        )
         val baseMsg = ChatComponentText("§aSaved as §l${key}§r. §7(XYZ: ${xyz}, Rotation: ${rotation}, Direction: ${direction}) ")
         sender.addChatMessage(
             makeRemove(baseMsg, key)

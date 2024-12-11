@@ -1,5 +1,6 @@
 package luna724.iloveichika.lunaclient
 
+import luna724.iloveichika.automove.AutoMoveMod
 import luna724.iloveichika.gardening.Gardening
 import luna724.iloveichika.lunaclient.commands.CommandManager
 import luna724.iloveichika.lunaclient.vigilanceConfig.Config
@@ -41,13 +42,15 @@ class LunaClient {
         configDirectory = directory
         persistentData = PersistentData.load()
         vigilanceConfig = Config
+        autoMove = AutoMoveMod()
+        autoMove.preInit(event)
         gardening = Gardening()
         gardening.preInit(event)
 
         tabListUtil = TabListUtil()
         scoreboardUtil = ScoreboardUtil()
 
-        python = PythonAPI()
+        // NOT WORKING & NEEDED python = PythonAPI()
 
         CommandManager()
     }
@@ -58,6 +61,7 @@ class LunaClient {
             this
         ).forEach(MinecraftForge.EVENT_BUS::register)
 
+        autoMove.onInit(event)
         gardening.onInit(event)
         configManager = ConfigManager()
         MinecraftForge.EVENT_BUS.register(configManager)
@@ -80,6 +84,7 @@ class LunaClient {
         val logger: Logger = LogManager.getLogger("LunaClient")
 
         lateinit var gardening: Gardening
+        lateinit var autoMove: AutoMoveMod
         lateinit var configDirectory: File
         lateinit var vigilanceConfig: Config
         lateinit var persistentData: PersistentData
