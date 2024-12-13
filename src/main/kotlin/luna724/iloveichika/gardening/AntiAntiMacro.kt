@@ -43,34 +43,13 @@ class AntiAntiMacro {
         //println("XYZ updated, Delay timer reset")
     }
 
-    private fun anyGuestJoined(): String? {
-        val tabList: List<String> = tabListUtil.getTabList()
-        val result = tabListUtil.findObjRegex(tabList, "Guests (\\d+)")
-        val match = result.first
-        val guestString = result.second
-        if (!match) { return null }
-
-        val guestCount: Int = guestString.toIntOrNull() ?: return null
-        if (guestCount >= 1) stopAutoGarden("§4Stopped AutoGarden by Anti-AntiMacro (Guest found)")
-        return ""
-    }
-
-    private fun isServerClosingSoon(): String? {
-        val valueList: List<String> = scoreboardUtil.getScoreboardValues()
-        return null
-    }
-
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
         try {
             if (!autoGardenIsEnable()) return
             if (mc.thePlayer == null) return
-            if (!LunaClient.isPlayerJoining) return
-            xyzChecker()
 
-            // ここから先はnullが返された場合、そこで処理を強制停止する
-            anyGuestJoined() ?: return
-            isServerClosingSoon() ?: return
+            xyzChecker()
         }
         catch (npe: NullPointerException) {
             sentErrorOccurred("NullPointerException in AntiAntiMacro.kt:onTick (currentScreen=${mc.currentScreen}")

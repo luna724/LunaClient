@@ -51,3 +51,13 @@ fun addSessionOpt(key: String, sessionOpt: SessionOpt) {
     s[key] = sessionOpt
     saveSessionOpt(s)
 }
+
+/**
+ * sessionOptの値をキーを用いり消し、即座に上書きする
+ */
+fun removeSessionOpt(key: String) {
+    val s = loadSessionOpt()
+    if (!s.containsKey(key)) return
+    s.remove(key)
+    saveSessionOpt(s)
+}

@@ -1,7 +1,7 @@
 package luna724.iloveichika.gardening
 
 import luna724.iloveichika.lunaclient.sendChat
-import luna724.iloveichika.gardening.main.ManageXYZ
+import luna724.iloveichika.gardening.commands.ManageXYZ
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraft.command.CommandBase
 import net.minecraft.command.ICommandSender

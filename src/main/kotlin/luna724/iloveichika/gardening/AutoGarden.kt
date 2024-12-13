@@ -12,8 +12,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 
 class AutoGarden {
-
-
     /**
      * onTick用の特別関数
      * プレイヤーの向き、視点変更を行う
@@ -32,11 +30,15 @@ class AutoGarden {
             startAutoMove()
         }.start()
     }
-    
+
+    private var triggeredTime: Long? = null
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
         // AutoGardenがオフなら終わる
         if (!autoGardenIsEnable()) return
+
+        // 次回のトリガーまでは 500ms は待機する
+        if (triggeredTime != null && System.currentTimeMillis() - triggeredTime!! < 500) return
 
         // XYZの取得
         val currentXYZ: List<Double> = getCurrentXYZ() ?: listOf(0.0, -1.0, 0.0)
@@ -61,5 +63,6 @@ class AutoGarden {
 
         // すべての条件が揃ったら、トリガーを実行
         swapMovement(yaw, pitch, movements)
+        triggeredTime = System.currentTimeMillis()
     }
 }

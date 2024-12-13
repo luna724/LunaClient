@@ -3,6 +3,8 @@ package luna724.iloveichika.automove
 import luna724.iloveichika.automove.AutoMoveMod.Companion.autoMoveInstance
 import luna724.iloveichika.automove.AutoMoveMod.Companion.autoMoveSettings
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
+import luna724.iloveichika.lunaclient.sendChat
+import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.command.ICommandSender
 import net.minecraft.util.ChatComponentText
@@ -26,21 +28,21 @@ private fun containsOnlyAvailableChars(input: String, availableChar: List<String
  *
  */
 fun changeDirection(
-    direction: String, sender: ICommandSender? = null
+    direction: String
 ) {
     autoMoveInstance.settings.autoMoveDirection = 0
     val key = direction.lowercase(Locale.getDefault())
     if (key.equals("reset", ignoreCase = true)) {
         val msg = "[§dLC-AutoMove§f]: §6Changed direction to §a§lNaN"
-        println(msg)
-        sender?.addChatMessage(ChatComponentText(msg))
+        sendChat(
+            ChatComponentText(msg)
+        )
     }
 
     val availableChar: List<String> = mutableListOf("f", "b", "r", "l")
     if (!containsOnlyAvailableChars(key, availableChar)) {
         val msg = "[§dLC-AutoMove§f]: §cUnknown args§f: $key"
-        println(msg)
-        sender?.addChatMessage(ChatComponentText(msg))
+        sentErrorOccurred(msg, report = false)
         return
     }
 
@@ -57,7 +59,9 @@ fun changeDirection(
     val moveDirections = autoMoveInstance.movingKey
     val msg = "[§dLC-AutoMove§f]: §6Changed direction to §a§l$moveDirections"
     println(msg)
-    sender?.addChatMessage(ChatComponentText(msg))
+    sendChat(
+        ChatComponentText(msg)
+    )
 }
 
 fun isEnable(): Boolean {

@@ -70,7 +70,7 @@ class CommandAutoMove(private val autoMove: AutoMove) : CommandBase() {
                 val msg = "[§dLC-AutoMove§f]: §6Changed direction to §a§lNaN"
                 sender.addChatMessage(ChatComponentText(msg))
             } else {
-                changeDirection(args[1], sender)
+                changeDirection(args[1])
             }
         } else if ("safemode".equals(args[0], ignoreCase = true)) {
             autoMove.settings.autoMoveStopWhenServerSwap = !autoMove.settings.autoMoveStopWhenServerSwap

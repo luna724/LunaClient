@@ -1,7 +1,7 @@
 package luna724.iloveichika.gardening.dev
 
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
-import luna724.iloveichika.gardening.main.ManageXYZ
+import luna724.iloveichika.gardening.commands.ManageXYZ
 import luna724.iloveichika.gardening.util.SessionOpt
 import luna724.iloveichika.gardening.util.addSessionOpt
 import luna724.iloveichika.gardening.main.checkDirectionsCorrectly
