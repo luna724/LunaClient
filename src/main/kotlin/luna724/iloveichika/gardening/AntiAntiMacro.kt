@@ -29,10 +29,10 @@ class AntiAntiMacro {
         val rawXYZ = getCurrentXYZ(12) ?: previousXYZ
 
         //println("Current XYZ: $rawXYZ, Previous XYZ: $previousXYZ")
-        if (compareXYZ(previousXYZ, rawXYZ, 1.0, 50000.0)) {
+        if (compareXYZ(previousXYZ, rawXYZ, 1.0, 3.0)) {
             //println("XYZ Matched!")
             if (!session.isEnable()) return
-            toggle.start("§4Stopped AutoGarden by Anti-AntiMacro")
+            toggle.stop("§4Stopped AutoGarden by Anti-AntiMacro")
             previousXYZ = listOf(0.0,-1.0,0.0)
             return
         }
@@ -47,6 +47,7 @@ class AntiAntiMacro {
             if (!session.isEnable()) return
             if (mc.thePlayer == null) return
 
+            // 座標チェック
             xyzChecker()
         }
         catch (npe: NullPointerException) {

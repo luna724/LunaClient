@@ -66,6 +66,7 @@ repositories {
 
     maven("https://repo.nea.moe/releases")
     maven("https://maven.notenoughupdates.org/releases")
+    maven { url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -90,6 +91,10 @@ dependencies {
     shadowImpl("com.fasterxml.jackson.core:jackson-core:2.8.11")
     shadowImpl("com.fasterxml.jackson.core:jackson-databind:2.8.11")
     shadowImpl("com.squareup.okhttp3:okhttp:4.10.0")
+    shadow("io.ktor:ktor-server-core:3.0.2")
+    shadow("io.ktor:ktor-server-netty:3.0.2")
+    shadow("io.ktor:ktor-server-content-negotiation:3.0.2")
+    shadow("io.ktor:ktor-serialization-kotlinx-json:3.0.2")
 
     minecraft("com.mojang:minecraft:1.8.9")
     mappings("de.oceanlabs.mcp:mcp_stable:22-1.8.9")

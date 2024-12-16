@@ -2,4 +2,5 @@
 - Auto-Garden XYZ Triggered時にクールダウンを追加
 - Anti-AntiMacroでのエラー時に Auto-Garden を止めない機能を追加
 - 一定期間 Auto-Garden がトリガーされなかったとき、停止する機能を追加
+- S08PacketPlayerPosLook による監視機能を追加
 - 
