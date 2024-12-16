@@ -4,6 +4,7 @@ import luna724.iloveichika.automove.gdCommand
 import luna724.iloveichika.gardening.util.loadSessionOpt
 import luna724.iloveichika.gardening.pest.PestCounter
 import luna724.iloveichika.gardening.pest.PestInfo
+import luna724.iloveichika.gardening.util.ToggleAutoGarden
 import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.ModMetadata
@@ -40,6 +41,8 @@ class Gardening {
         val aamInstances = AntiAntiMacro()
         val pestCounter = PestCounter()
         autoGarden = AutoGarden()
+        session = AutoGardenSession()
+        toggle = ToggleAutoGarden()
 
         MinecraftForge.EVENT_BUS.register(autoGarden)
         MinecraftForge.EVENT_BUS.register(aamInstances)
@@ -60,6 +63,8 @@ class Gardening {
         lateinit var adminConfig: AdminConfig
         lateinit var pestInfo: PestInfo
         lateinit var autoGarden: AutoGarden
+        lateinit var session: AutoGardenSession
+        lateinit var toggle: ToggleAutoGarden
 
         const val HEADER: String = "§6[§2Auto-Garden§6]§f: "
 

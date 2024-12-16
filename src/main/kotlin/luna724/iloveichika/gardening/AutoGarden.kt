@@ -5,6 +5,7 @@ import luna724.iloveichika.automove.changeDirection
 import luna724.iloveichika.automove.startAutoMove
 import luna724.iloveichika.automove.stopAutoMove
 import luna724.iloveichika.gardening.Gardening.Companion.adminConfig
+import luna724.iloveichika.gardening.Gardening.Companion.session
 import luna724.iloveichika.gardening.main.*
 import luna724.iloveichika.gardening.util.SessionOpt
 import luna724.iloveichika.lunaclient.sentErrorOccurred
@@ -35,7 +36,7 @@ class AutoGarden {
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
         // AutoGardenがオフなら終わる
-        if (!autoGardenIsEnable()) return
+        if (!session.isEnable()) return
 
         // 次回のトリガーまでは 500ms は待機する
         if (triggeredTime != null && System.currentTimeMillis() - triggeredTime!! < 500) return

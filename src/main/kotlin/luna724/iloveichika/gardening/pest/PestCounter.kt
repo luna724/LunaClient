@@ -1,7 +1,7 @@
 package luna724.iloveichika.gardening.pest
 
 import luna724.iloveichika.gardening.Gardening.Companion.pestInfo
-import luna724.iloveichika.gardening.main.autoGardenIsEnable
+import luna724.iloveichika.gardening.Gardening.Companion.session
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.lunaclient.LunaClient.Companion.scoreboardUtil
 import luna724.iloveichika.lunaclient.LunaClient.Companion.tabListUtil
@@ -21,7 +21,7 @@ class PestCounter {
     @SubscribeEvent
     fun onTick(event: ClientTickEvent) {
         val test = mc.thePlayer?.rotationYaw ?: return
-        if (!autoGardenIsEnable()) return
+        if (!session.isEnable()) return
 
         val currentTabList = tabListUtil.getTabList()
         val currentScoreboard = scoreboardUtil.getScoreboardValues()

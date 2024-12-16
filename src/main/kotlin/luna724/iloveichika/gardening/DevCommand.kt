@@ -2,7 +2,6 @@ package luna724.iloveichika.gardening
 
 import luna724.iloveichika.lunaclient.sendChat
 import luna724.iloveichika.gardening.dev.ManageXYZ
-import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraft.command.CommandBase
 import net.minecraft.command.ICommandSender
 import net.minecraft.util.ChatComponentText
@@ -39,7 +38,7 @@ class DevCommand : CommandBase() {
                 return
             }
             if (trigger.equals("start", ignoreCase = true)) {
-                AutoGardenCurrent.isEnabled = true
+                return
             }
             if (trigger.equals("removexyz", ignoreCase = true)) {
                 //manageXYZ.removeXYZ(sender, args)

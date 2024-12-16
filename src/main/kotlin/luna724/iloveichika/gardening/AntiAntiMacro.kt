@@ -1,14 +1,12 @@
 package luna724.iloveichika.gardening
 
 import luna724.iloveichika.gardening.Gardening.Companion.adminConfig
-import luna724.iloveichika.gardening.main.autoGardenIsEnable
+import luna724.iloveichika.gardening.Gardening.Companion.session
+import luna724.iloveichika.gardening.Gardening.Companion.toggle
 import luna724.iloveichika.gardening.main.compareXYZ
 import luna724.iloveichika.gardening.main.getCurrentXYZ
-import luna724.iloveichika.gardening.main.stopAutoGarden
 import luna724.iloveichika.lunaclient.LunaClient
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
-import luna724.iloveichika.lunaclient.LunaClient.Companion.scoreboardUtil
-import luna724.iloveichika.lunaclient.LunaClient.Companion.tabListUtil
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
@@ -22,7 +20,7 @@ class AntiAntiMacro {
 
     private fun xyzChecker() {
         if (!LunaClient.isPlayerJoining) return
-        if (!autoGardenIsEnable()) return
+        if (!session.isEnable()) return
         val currentTime = System.currentTimeMillis()
         val effectivePreviousTime = previousTime ?: currentTime
         //println("Current Time: $currentTime, Effective Previous Time: $effectivePreviousTime, Delay: $delay")
@@ -33,8 +31,8 @@ class AntiAntiMacro {
         //println("Current XYZ: $rawXYZ, Previous XYZ: $previousXYZ")
         if (compareXYZ(previousXYZ, rawXYZ, 1.0, 50000.0)) {
             //println("XYZ Matched!")
-            if (!autoGardenIsEnable()) return
-            stopAutoGarden("§4Stopped AutoGarden by Anti-AntiMacro")
+            if (!session.isEnable()) return
+            toggle.start("§4Stopped AutoGarden by Anti-AntiMacro")
             previousXYZ = listOf(0.0,-1.0,0.0)
             return
         }
@@ -46,7 +44,7 @@ class AntiAntiMacro {
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
         try {
-            if (!autoGardenIsEnable()) return
+            if (!session.isEnable()) return
             if (mc.thePlayer == null) return
 
             xyzChecker()
@@ -54,13 +52,13 @@ class AntiAntiMacro {
         catch (npe: NullPointerException) {
             sentErrorOccurred("NullPointerException in AntiAntiMacro.kt:onTick (currentScreen=${mc.currentScreen}")
             if (!adminConfig.antiAntiMacroKeepException) {
-                stopAutoGarden()
+                toggle.stop("Auto-Garden stopped by NullPointerException in AntiAntiMacro")
             }
         }
         catch (e: Exception) {
             sentErrorOccurred("An Error Occurred in Anti-AntiMacro (AntiAntiMacro.kt:onTick)")
             if (!adminConfig.antiAntiMacroKeepException) {
-                stopAutoGarden()
+                toggle.stop()
             }
         }
     }
