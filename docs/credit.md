@@ -17,11 +17,14 @@
 - Gson (com.google.code.gson:gson 2.10.1)
 - MoulConfig (org.notenoughupdates.moulconfig:MoulConfig 1.3.0)
 - libautoupdate (moe.nea:libautoupdate 1.0.3)
+- Ktor (io.ktor:ktor-server-core and etc (3.0.2))
 
 ## Credits
 - [hannibal002/Example-1.8.9-Mod](https://github.com/hannibal002/Example-1.8.9-Mod): install MoulConfig
 - [appable0/Forge-Kotlin-Essential-1.8.9-Template](https://github.com/appable0/Forge-Kotlin-Essential-1.8.9-Template): base template
 - [Skytils/SkytilsMod](https://github.com/Skytils/SkytilsMod): example code
+- [SkidderMC/FDPClient](https://github.com/SkidderMC/FDPClient): blink example code
+- [Wurst-Imperium/Wurst7](https://github.com/Wurst-Imperium/Wurst7/): blink example code
 
 ### merged my repositories
 - [AutoMove](https://github.com/luna724/LC-AutoMove)
