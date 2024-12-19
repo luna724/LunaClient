@@ -91,6 +91,7 @@ dependencies {
     shadowImpl("com.fasterxml.jackson.core:jackson-core:2.8.11")
     shadowImpl("com.fasterxml.jackson.core:jackson-databind:2.8.11")
     shadowImpl("com.squareup.okhttp3:okhttp:4.10.0")
+    shadowImpl("org.openjfx:javafx-controls:20-ea+10")
     shadow("io.ktor:ktor-server-core:3.0.2")
     shadow("io.ktor:ktor-server-netty:3.0.2")
     shadow("io.ktor:ktor-server-content-negotiation:3.0.2")

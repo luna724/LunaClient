@@ -3,8 +3,11 @@ package luna724.iloveichika.gardening.antiantimacro
 import luna724.iloveichika.gardening.Gardening.Companion.session
 import luna724.iloveichika.gardening.main.getCurrentRotation
 import luna724.iloveichika.gardening.main.getCurrentXYZ
+import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.lunaclient.sendChat
 import luna724.iloveichika.lunaclient.sentErrorOccurred
+import luna724.iloveichika.lunaclient.utils.playSound
+import luna724.iloveichika.lunaclient.utils.showPrimaryTextWindow
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.ChatComponentText
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
@@ -14,13 +17,21 @@ class TeleportationPacketHandler {
     private val packetTimestamps = mutableListOf<Long>()
 
     fun onPacketReceived(packet: S08PacketPlayerPosLook, ci: CallbackInfo) {
+        val success: Boolean = processPacket(packet, ci)
+        if (!success) {
+            mc.netHandler.addToSendQueue(packet)
+        }
+    }
+
+    fun processPacket(packet: S08PacketPlayerPosLook, ci: CallbackInfo): Boolean {
         sendChat(
             ChatComponentText("S08PacketPlayerPosLook received on kotlin!")
         )
         if (!session.isEnable()) {
-            return
+            return false
         }
 
+        ci.cancel()
         // パケットの値を取得
         val atX = packet.x
         val atY = packet.y
@@ -28,8 +39,8 @@ class TeleportationPacketHandler {
         val atYaw = packet.yaw
         val atPitch = packet.pitch
 
-        val currentXYZ = getCurrentXYZ(4) ?: return
-        val currentRotation = getCurrentRotation(1) ?: return
+        val currentXYZ = getCurrentXYZ(4) ?: return false
+        val currentRotation = getCurrentRotation(1) ?: return false
         val x = currentXYZ[0]
         val y = currentXYZ[1]
         val z = currentXYZ[2]
@@ -52,16 +63,35 @@ class TeleportationPacketHandler {
 
             if (packetTimestamps.size <= 10) {
                 sendChat(ChatComponentText(
-                    "S08PacketPlayerPosLook received. (maybe admin-check)"))
-                return
+                    "[!!IGNORE THIS!!] S08PacketPlayerPosLook received. (maybe admin-check) [!!IGNORE THIS!!]"))
+                mc.netHandler.addToSendQueue(packet)
+                return true
             }
             else {
                 sendChat(
                     ChatComponentText(
                         "received many S08PacketPlayerPosLook! (10+ in 2000ms). Enabling blink.."
                     ))
+                // TODO: enable blink
+                return false
             }
         }
+        else {
+            // 誤差が大きい場合
+            sendChat(
+                ChatComponentText(
+                    "received visual-anti-macro packet. Enabling blink and sending Notification.."
+                )
+            )
+            sentErrorOccurred(
+                "[Anti-Macro-Check]: a player received visual-anti-macro packet! (tolerance: $toleranceX, $toleranceY, $toleranceZ, $toleranceYaw, $tolerancePitch)"
+            )
+            showPrimaryTextWindow("LunaClient / Anti-AntiMacro", "You got \"hello, macro check!\"! react on Minecraft!")
 
+            playSound("note.pling", 1.0f, 1.5f)
+            // TODO: Discordへの通知機能
+            mc.netHandler.addToSendQueue(packet)
+            return true
+        }
     }
 }

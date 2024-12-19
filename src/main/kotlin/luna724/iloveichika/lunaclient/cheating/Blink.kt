@@ -1,54 +1,52 @@
 package luna724.iloveichika.lunaclient.cheating
 
+import kotlinx.coroutines.*
 import net.minecraft.client.Minecraft
 import net.minecraft.network.Packet
-import net.minecraft.network.play.client.C03PacketPlayer
-import kotlinx.coroutines.*
 import java.util.concurrent.ConcurrentLinkedQueue
 
-class Blink {
+class PacketHandler {
     private val mc = Minecraft.getMinecraft()
-    private val packetQueue = ConcurrentLinkedQueue<Packet<*>>() // パケットを保存するキュー
-    private var isEnabled = false
+    private val packetQueue = ConcurrentLinkedQueue<Pair<Packet<*>, Long>>()
+    private var isRunning = true
 
-    // Blinkを有効化
-    fun enableBlink() {
-        isEnabled = true
-    }
-
-    // Blinkを無効化
-    fun disableBlink() {
-        isEnabled = false
-        sendAllPackets() // 保存されているパケットを全て送信
-    }
-
-    // パケットの処理
-    fun onSendPacket(packet: Packet<*>) {
-        if (isEnabled && packet is C03PacketPlayer) {
-            // C03PacketPlayerの場合は保存して送信を防ぐ
-            packetQueue.add(packet)
-        } else {
-            // 通常のパケット送信
-            mc.netHandler.addToSendQueue(packet)
-        }
-    }
-
-    // 保存されているパケットを送信
-    private fun sendAllPackets() {
-        while (packetQueue.isNotEmpty()) {
-            val packet = packetQueue.poll()
-            mc.netHandler.addToSendQueue(packet)
-        }
-    }
-
-    // 一定期間後にパケットを送信する (オプション機能)
-    @OptIn(DelicateCoroutinesApi::class)
-    fun flushPacketsAfterDelay(delayMillis: Long) {
+    init {
+        // パケット送信スレッドを起動
+        @OptIn(DelicateCoroutinesApi::class)
         GlobalScope.launch {
-            delay(delayMillis)
-            if (isEnabled) {
-                sendAllPackets()
+            while (isRunning) {
+                processQueue()
+                delay(10) // 10msごとにチェック
             }
         }
+    }
+
+    // パケットをキューに追加（送信を遅延させる）
+    fun queuePacket(packet: Packet<*>, delayMillis: Long) {
+        val sendTime = System.currentTimeMillis() + delayMillis
+        packetQueue.add(packet to sendTime)
+    }
+
+    // キューからパケットを送信
+    private fun processQueue() {
+        val currentTime = System.currentTimeMillis()
+        while (packetQueue.isNotEmpty()) {
+            val (packet, sendTime) = packetQueue.peek()
+            if (currentTime >= sendTime) {
+                mc.netHandler.addToSendQueue(packet)
+                packetQueue.poll()
+            } else {
+                break // 送信時刻に達していないパケットがある場合は終了
+            }
+        }
+    }
+
+    fun start() {
+        isRunning = true
+    }
+
+    // ハンドラの終了
+    fun stop() {
+        isRunning = false
     }
 }
