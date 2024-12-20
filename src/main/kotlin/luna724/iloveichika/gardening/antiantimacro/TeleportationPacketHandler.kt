@@ -84,12 +84,12 @@ class TeleportationPacketHandler {
                 )
             )
             sentErrorOccurred(
-                "[Anti-Macro-Check]: a player received visual-anti-macro packet! (tolerance: $toleranceX, $toleranceY, $toleranceZ, $toleranceYaw, $tolerancePitch)"
+                "[Anti-Macro-Check]: a player received visual-anti-macro packet! (tolerance: $toleranceX, $toleranceY, $toleranceZ, $toleranceYaw, $tolerancePitch)",
+                report = true
             )
             showPrimaryTextWindow("LunaClient / Anti-AntiMacro", "You got \"hello, macro check!\"! react on Minecraft!")
 
             playSound("note.pling", 1.0f, 1.5f)
-            // TODO: Discordへの通知機能
             mc.netHandler.addToSendQueue(packet)
             return true
         }
