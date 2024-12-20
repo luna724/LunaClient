@@ -1,9 +1,9 @@
 
+- ## [Discordサーバー!!! みんな入れ!](https://discord.gg/lunaclient)
 
 ## Warning
 - 現在LunaClient v2 と v1.1.4 は同時に導入可能ですが、コマンドの競合を起こします
 - LunaClient ポート `localhost:3333` をpythonとの対話に使用します
-- ## [Discordサーバー!!! みんな入れ!](https://discord.gg/lunaclient)
 
 ## Documentations
 - [Installations](/docs/install.md)
