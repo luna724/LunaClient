@@ -12,18 +12,24 @@ import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.ChatComponentText
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
 import tv.twitch.chat.Chat
+import kotlin.math.abs
 
 class TeleportationPacketHandler {
     private val packetTimestamps = mutableListOf<Long>()
 
-    fun onPacketReceived(packet: S08PacketPlayerPosLook, ci: CallbackInfo) {
-        val success: Boolean = processPacket(packet, ci)
-        if (!success) {
-            mc.netHandler.addToSendQueue(packet)
-        }
+    fun onPacketReceived(packet: S08PacketPlayerPosLook, ci: CallbackInfo): Boolean {
+        val success: Boolean = processPacket(packet, ci) ?: return false
+
+        // 現状は false を絶対返す
+        return false
     }
 
-    fun processPacket(packet: S08PacketPlayerPosLook, ci: CallbackInfo): Boolean {
+    /**
+     * パケットを処理する、
+     * パケットを処理せず終わるとき(拒否)は True、
+     * クライアントに適用させるときは False を返す
+     */
+    private fun processPacket(packet: S08PacketPlayerPosLook, ci: CallbackInfo): Boolean {
         sendChat(
             ChatComponentText("S08PacketPlayerPosLook received on kotlin!")
         )
@@ -31,7 +37,6 @@ class TeleportationPacketHandler {
             return false
         }
 
-        ci.cancel()
         // パケットの値を取得
         val atX = packet.x
         val atY = packet.y
@@ -48,11 +53,11 @@ class TeleportationPacketHandler {
         val pitch = currentRotation[1]
 
         // 誤差が 0.1 block以下かつ、過去2秒間に 10回以下の Packet を受け取っていたら無視
-        val toleranceX = Math.abs(atX - x)
-        val toleranceY = Math.abs(atY - y)
-        val toleranceZ = Math.abs(atZ - z)
-        val toleranceYaw = Math.abs(atYaw - yaw)
-        val tolerancePitch = Math.abs(atPitch - pitch)
+        val toleranceX = abs(atX - x)
+        val toleranceY = abs(atY - y)
+        val toleranceZ = abs(atZ - z)
+        val toleranceYaw = abs(atYaw - yaw)
+        val tolerancePitch = abs(atPitch - pitch)
 
         if (toleranceX <= 0.1 && toleranceY <= 0.1 && toleranceZ <= 0.1 && toleranceYaw <= 0.1 && tolerancePitch <= 0.1) {
             val currentTime = System.currentTimeMillis()
@@ -64,13 +69,12 @@ class TeleportationPacketHandler {
             if (packetTimestamps.size <= 10) {
                 sendChat(ChatComponentText(
                     "[!!IGNORE THIS!!] S08PacketPlayerPosLook received. (maybe admin-check) [!!IGNORE THIS!!]"))
-                mc.netHandler.addToSendQueue(packet)
-                return true
+                return false
             }
             else {
                 sendChat(
                     ChatComponentText(
-                        "received many S08PacketPlayerPosLook! (10+ in 2000ms). Enabling blink.."
+                        "§l§o§4[!!READ THIS!!] received many S08PacketPlayerPosLook! (10+ in 2000ms). Enabling blink.. §r§c(React if it looks like you need it!)"
                     ))
                 // TODO: enable blink
                 return false
@@ -90,7 +94,6 @@ class TeleportationPacketHandler {
             showPrimaryTextWindow("LunaClient / Anti-AntiMacro", "You got \"hello, macro check!\"! react on Minecraft!")
 
             playSound("note.pling", 1.0f, 1.5f)
-            mc.netHandler.addToSendQueue(packet)
             return true
         }
     }

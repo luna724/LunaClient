@@ -2,6 +2,7 @@ package luna724.iloveichika.lunaclient
 
 import luna724.iloveichika.automove.AutoMoveMod
 import luna724.iloveichika.gardening.Gardening
+import luna724.iloveichika.lunaclient.cheating.Blink
 import luna724.iloveichika.lunaclient.commands.CommandManager
 import luna724.iloveichika.lunaclient.vigilanceConfig.Config
 import luna724.iloveichika.lunaclient.vigilanceConfig.PersistentData
@@ -9,6 +10,7 @@ import luna724.iloveichika.lunaclient.config.ConfigManager
 import luna724.iloveichika.lunaclient.config.categories.ModConfig
 import luna724.iloveichika.lunaclient.modules.debug_info.onPlayerLogged
 import luna724.iloveichika.lunaclient.python.PythonAPI
+import luna724.iloveichika.lunaclient.utils.InfiniSound
 import luna724.iloveichika.lunaclient.utils.ScoreboardUtil
 import luna724.iloveichika.lunaclient.utils.TabListUtil
 import net.minecraft.client.Minecraft
@@ -49,6 +51,8 @@ class LunaClient {
 
         tabListUtil = TabListUtil()
         scoreboardUtil = ScoreboardUtil()
+        infiniSound = InfiniSound()
+        blink = Blink()
 
         // NOT WORKING & NEEDED python = PythonAPI()
 
@@ -99,9 +103,13 @@ class LunaClient {
         // Utils
         lateinit var tabListUtil: TabListUtil
         lateinit var scoreboardUtil: ScoreboardUtil
+        lateinit var blink: Blink
 
         // Python
         lateinit var python: PythonAPI
+
+        // Inifinite Sound Instances
+        lateinit var infiniSound: InfiniSound
 
         // config
         val config: ModConfig

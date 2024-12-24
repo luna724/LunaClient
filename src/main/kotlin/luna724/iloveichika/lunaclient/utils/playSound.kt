@@ -15,10 +15,13 @@ fun playSound(soundPath: String, volume: Float = 1f, pitch: Float = 1f) {
 }
 
 class InfiniSound(
-    val soundPath: String,
-    val volume: Float = 1f,
-    val pitch: Float = 1f
 ) {
+    companion object {
+        var soundPath: String = "note.pling"
+        var volume: Float = 1f
+        var pitch: Float = 1f
+    }
+
     private val scheduler = Executors.newSingleThreadScheduledExecutor()
     private var soundTask: ScheduledFuture<*>? = null
 
@@ -31,5 +34,11 @@ class InfiniSound(
     fun stop() {
         soundTask?.cancel(true) // タスクの停止
         scheduler.shutdown() // スケジューラの終了
+    }
+
+    fun setSound(newSoundPath: String, newVolume: Float = 1f, newPitch: Float = 1f) {
+        soundPath = newSoundPath
+        volume = newVolume
+        pitch = newPitch
     }
 }

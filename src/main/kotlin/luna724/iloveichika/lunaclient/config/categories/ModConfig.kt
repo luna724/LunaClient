@@ -7,7 +7,7 @@ import io.github.notenoughupdates.moulconfig.annotations.Category
 
 class ModConfig : Config() {
     override fun getTitle(): String {
-        return ("§dLunaClient " + LunaClient.VERSION) + " by §dluna724§r, config by §channibal2§r, §5Moulberry §rand §5nea89";
+        return ("§dLunaClient " + LunaClient.VERSION) + " by §dluna724§r, config menu by §channibal2§r, §5Moulberry §rand §5nea89";
     }
 
     override fun saveNow() {

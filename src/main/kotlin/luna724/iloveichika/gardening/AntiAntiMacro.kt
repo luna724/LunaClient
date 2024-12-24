@@ -15,7 +15,7 @@ class AntiAntiMacro {
     companion object {
         private var previousXYZ: List<Double> = listOf(0.0, -1.0, 0.0)
         private var previousTime: Long? = System.currentTimeMillis()
-        private val delay: Long = adminConfig.antiAntiMacroTriggerDelay
+        private val delay: Long = 3000L
     }
 
     private fun xyzChecker() {

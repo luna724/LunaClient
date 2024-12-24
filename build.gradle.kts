@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.archivesName
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.util.*
 
 plugins {
     kotlin("jvm") version "1.9.0"
@@ -91,7 +92,6 @@ dependencies {
     shadowImpl("com.fasterxml.jackson.core:jackson-core:2.8.11")
     shadowImpl("com.fasterxml.jackson.core:jackson-databind:2.8.11")
     shadowImpl("com.squareup.okhttp3:okhttp:4.10.0")
-    shadowImpl("org.openjfx:javafx-controls:20-ea+10")
     shadow("io.ktor:ktor-server-core:3.0.2")
     shadow("io.ktor:ktor-server-netty:3.0.2")
     shadow("io.ktor:ktor-server-content-negotiation:3.0.2")
@@ -138,7 +138,7 @@ tasks.processResources {
             expand(
                 mapOf(
                     "modname" to project.name,
-                    "modid" to project.name.toLowerCase(),
+                    "modid" to project.name.lowercase(Locale.getDefault()),
                     "version" to project.version,
                     "mcversion" to "1.8.9"
                 )
