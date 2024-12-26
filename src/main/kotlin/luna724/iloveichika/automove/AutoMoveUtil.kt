@@ -33,7 +33,7 @@ fun changeDirection(
     autoMoveInstance.settings.autoMoveDirection = 0
     val key = direction.lowercase(Locale.getDefault())
     if (key.equals("reset", ignoreCase = true)) {
-        val msg = "[§dLC-AutoMove§f]: §6Changed direction to §a§lNaN"
+        val msg = " [§dLC-AutoMove§f]: §6Changed direction to §a§lNaN"
         sendChat(
             ChatComponentText(msg)
         )
@@ -41,7 +41,7 @@ fun changeDirection(
 
     val availableChar: List<String> = mutableListOf("f", "b", "r", "l")
     if (!containsOnlyAvailableChars(key, availableChar)) {
-        val msg = "[§dLC-AutoMove§f]: §cUnknown args§f: $key"
+        val msg = " [§dLC-AutoMove§f]: §cUnknown args§f: $key"
         sentErrorOccurred(msg, report = false)
         return
     }
@@ -57,7 +57,7 @@ fun changeDirection(
         autoMoveInstance.settings.autoMoveDirection or autoMoveInstance.backward
 
     val moveDirections = autoMoveInstance.movingKey
-    val msg = "[§dLC-AutoMove§f]: §6Changed direction to §a§l$moveDirections"
+    val msg = " [§dLC-AutoMove§f]: §6Changed direction to §a§l$moveDirections"
     println(msg)
     sendChat(
         ChatComponentText(msg)

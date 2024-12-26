@@ -11,7 +11,7 @@ import luna724.iloveichika.lunaclient.utils.openFolder
 
 class CommandManager {
     init {
-        registerCommand("openconfig") {
+        registerCommand("lc") {
             LunaClient.configManager.openConfigGui()
         }
 
@@ -29,7 +29,6 @@ class CommandManager {
     private fun registerCommand(name: String, function: (Array<String>) -> Unit) {
         ClientCommandHandler.instance.registerCommand(SimpleCommand(name, createCommand(function)))
     }
-
 
     private fun createCommand(function: (Array<String>) -> Unit) = object : ProcessCommandRunnable() {
         override fun processCommand(sender: ICommandSender?, args: Array<String>?) {

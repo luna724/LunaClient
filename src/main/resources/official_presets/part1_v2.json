@@ -1,0 +1,590 @@
+{
+  "wtvv8": {
+    "coordinates": [
+      238,
+      -1,
+      -49
+    ],
+    "orientation": [
+      0.5,
+      -3.8
+    ],
+    "direction": "b"
+  },
+  "fgv7": {
+    "coordinates": [
+      -239,
+      -1,
+      -54
+    ],
+    "orientation": [
+      -5,
+      -3.6
+    ],
+    "direction": "b"
+  },
+  "6n2j5": {
+    "coordinates": [
+      -239,
+      -1,
+      -60
+    ],
+    "orientation": [
+      -5,
+      -3.6
+    ],
+    "direction": "l"
+  },
+  "fzo3yu": {
+    "coordinates": [
+      -237,
+      -1,
+      -60
+    ],
+    "orientation": [
+      4.8,
+      -3.6
+    ],
+    "direction": "l"
+  },
+  "omfo": {
+    "coordinates": [
+      238,
+      -1,
+      -60
+    ],
+    "orientation": [
+      4.8,
+      -3.6
+    ],
+    "direction": "b"
+  },
+  "zm3a4h": {
+    "coordinates": [
+      238,
+      -1,
+      -66
+    ],
+    "orientation": [
+      4.8,
+      -3.6
+    ],
+    "direction": "r"
+  },
+  "kkxzay": {
+    "coordinates": [
+      236,
+      -1,
+      -66
+    ],
+    "orientation": [
+      -4.8,
+      -3.6
+    ],
+    "direction": "r"
+  },
+  "xbpy": {
+    "coordinates": [
+      -239,
+      -1,
+      -66
+    ],
+    "orientation": [
+      -4.9,
+      -3.6
+    ],
+    "direction": "b"
+  },
+  "yh5p": {
+    "coordinates": [
+      -239,
+      -1,
+      -72
+    ],
+    "orientation": [
+      -5,
+      -3.6
+    ],
+    "direction": "l"
+  },
+  "9ic9": {
+    "coordinates": [
+      -237,
+      -1,
+      -72
+    ],
+    "orientation": [
+      4.8,
+      -3.6
+    ],
+    "direction": "l"
+  },
+  "6std": {
+    "coordinates": [
+      238,
+      -1,
+      -72
+    ],
+    "orientation": [
+      4.8,
+      -3.6
+    ],
+    "direction": "b"
+  },
+  "yzl6sq": {
+    "coordinates": [
+      238,
+      -1,
+      -78
+    ],
+    "orientation": [
+      4.8,
+      -3.6
+    ],
+    "direction": "r"
+  },
+  "ewixza": {
+    "coordinates": [
+      236,
+      -1,
+      -78
+    ],
+    "orientation": [
+      -4.9,
+      -3.6
+    ],
+    "direction": "r"
+  },
+  "qursws": {
+    "coordinates": [
+      -239,
+      -1,
+      -78
+    ],
+    "orientation": [
+      -4.9,
+      -3.6
+    ],
+    "direction": "b"
+  },
+  "vn6426": {
+    "coordinates": [
+      -239,
+      -1,
+      -84
+    ],
+    "orientation": [
+      -5,
+      -3.6
+    ],
+    "direction": "l"
+  },
+  "bobr": {
+    "coordinates": [
+      -237,
+      -1,
+      -84
+    ],
+    "orientation": [
+      4.8,
+      -3.6
+    ],
+    "direction": "l"
+  },
+  "rr4j": {
+    "coordinates": [
+      238,
+      -1,
+      -84
+    ],
+    "orientation": [
+      4.8,
+      -3.6
+    ],
+    "direction": "b"
+  },
+  "u55r4": {
+    "coordinates": [
+      238,
+      -1,
+      -90
+    ],
+    "orientation": [
+      4.8,
+      -3.6
+    ],
+    "direction": "r"
+  },
+  "bjbmv": {
+    "coordinates": [
+      236,
+      -1,
+      -90
+    ],
+    "orientation": [
+      -4.9,
+      -3.6
+    ],
+    "direction": "r"
+  },
+  "xn6z": {
+    "coordinates": [
+      -239,
+      -1,
+      -90
+    ],
+    "orientation": [
+      -5,
+      -3.6
+    ],
+    "direction": "b"
+  },
+  "15knk": {
+    "coordinates": [
+      -239,
+      -1,
+      -96
+    ],
+    "orientation": [
+      -5,
+      -3.6
+    ],
+    "direction": "l"
+  },
+  "zhooy": {
+    "coordinates": [
+      -237,
+      -1,
+      -96
+    ],
+    "orientation": [
+      4.8,
+      -3.6
+    ],
+    "direction": "l"
+  },
+  "sgqmr": {
+    "coordinates": [
+      238,
+      -1,
+      -96
+    ],
+    "orientation": [
+      4.7,
+      -9.9
+    ],
+    "direction": "b"
+  },
+  "dnaj": {
+    "coordinates": [
+      238,
+      -1,
+      -102
+    ],
+    "orientation": [
+      4.7,
+      -9.9
+    ],
+    "direction": "r"
+  },
+  "esuu7s": {
+    "coordinates": [
+      236,
+      -1,
+      -102
+    ],
+    "orientation": [
+      -4.8,
+      -9.9
+    ],
+    "direction": "r"
+  },
+  "dipg": {
+    "coordinates": [
+      -239,
+      -1,
+      -102
+    ],
+    "orientation": [
+      -4.8,
+      -9.9
+    ],
+    "direction": "b"
+  },
+  "fhiwnq": {
+    "coordinates": [
+      -239,
+      -1,
+      -108
+    ],
+    "orientation": [
+      -4.8,
+      -9.9
+    ],
+    "direction": "l"
+  },
+  "5zm5d": {
+    "coordinates": [
+      -237,
+      -1,
+      -108
+    ],
+    "orientation": [
+      4.7,
+      -9.9
+    ],
+    "direction": "l"
+  },
+  "ew7vx": {
+    "coordinates": [
+      238,
+      -1,
+      -108
+    ],
+    "orientation": [
+      4.7,
+      -9.9
+    ],
+    "direction": "b"
+  },
+  "oq7rk": {
+    "coordinates": [
+      238,
+      -1,
+      -114
+    ],
+    "orientation": [
+      4.7,
+      -9.9
+    ],
+    "direction": "r"
+  },
+  "95fu8": {
+    "coordinates": [
+      236,
+      -1,
+      -114
+    ],
+    "orientation": [
+      -4.8,
+      -9.9
+    ],
+    "direction": "r"
+  },
+  "pxipa9": {
+    "coordinates": [
+      -239,
+      -1,
+      -114
+    ],
+    "orientation": [
+      -4.8,
+      -9.9
+    ],
+    "direction": "b"
+  },
+  "ehwkg": {
+    "coordinates": [
+      -239,
+      -1,
+      -120
+    ],
+    "orientation": [
+      -4.8,
+      -9.9
+    ],
+    "direction": "l"
+  },
+  "9u1nw": {
+    "coordinates": [
+      -237,
+      -1,
+      -120
+    ],
+    "orientation": [
+      4.7,
+      -9.9
+    ],
+    "direction": "l"
+  },
+  "a2qj": {
+    "coordinates": [
+      238,
+      -1,
+      -120
+    ],
+    "orientation": [
+      4.7,
+      -9.9
+    ],
+    "direction": "b"
+  },
+  "2t8ahj": {
+    "coordinates": [
+      238,
+      -1,
+      -126
+    ],
+    "orientation": [
+      4.7,
+      -9.9
+    ],
+    "direction": "r"
+  },
+  "k99p64": {
+    "coordinates": [
+      237,
+      -1,
+      -126
+    ],
+    "orientation": [
+      -4.8,
+      -9.9
+    ],
+    "direction": "r"
+  },
+  "7y0p": {
+    "coordinates": [
+      -239,
+      -1,
+      -126
+    ],
+    "orientation": [
+      -4.8,
+      -9.9
+    ],
+    "direction": "b"
+  },
+  "g2pk": {
+    "coordinates": [
+      -239,
+      -1,
+      -132
+    ],
+    "orientation": [
+      -4.8,
+      -9.9
+    ],
+    "direction": "l"
+  },
+  "z523": {
+    "coordinates": [
+      -237,
+      -1,
+      -132
+    ],
+    "orientation": [
+      4.7,
+      -9.9
+    ],
+    "direction": "l"
+  },
+  "x1ppg4": {
+    "coordinates": [
+      238,
+      -1,
+      -132
+    ],
+    "orientation": [
+      4.7,
+      -9.9
+    ],
+    "direction": "b"
+  },
+  "al17cu": {
+    "coordinates": [
+      238,
+      -1,
+      -138
+    ],
+    "orientation": [
+      4.7,
+      -9.9
+    ],
+    "direction": "r"
+  },
+  "1czv": {
+    "coordinates": [
+      236,
+      -1,
+      -138
+    ],
+    "orientation": [
+      -4.8,
+      -9.9
+    ],
+    "direction": "r"
+  },
+  "0veiuk": {
+    "coordinates": [
+      -239,
+      -1,
+      -138
+    ],
+    "orientation": [
+      -4.8,
+      -9.9
+    ],
+    "direction": "b"
+  },
+  "w46yq6": {
+    "coordinates": [
+      -239,
+      -1,
+      -144
+    ],
+    "orientation": [
+      -4.8,
+      -9.9
+    ],
+    "direction": "l"
+  },
+  "2cjm": {
+    "coordinates": [
+      -236,
+      -1,
+      -144
+    ],
+    "orientation": [
+      4.7,
+      -9.9
+    ],
+    "direction": "l"
+  },
+  "sekm": {
+    "coordinates": [
+      238,
+      -1,
+      -54
+    ],
+    "orientation": [
+      4.7,
+      -0.9
+    ],
+    "direction": "r"
+  },
+  "tnyisi": {
+    "coordinates": [
+      237,
+      -1,
+      -54
+    ],
+    "orientation": [
+      -4.8,
+      -0.9
+    ],
+    "direction": "r"
+  },
+  "57gzk": {
+    "coordinates": [
+      238,
+      73,
+      -52
+    ],
+    "orientation": [
+      -4.1,
+      -5.2
+    ],
+    "direction": "b"
+  }
+}

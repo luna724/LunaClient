@@ -8,6 +8,7 @@ import luna724.iloveichika.gardening.Gardening.Companion.adminConfig
 import luna724.iloveichika.gardening.Gardening.Companion.session
 import luna724.iloveichika.gardening.main.*
 import luna724.iloveichika.gardening.util.SessionOpt
+import luna724.iloveichika.lunaclient.LunaClient.Companion.configManager
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
@@ -33,13 +34,23 @@ class AutoGarden {
     }
 
     private var triggeredTime: Long? = null
+    // 次回のトリガーまでの待機時間 (デフォで500ms)
+    private val triggeredCooldown: Float = configManager.config?.autoGardenCategory?.autoGarden?.movementCooldown ?: 500f
+    private val antiAntiMacro = AntiAntiMacro()
+
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
         // AutoGardenがオフなら終わる
         if (!session.isEnable()) return
 
-        // 次回のトリガーまでは 500ms は待機する
-        if (triggeredTime != null && System.currentTimeMillis() - triggeredTime!! < 500) return
+        // Anti-AntiMacro
+        val aamEnable = configManager.config?.autoGardenCategory?.antiAntiMacroConfig?.antiAntiMacroMainToggle ?: false
+        if (aamEnable) {
+            antiAntiMacro.onTick(event)
+        }
+
+        // 次回のトリガーまでの待機
+        if (triggeredTime != null && System.currentTimeMillis() - triggeredTime!! < triggeredCooldown) return
 
         // XYZの取得
         val currentXYZ: List<Double> = getCurrentXYZ() ?: listOf(0.0, -1.0, 0.0)

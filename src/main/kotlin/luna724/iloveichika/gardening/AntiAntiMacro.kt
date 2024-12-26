@@ -12,11 +12,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 
 class AntiAntiMacro {
-    companion object {
-        private var previousXYZ: List<Double> = listOf(0.0, -1.0, 0.0)
-        private var previousTime: Long? = System.currentTimeMillis()
-        private val delay: Long = 3000L
-    }
+    private var previousXYZ: List<Double> = listOf(0.0, -1.0, 0.0)
+    private var previousTime: Long? = System.currentTimeMillis()
+    private val delay: Long = 3000L
 
     private fun xyzChecker() {
         if (!LunaClient.isPlayerJoining) return
@@ -41,10 +39,8 @@ class AntiAntiMacro {
         //println("XYZ updated, Delay timer reset")
     }
 
-    @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
         try {
-            if (!session.isEnable()) return
             if (mc.thePlayer == null) return
 
             // 座標チェック
