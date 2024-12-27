@@ -5,6 +5,8 @@
 
 ## Warning
 - 現在LunaClient v2 と v1.1.4 は同時に導入可能ですが、コマンド名の競合を起こします
+- LunaClientはポート 8888 を Python FastAPI サーバーに使用します
+- LunaClientは `Python 3.9` 以上 (テスト環境: 3.10.9) を要求します。また、venvを使用せずに `fastapi uvicorn gunicorn` をインストールします
 
 ## Documentations
 - [Wiki (preparing)](https://luna724.github.io/repo/lunaclient)

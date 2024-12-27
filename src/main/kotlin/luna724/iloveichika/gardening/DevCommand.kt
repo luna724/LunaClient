@@ -71,7 +71,16 @@ class DevCommand : CommandBase() {
                     sender.addChatMessage(
                         ChatComponentText("Trying to get Cloud template..")
                     )
-
+                    val success = loadOfficial.loadCloud(cloud_key!!)
+                    if (success == true) {
+                        sender.addChatMessage(
+                            ChatComponentText("Import successful. (try /lcg listxyz)")
+                        )
+                        return
+                    }
+                    else {
+                        sentErrorOccurred("Import Failed from Cloud. ($cloud_key)")
+                    }
                 }
             }
         }

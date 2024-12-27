@@ -1,7 +1,7 @@
 - [v1.1.4以前のインストール方法 / Install v1.1.4 and below](/docs/install_114.md)
 
 ## インストール方法
-- LunaClient v2 は Minecraft Forge を要求します
+- LunaClient v2 は `Minecraft Forge 1.8.9`、`Python3.9+` を要求します
 
 ### GitHubの(pre)リリースからダウンロード
 1. [GitHubのリリースページ](https://github.com/luna724/LunaClient/releases)から最新のv2.0ファイルを取得 (v2.0β-preview)
@@ -17,7 +17,7 @@
 
 
 ## Installation Guide
-- LunaClient v2 requires Minecraft Forge.
+- LunaClient v2 requires `Minecraft Forge 1.8.9` and `Python3.9+`.
 
 ### Download from the GitHub (Pre-Releases)
 1. Go to the [GitHub Release Page]() and get the latest v2.0 file (v2.0β-preview).

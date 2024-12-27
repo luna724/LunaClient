@@ -4,15 +4,15 @@ import luna724.iloveichika.automove.AutoMoveMod
 import luna724.iloveichika.gardening.Gardening
 import luna724.iloveichika.lunaclient.cheating.Blink
 import luna724.iloveichika.lunaclient.commands.CommandManager
-import luna724.iloveichika.lunaclient.vigilanceConfig.Config
-import luna724.iloveichika.lunaclient.vigilanceConfig.PersistentData
 import luna724.iloveichika.lunaclient.config.ConfigManager
 import luna724.iloveichika.lunaclient.config.categories.ModConfig
 import luna724.iloveichika.lunaclient.modules.debug_info.onPlayerLogged
-import luna724.iloveichika.lunaclient.python.PythonAPI
+import luna724.iloveichika.lunaclient.python.InitPythonEnv
 import luna724.iloveichika.lunaclient.utils.InfiniSound
 import luna724.iloveichika.lunaclient.utils.ScoreboardUtil
 import luna724.iloveichika.lunaclient.utils.TabListUtil
+import luna724.iloveichika.lunaclient.vigilanceConfig.Config
+import luna724.iloveichika.lunaclient.vigilanceConfig.PersistentData
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraftforge.common.MinecraftForge
@@ -54,8 +54,6 @@ class LunaClient {
         infiniSound = InfiniSound()
         blink = Blink()
 
-        // NOT WORKING & NEEDED python = PythonAPI()
-
         CommandManager()
     }
 
@@ -70,6 +68,10 @@ class LunaClient {
         gardening.onInit(event)
         MinecraftForge.EVENT_BUS.register(configManager)
         MinecraftForge.EVENT_BUS.register(gardening)
+
+
+        // Python ライブラリをインストール
+        InitPythonEnv()
 
         logger.info("LunaClient successfully initialized.")
     }
@@ -104,9 +106,6 @@ class LunaClient {
         lateinit var tabListUtil: TabListUtil
         lateinit var scoreboardUtil: ScoreboardUtil
         lateinit var blink: Blink
-
-        // Python
-        lateinit var python: PythonAPI
 
         // Inifinite Sound Instances
         lateinit var infiniSound: InfiniSound

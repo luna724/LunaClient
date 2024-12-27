@@ -1,14 +1,14 @@
 package luna724.iloveichika.gardening.util
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
-import com.fasterxml.jackson.module.kotlin.readValue
+import kotlinx.coroutines.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import net.minecraft.util.Session
+import luna724.iloveichika.lunaclient.sentErrorOccurred
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 
 class LoadOfficialPresets {
     companion object {
@@ -39,10 +39,6 @@ class LoadOfficialPresets {
             availableLocalPresetAIO).flatten()
         return availableLocalKeys.contains(key.lowercase())
     }
-
-    data class Preset(
-        val sessions: LinkedHashMap<String, SessionOpt>
-    )
 
     fun loadLocal(key: String): Boolean? {
         if (!validateLocalKey(key)) {
@@ -75,5 +71,65 @@ class LoadOfficialPresets {
 
         saveSessionOpt(data)
         return true
+    }
+
+
+    private suspend fun loadJsonRequest(body: String): String = withContext(Dispatchers.IO) {
+        val connection = URL("http://127.0.0.1:8888/gardening_LoadCloudPreset").openConnection() as HttpURLConnection
+        try {
+            connection.requestMethod = "POST"
+            connection.setRequestProperty("Content-Type", "application/json")
+            connection.doOutput = true
+
+            // リクエストボディを書き込み
+            connection.outputStream.use { os ->
+                os.write(body.toByteArray(Charsets.UTF_8))
+            }
+
+            // レスポンスを取得
+            connection.inputStream.use { input ->
+                input.bufferedReader().use { it.readText() }
+            }
+        } finally {
+            connection.disconnect()
+        }
+    }
+
+    fun loadCloud(key: String): Boolean? {
+        try {
+            var returnValue: Boolean? = null
+            runBlocking {
+                val asyncing = async {
+                    loadJsonRequest("{\"key\": \"$key\"}")
+                }
+                val response = asyncing.await()
+                if (response.isEmpty() || response == "") {
+                    returnValue = false
+                    return@runBlocking
+                }
+                if (response.startsWith("FATAL ERROR")) {
+                    sentErrorOccurred(response)
+                    returnValue= false
+                    return@runBlocking
+                }
+
+                val cleanedJson = response
+                    .replace("\\n", "")     // 不要な改行エスケープを削除
+                    .replace("\\\"", "\"")  // \" を " に置換
+                    .removePrefix("\"")     // 先頭の " を取り除く
+                    .removeSuffix("\"")
+                println("Response: $cleanedJson")
+                val mapper = object : TypeToken<LinkedHashMap<String, SessionOpt>>() {}.type
+                val data: LinkedHashMap<String, SessionOpt> = Gson().fromJson(cleanedJson, mapper)
+                saveSessionOpt(data)
+                returnValue = true
+            }
+            return returnValue
+        }
+        catch (e: Throwable) {
+            e.printStackTrace()
+            sentErrorOccurred(e.message ?: "Unknown Error", report=true)
+            return null
+        }
     }
 }

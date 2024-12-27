@@ -1,8 +1,6 @@
 package luna724.iloveichika.gardening.commands
 
-import luna724.iloveichika.gardening.main.checkDirectionsCorrectly
-import luna724.iloveichika.gardening.main.getCurrentRotation
-import luna724.iloveichika.gardening.main.getCurrentXYZ
+import luna724.iloveichika.gardening.main.*
 import luna724.iloveichika.gardening.util.SessionOpt
 import luna724.iloveichika.gardening.util.addSessionOpt
 import luna724.iloveichika.gardening.util.loadSessionOpt
@@ -180,19 +178,23 @@ class ManageXYZ {
     fun currentXYZ(
         sender: ICommandSender, args: Array<String>
     ) {
-        val currentXYZ = getCurrentXYZ(1) ?: run {
+        val currentXYZ = getCurrentXYZ() ?: run {
             sendError("Failed to retrieve current XYZ.")
             return
         }
 
-        val sessionOpt = loadSessionOpt() // 現在のSessionOptを取得
+        val sessionOpt = getSessionOption() ?: run {
+            sendError("Failed to retrieve session option.")
+            return
+        } // 現在のSessionOptを取得
         var triggeredKey: String? = null
 
-        // 現在の座標と保存された座標を比較して一致するものを探す
-        sessionOpt.forEach { (key, value) ->
-            if (value.coordinates == currentXYZ) {
-                triggeredKey = key
-                return@forEach
+        // sessionOpt を座標リストに変換
+        val xyzLists: List<List<Double>> = convertSessionOptToXYZLists(sessionOpt)
+        val (matched, index) = checkXYZisIn(xyzLists, currentXYZ)
+        if (matched) {
+            sessionOpt.entries.toList()[index].key.let {
+                triggeredKey = it
             }
         }
 

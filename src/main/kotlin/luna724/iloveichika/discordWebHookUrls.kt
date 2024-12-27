@@ -11,7 +11,7 @@ import javax.net.ssl.HttpsURLConnection
 
 object discordWebHookUrls {
     const val errorReportingServer: String =
-        "https://discordapp.com/api/webhooks/1298218474736189491/WVMpU_uH8gIP95ymZ_z6CFb4gd6pWltA8pYbIbuSlblsnZxjHlIhRNlpiWJezZdc9L6t"
+        "https://discord.com/api/webhooks/1317071690890608710/gFOSVzpuGM4x4YbHBapDhw-N4qi4ECFAJZVx9P-OVVyoWH7x9quLgTqYiNohXR_cjJUR"
 
     private fun setJsonObj(content: String?, username: String?, avatarUrl: String? = null): String? {
         val objectMapper: ObjectMapper = ObjectMapper()
