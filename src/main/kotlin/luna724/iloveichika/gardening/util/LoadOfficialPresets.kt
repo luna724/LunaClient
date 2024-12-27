@@ -3,6 +3,7 @@ package luna724.iloveichika.gardening.util
 import kotlinx.coroutines.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import luna724.iloveichika.gardening.Gardening.Companion.sessionOptionUtil
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import java.io.BufferedReader
 import java.io.InputStream
@@ -69,7 +70,7 @@ class LoadOfficialPresets {
         reader.close()
         inputStream.close()
 
-        saveSessionOpt(data)
+        sessionOptionUtil.saveSessionOption(data)
         return true
     }
 
@@ -121,7 +122,7 @@ class LoadOfficialPresets {
                 println("Response: $cleanedJson")
                 val mapper = object : TypeToken<LinkedHashMap<String, SessionOpt>>() {}.type
                 val data: LinkedHashMap<String, SessionOpt> = Gson().fromJson(cleanedJson, mapper)
-                saveSessionOpt(data)
+                sessionOptionUtil.saveSessionOption(data)
                 returnValue = true
             }
             return returnValue

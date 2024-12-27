@@ -6,18 +6,29 @@ import luna724.iloveichika.automove.startAutoMove
 import luna724.iloveichika.automove.stopAutoMove
 import luna724.iloveichika.gardening.Gardening.Companion.adminConfig
 import luna724.iloveichika.gardening.Gardening.Companion.session
-import luna724.iloveichika.gardening.main.*
+import luna724.iloveichika.gardening.Gardening.Companion.sessionOptionUtil
+import luna724.iloveichika.gardening.main.checkDirectionsCorrectly
+import luna724.iloveichika.gardening.main.checkXYZisIn
+import luna724.iloveichika.gardening.main.convertSessionOptToXYZLists
+import luna724.iloveichika.gardening.main.getCurrentXYZ
 import luna724.iloveichika.gardening.util.SessionOpt
 import luna724.iloveichika.lunaclient.LunaClient.Companion.configManager
-import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 
 class AutoGarden {
+    private fun changeAutoMoveDirection(movements: String) {
+        val specialDirectionFunction: List<String> = listOf(
+            "reset", "spawn"
+        )
+        // 知らないものはフィルタ済みなので実行
+
+
+    }
+
     /**
-     * onTick用の特別関数
-     * プレイヤーの向き、視点変更を行う
-     */
+     * AutoGarden トリガー時の要素
+     *      */
     private fun swapMovement(
         yaw: Double, pitch: Double, movements: String
     ) {
@@ -46,7 +57,7 @@ class AutoGarden {
         // Anti-AntiMacro
         val aamEnable = configManager.config?.autoGardenCategory?.antiAntiMacroConfig?.antiAntiMacroMainToggle ?: false
         if (aamEnable) {
-            antiAntiMacro.onTick(event)
+            antiAntiMacro.tick()
         }
 
         // 次回のトリガーまでの待機
@@ -54,11 +65,7 @@ class AutoGarden {
 
         // XYZの取得
         val currentXYZ: List<Double> = getCurrentXYZ() ?: listOf(0.0, -1.0, 0.0)
-        val sessionOpt: LinkedHashMap<String, SessionOpt>? = getSessionOption()
-        if (sessionOpt == null) {
-            sentErrorOccurred("SessionOption is Null!")
-            return
-        }
+        val sessionOpt: LinkedHashMap<String, SessionOpt> = sessionOptionUtil.loadSessionOption()
 
         // sessionOpt を座標リストに変換
         val xyzLists: List<List<Double>> = convertSessionOptToXYZLists(sessionOpt)

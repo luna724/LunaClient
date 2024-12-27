@@ -4,6 +4,7 @@ import com.moandjiezana.toml.Toml
 import com.moandjiezana.toml.TomlWriter
 import java.io.File
 
+@Deprecated("すべての設定を /lc に統合するべき")
 data class AdminConfig(
     /**プレイヤーがこの期間動かなかったら停止する*/
     val antiAntiMacroTriggerDelay: Long = 3000 ,// ms
@@ -51,6 +52,7 @@ data class AdminConfig(
     )
 
 class TomlConfigManager(private val configFile: File) {
+    @Deprecated("すべての AdminConfig は /lc の設定で決めれる必要性がある")
     var config: AdminConfig = AdminConfig()
     private val tomlWriter = TomlWriter()
 
@@ -58,7 +60,7 @@ class TomlConfigManager(private val configFile: File) {
         loadConfig()
     }
 
-    fun loadConfig() {
+    private fun loadConfig() {
         if (configFile.exists()) {
             config = Toml().read(configFile).to(AdminConfig::class.java)
         } else {
@@ -66,7 +68,7 @@ class TomlConfigManager(private val configFile: File) {
         }
     }
 
-    fun saveConfig() {
+    private fun saveConfig() {
         tomlWriter.write(config, configFile)
     }
 }

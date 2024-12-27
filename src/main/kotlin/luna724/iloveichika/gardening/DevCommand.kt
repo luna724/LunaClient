@@ -1,14 +1,11 @@
 package luna724.iloveichika.gardening
 
-import luna724.iloveichika.lunaclient.sendChat
-import luna724.iloveichika.gardening.dev.ManageXYZ
 import luna724.iloveichika.gardening.util.LoadOfficialPresets
+import luna724.iloveichika.lunaclient.sendChat
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraft.command.CommandBase
 import net.minecraft.command.ICommandSender
 import net.minecraft.util.ChatComponentText
-import scala.xml.Null
-import kotlinx.coroutines.Dispatchers
 import java.util.*
 
 class DevCommand : CommandBase() {
@@ -36,7 +33,6 @@ class DevCommand : CommandBase() {
                 return
             }
             val trigger: String = args[0].lowercase(Locale.getDefault())
-            val manageXYZ = ManageXYZ()
 
             if (trigger.equals("import_official", ignoreCase = true)) {
                 val key: String? = args.getOrNull(1)?.lowercase()

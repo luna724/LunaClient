@@ -1,10 +1,8 @@
 package luna724.iloveichika.gardening.commands
 
+import luna724.iloveichika.gardening.Gardening.Companion.sessionOptionUtil
 import luna724.iloveichika.gardening.main.*
 import luna724.iloveichika.gardening.util.SessionOpt
-import luna724.iloveichika.gardening.util.addSessionOpt
-import luna724.iloveichika.gardening.util.loadSessionOpt
-import luna724.iloveichika.gardening.util.removeSessionOpt
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.lunaclient.utils.generateUniqueBase64Key
 import net.minecraft.command.ICommandSender
@@ -26,7 +24,7 @@ class ManageXYZ {
         )
     }
 
-    fun makeRemove(base: ChatComponentText, key: String): IChatComponent {
+    private fun makeRemove(base: ChatComponentText, key: String): IChatComponent {
         val command = "/lcg removexyz ${key}"
         val remove = ChatComponentText("[Remove]").apply {
             chatStyle = ChatStyle()
@@ -41,6 +39,7 @@ class ManageXYZ {
         return base
     }
 
+    @Deprecated("TODO: この機能の完全な実装")
     private fun makeRestore(base: ChatComponentText, sessionOptValue: SessionOpt): IChatComponent {
         val command = "/"
         val restore = ChatComponentText("[Restore Currently NOT Supported]").apply {
@@ -78,7 +77,7 @@ class ManageXYZ {
         if (args.any { it.equals("ignorey", ignoreCase = true) }) ignoreY = true
         if (args.any { it.equals("changepitch", ignoreCase = true) }) changePitch = true
         val key: String = generateUniqueBase64Key(
-            loadSessionOpt().keys
+            sessionOptionUtil.loadSessionOption().keys
         )
         val xyz:MutableList<Double> = getCurrentXYZ(1)?.toMutableList() ?: run {
             sendError("Exception in getCurrentXYZ()")
@@ -93,10 +92,14 @@ class ManageXYZ {
             xyz[1] = -1.0 // Y を -1 に
         }
 
-        addSessionOpt(key, SessionOpt(
+        val result = sessionOptionUtil.addSessionOpt(key, SessionOpt(
             xyz, rotation, direction, changePitch
-        )
-        )
+        ), overwrite = false)
+        if (!result) {
+            sendError("Keys already found. probably reached max key count. try again")
+            return
+        }
+
         val baseMsg = ChatComponentText("$HEADER§aSaved as §l${key}§r. §7(XYZ: ${xyz}, Rotation: ${rotation}, Direction: ${direction}) ")
         sender.addChatMessage(
             makeRemove(baseMsg, key)
@@ -112,32 +115,33 @@ class ManageXYZ {
         }
 
         val targetKey = args[1]
-        val sessionOpt = loadSessionOpt() // 現在のSessionOptを取得
-
+        val sessionOpt = sessionOptionUtil.loadSessionOption()
         // 対象キーが存在しない場合のエラー処理
         if (!sessionOpt.containsKey(targetKey)) {
             sendError("Key '$targetKey' does not exist.")
             return
         }
 
-        // キーの値を保持
-        val sessionOptValue: SessionOpt = sessionOpt[targetKey]!!
+        val backupSessionOpt: SessionOpt = sessionOpt[targetKey]!! // バックアップを作成し、キーを削除
+        val result: Boolean = sessionOptionUtil.removeSessionOpt(targetKey)
 
-        // キーを削除
-        removeSessionOpt(targetKey)
-
-        // 削除完了のメッセージを送信
-        val baseMsg = ChatComponentText("$HEADER§aDeleted §l$targetKey§r.")
-        sender.addChatMessage(
-            //makeRestore(baseMsg, sessionOptValue)
-            baseMsg
-        )
+        if (result) {
+            val baseMsg = ChatComponentText("$HEADER§aDeleted §l$targetKey§r.")
+            sender.addChatMessage(
+                //makeRestore(baseMsg, sessionOptValue) TODO: [Restore] の作成
+                baseMsg
+            )
+        }
+        else {
+            sendError("Failed to delete $targetKey. (does not exist?)")
+            return
+        }
     }
 
     fun listXYZ(
         sender: ICommandSender, args: Array<String>
     ) {
-        val sessionOpt = loadSessionOpt() // 現在のSessionOptを取得
+        val sessionOpt = sessionOptionUtil.loadSessionOption() // 現在のSessionOptを取得
 
         if (sessionOpt.isEmpty()) {
             // 登録データがない場合の処理
@@ -183,10 +187,7 @@ class ManageXYZ {
             return
         }
 
-        val sessionOpt = getSessionOption() ?: run {
-            sendError("Failed to retrieve session option.")
-            return
-        } // 現在のSessionOptを取得
+        val sessionOpt = sessionOptionUtil.loadSessionOption() // 現在のSessionOptを取得
         var triggeredKey: String? = null
 
         // sessionOpt を座標リストに変換

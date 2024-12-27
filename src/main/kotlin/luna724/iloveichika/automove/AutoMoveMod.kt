@@ -24,7 +24,7 @@ class AutoMoveMod {
         MinecraftForge.EVENT_BUS.register(rotationManager)
     }
 
-    fun onInit(event: FMLInitializationEvent?) {
+    fun onInit() {
         // クライアントサイドのコマンドを登録
         ClientCommandHandler.instance.registerCommand(CommandAutoMove(autoMoveInstance))
         ClientCommandHandler.instance.registerCommand(gdCommand())

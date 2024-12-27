@@ -7,6 +7,7 @@ import net.minecraft.util.ChatComponentText
  * 処理する方向があって要るかどうかを確認する
  * rlfb の文字列、または reset, spawn 出ない場合は null を返す
  */
+@Deprecated("use SessionOptions")
 fun checkDirectionsCorrectly(direction: String): String? {
     // setxyz <trigger> に渡される Direction を正則化する
     val availableChar = "rlfb"

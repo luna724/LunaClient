@@ -39,7 +39,7 @@ class AntiAntiMacro {
         //println("XYZ updated, Delay timer reset")
     }
 
-    fun onTick(event: TickEvent.ClientTickEvent) {
+    fun tick() {
         try {
             if (mc.thePlayer == null) return
 

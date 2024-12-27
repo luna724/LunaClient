@@ -64,11 +64,10 @@ class LunaClient {
         ).forEach(MinecraftForge.EVENT_BUS::register)
         configManager = ConfigManager()
 
-        autoMove.onInit(event)
-        gardening.onInit(event)
+        autoMove.onInit()
+        gardening.onInit()
         MinecraftForge.EVENT_BUS.register(configManager)
         MinecraftForge.EVENT_BUS.register(gardening)
-
 
         // Python ライブラリをインストール
         InitPythonEnv()
