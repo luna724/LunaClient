@@ -21,6 +21,10 @@ class CommandAutoMove(private val autoMove: AutoMove) : CommandBase() {
         return "automove"
     }
 
+    override fun getCommandAliases(): List<String> {
+        return listOf("am", "lc_automove", "lcam")
+    }
+
     override fun getCommandUsage(sender: ICommandSender): String {
         return "/automove <toggle|setdirection|hoverclick> {L/R/F}"
     }
@@ -129,9 +133,6 @@ class CommandAutoMove(private val autoMove: AutoMove) : CommandBase() {
     }
 
     override fun getRequiredPermissionLevel(): Int {
-        return 0 // 権限レベル0（すべてのプレイヤーが使用可能）
-    }
-
-    companion object {
+        return 0
     }
 }

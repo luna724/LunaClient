@@ -6,7 +6,6 @@ import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.lunaclient.sendChat
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraft.client.settings.KeyBinding
-import net.minecraft.command.ICommandSender
 import net.minecraft.util.ChatComponentText
 import java.util.*
 
@@ -32,8 +31,8 @@ fun changeDirection(
 ) {
     autoMoveInstance.settings.autoMoveDirection = 0
     val key = direction.lowercase(Locale.getDefault())
-    if (key.equals("reset", ignoreCase = true)) {
-        val msg = " [§dLC-AutoMove§f]: §6Changed direction to §a§lNaN"
+    if (key.equals("reset", ignoreCase = true) || key.isEmpty()) {
+        val msg = " [§dLC-AutoMove§f]: §6direction removed."
         sendChat(
             ChatComponentText(msg)
         )
@@ -62,10 +61,6 @@ fun changeDirection(
     sendChat(
         ChatComponentText(msg)
     )
-}
-
-fun isEnable(): Boolean {
-    return autoMoveSettings.autoMoveEnabled
 }
 
 private val keyBinds: IntArray

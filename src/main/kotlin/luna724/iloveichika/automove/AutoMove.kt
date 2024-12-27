@@ -1,7 +1,7 @@
 package luna724.iloveichika.automove
 
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
-import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.settings.KeyBinding
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly
 import java.util.*
 
 @SideOnly(Side.CLIENT)
-class AutoMove(val settings: Settings, val rotationManager: RotationManager) {
+class AutoMove(val settings: AutoMoveSettings, val rotationManager: RotationManager) {
     private val keyBinds: IntArray
         get() {
             /*0=Forward, 1=Backward, 2=Left, 3=Right, 4=Attack*/
@@ -62,10 +62,10 @@ class AutoMove(val settings: Settings, val rotationManager: RotationManager) {
 
         // GUIが開いている場合は動作を行わない
         if (mc.currentScreen != null) {
-            // TODO: Vigilance GUI など、クライアントサイドGUIを許可する設定を追加
-
-            //System.out.println("Current screen != null!. Current screen: " + mc.currentScreen.toString());
-            return
+            if (mc.currentScreen is GuiContainer) {
+                // GuiContainer を継承するサーバーにも認識される GUI なら動作停止
+                return
+            }
         }
         val player = mc.thePlayer ?: return
 
@@ -103,7 +103,6 @@ class AutoMove(val settings: Settings, val rotationManager: RotationManager) {
         }
 
         if (settings.autoMoveEnabled) {
-            println("Stopped AutoMoving by Safety Module.")
             settings.autoMoveEnabled = false
             stopAutoMove()
         }

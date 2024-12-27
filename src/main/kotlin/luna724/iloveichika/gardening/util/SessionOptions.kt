@@ -23,6 +23,10 @@ class SessionOptions {
         private val sessionOptionBackupDirectory: File = File(
             configDirectory, "backup_session"
         )
+
+        // 使用可能な direction
+        val availableDirectionChar: String = "rlfb"
+        val availableDirectionTrigger: List<String> = listOf("reset", "spawn")
     }
 
     init { // 必ずエラーになるものを事前に作成
@@ -32,6 +36,7 @@ class SessionOptions {
 
     /**
      * SessionOption が存在するかどうかの確認を行う
+     *
      * 存在しない場合、空の内容で再生成する
      */
     private fun checkSessionOptionExists() {
@@ -43,6 +48,7 @@ class SessionOptions {
 
     /**
      * 実際に開いてみてキャッチ可能なエラーをすべて試す
+     *
      * また、致命的なものはそのままスローする
      */
     private fun trySessionOptionIO() {
@@ -93,6 +99,7 @@ class SessionOptions {
 
     /**
      * SessionOpt IO 時に必ず呼び出すべき関数
+     *
      * IOエラーの可能性を事前に解消する
      *
      * 外部クラスから呼び出すことはあまり推奨しない (Gardening.kt:onInit にて利用させるためにprivateではない)
@@ -124,6 +131,7 @@ class SessionOptions {
 
     /**
      * SessionOpt の連番を返す
+     *
      * 実質的にはJsonを読み込んだものをそのまま返すため、多用される関数
      */
     fun loadSessionOption(): LinkedHashMap<String, SessionOpt> {
@@ -135,6 +143,7 @@ class SessionOptions {
 
     /**
      * 単一の SessionOpt とキーを受け取り、連番に追加する
+     *
      * この動作は現在のファイルを即座に変更する
      *
      * @return: 追加に成功したかどうか
@@ -152,6 +161,7 @@ class SessionOptions {
 
     /**
      * 単一の SessionOpt をキーから消す
+     *
      * この動作は現在のファイルを即座に変更する
      *
      * @return: キーが存在したかどうか
@@ -167,8 +177,18 @@ class SessionOptions {
     }
 
     /**
+     * SessionOpt の direction が正しいかどうかを確かめる
      *
+     * 利用可能な値は object にて定義される
+     *
+     * @return: 正しい場合は渡した値、正しくない場合は Null を返す。
+     *
+     * そのため、val direction = isDirectionValid(args[1]) ?: "reset" のような利用を想定している
      */
+    fun isDirectionValid(
+        direction: String
+    ): String? {
 
+    }
 }
 

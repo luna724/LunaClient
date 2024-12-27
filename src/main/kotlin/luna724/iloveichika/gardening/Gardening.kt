@@ -1,15 +1,14 @@
 package luna724.iloveichika.gardening
 
-import luna724.iloveichika.automove.gdCommand
-import luna724.iloveichika.gardening.util.SessionOptions
 import luna724.iloveichika.gardening.pest.PestCounter
 import luna724.iloveichika.gardening.pest.PestInfo
 import luna724.iloveichika.gardening.util.AutoGardenSession
+import luna724.iloveichika.gardening.util.SessionOptions
 import luna724.iloveichika.gardening.util.ToggleAutoGarden
+import luna724.iloveichika.gardening.util.WarpGardenAlias
 import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.ModMetadata
-import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import java.io.File
 import java.nio.file.Path
@@ -27,12 +26,12 @@ class Gardening {
         val pestCounter = PestCounter()
         pestInfo = pestCounter.config
 
-        val gdCommand = gdCommand()
+        val gardenAlias = WarpGardenAlias()
         val commandLCG = Command()
         val devCommand = DevCommand()
 
         ClientCommandHandler.instance.registerCommand(devCommand)
-        ClientCommandHandler.instance.registerCommand(gdCommand)
+        ClientCommandHandler.instance.registerCommand(gardenAlias)
         ClientCommandHandler.instance.registerCommand(commandLCG)
     }
 
