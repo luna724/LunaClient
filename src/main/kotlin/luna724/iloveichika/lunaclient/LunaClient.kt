@@ -64,10 +64,10 @@ class LunaClient {
         listOf(
             this
         ).forEach(MinecraftForge.EVENT_BUS::register)
+        configManager = ConfigManager()
 
         autoMove.onInit(event)
         gardening.onInit(event)
-        configManager = ConfigManager()
         MinecraftForge.EVENT_BUS.register(configManager)
         MinecraftForge.EVENT_BUS.register(gardening)
 

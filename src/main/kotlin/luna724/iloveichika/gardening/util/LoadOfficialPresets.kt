@@ -3,6 +3,8 @@ package luna724.iloveichika.gardening.util
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import net.minecraft.util.Session
 import java.io.BufferedReader
 import java.io.InputStream
@@ -65,12 +67,13 @@ class LoadOfficialPresets {
         val inputStream: InputStream = this.javaClass.classLoader.getResourceAsStream(resourcePath) ?: return null
         val reader = BufferedReader(InputStreamReader(inputStream))
         val content = reader.readText()
-        val mapper = ObjectMapper().registerModules(KotlinModule())
-        val data: Preset = mapper.readValue(content)
+        val mapper = object : TypeToken<LinkedHashMap<String, SessionOpt>>() {}.type
+        val data: LinkedHashMap<String, SessionOpt> = Gson().fromJson(content, mapper)
+
         reader.close()
         inputStream.close()
 
-        saveSessionOpt(data.sessions)
+        saveSessionOpt(data)
         return true
     }
 }
