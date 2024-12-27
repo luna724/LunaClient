@@ -1,11 +1,13 @@
 ## Auto Garden
-LunaClient / Auto Garden は以下のMODを要求します。
+LunaClient v1.1.4 / Auto Garden は以下のMODを要求します。
 - [LC-AutoMove](https://github.com/luna724/LC-AutoMove/releases): v2.2以上
 
-- `/lc_gardening help` でゲーム内ヘルプを表示
+- `/lcgardening` でゲーム内ヘルプを表示
+
 
 ### コマンド一覧
 全てのコマンドは `/lc_gardening` で開始します <br>
+[v2の場合、Wikiにて全仕様を確認できます](https://luna724.github.io/repo/lunaclient)
 
 - `/lcg gui` <br>
 プリセットに依存しない固定変数の設定があるメニュー <br>

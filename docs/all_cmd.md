@@ -1,4 +1,4 @@
-1. /openconfig `tmp WIP`
+1. /lc
 - LunaClientコンフィグメニューを開く
 
 2. /automove

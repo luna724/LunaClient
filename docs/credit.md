@@ -1,5 +1,5 @@
 # Using Softwares
-- Kotlin (1.7.10)
+- Kotlin (1.9.0)
 - Minecraft (1.8.9) (Mapping: de.oceanlabs.mcp:mcp_stable:22-1.8.9)
 - Minecraft Forge (net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9)
 - Essential Loom (gg.essential.loom 0.10.0.+)
@@ -23,8 +23,9 @@
 - [hannibal002/Example-1.8.9-Mod](https://github.com/hannibal002/Example-1.8.9-Mod): install MoulConfig
 - [appable0/Forge-Kotlin-Essential-1.8.9-Template](https://github.com/appable0/Forge-Kotlin-Essential-1.8.9-Template): base template
 - [Skytils/SkytilsMod](https://github.com/Skytils/SkytilsMod): example code
-- [SkidderMC/FDPClient](https://github.com/SkidderMC/FDPClient): blink example code
-- [Wurst-Imperium/Wurst7](https://github.com/Wurst-Imperium/Wurst7/): blink example code
+- [SkidderMC/FDPClient](https://github.com/SkidderMC/FDPClient): example code
+- [Wurst-Imperium/Wurst7](https://github.com/Wurst-Imperium/Wurst7/): example code
+- [hannibal002/SkyHanni](https://github.com/hannibal002/skyhanni): example code
 
 ### merged my repositories
 - [AutoMove](https://github.com/luna724/LC-AutoMove)
