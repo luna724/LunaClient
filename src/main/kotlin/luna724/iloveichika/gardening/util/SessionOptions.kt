@@ -15,6 +15,10 @@ data class SessionOpt(
     val coordinates: List<Double> = listOf(0.0, 0.0, 0.0), val orientation: List<Double> = listOf(0.0, 0.0), val direction: String = "reset", val changePitch: Boolean = false
 )    // coordinates: [X,Y,Z], orientation: [Yaw, Pitch], direction: anyDirection (literalString), changePitch: changePitch
 
+/**
+ * SessionOpt に関する物を管理するクラス
+ * インスタンス化は Gardening でのみ許可される
+ */
 class SessionOptions {
     companion object {
         private val currentSessionOptionFile: File = File(currentSessionOptionsPath.toUri())
@@ -188,7 +192,33 @@ class SessionOptions {
     fun isDirectionValid(
         direction: String
     ): String? {
+        val dir = direction.lowercase()
+        if (availableDirectionTrigger.contains(dir)) return dir
 
+        val regex = Regex("^[${availableDirectionChar}]+$")
+        if (regex.matches(dir)) {
+            return dir
+        }
+
+        sentErrorOccurred("\"direction\" can only contains l, r, f, b and special trigger. but got $dir", report = false)
+        return null
     }
+
+    /**
+     * SessionOptの連番から coordinates をすべて摘出する
+     *
+     * @return: 渡された SessionOptの連番の coordinates を摘出したリスト
+     */
+    fun convertSessionOptionToCoordLists(sessionOption: LinkedHashMap<String, SessionOpt>): List<List<Double>> {
+        val xyzLists: MutableList<List<Double>> = mutableListOf()
+        for ((_, v: SessionOpt) in sessionOption) {
+            xyzLists.add(v.coordinates)
+        }
+        return xyzLists
+    }
+
+    /**
+     *
+     */
 }
 

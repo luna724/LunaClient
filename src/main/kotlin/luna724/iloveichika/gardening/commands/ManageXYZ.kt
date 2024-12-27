@@ -1,5 +1,8 @@
 package luna724.iloveichika.gardening.commands
 
+import luna724.iloveichika.gardening.Gardening
+import luna724.iloveichika.gardening.Gardening.Companion
+import luna724.iloveichika.gardening.Gardening.Companion.playerPosUtil
 import luna724.iloveichika.gardening.Gardening.Companion.sessionOptionUtil
 import luna724.iloveichika.gardening.main.*
 import luna724.iloveichika.gardening.util.SessionOpt
@@ -70,7 +73,7 @@ class ManageXYZ {
         }
         // 条件がそろった場合、setXYZ.py を呼び出す
 
-        val direction: String = checkDirectionsCorrectly(args[1]) ?: return
+        val direction: String = sessionOptionUtil.isDirectionValid(args[1]) ?: return
         var ignoreY = false
         var changePitch = false
 
@@ -79,14 +82,8 @@ class ManageXYZ {
         val key: String = generateUniqueBase64Key(
             sessionOptionUtil.loadSessionOption().keys
         )
-        val xyz:MutableList<Double> = getCurrentXYZ(1)?.toMutableList() ?: run {
-            sendError("Exception in getCurrentXYZ()")
-            return
-        }
-        val rotation = getCurrentRotation(1) ?: run {
-            sendError("Exception in getCurrentRotation()")
-            return
-        }
+        val xyz:MutableList<Double> = playerPosUtil.getPlayerPosition(1).toMutableList()
+        val rotation = playerPosUtil.getPlayerRotation(1)
 
         if (ignoreY) {
             xyz[1] = -1.0 // Y を -1 に
@@ -182,17 +179,13 @@ class ManageXYZ {
     fun currentXYZ(
         sender: ICommandSender, args: Array<String>
     ) {
-        val currentXYZ = getCurrentXYZ() ?: run {
-            sendError("Failed to retrieve current XYZ.")
-            return
-        }
-
+        val currentXYZ = playerPosUtil.getPlayerPosition(2)
         val sessionOpt = sessionOptionUtil.loadSessionOption() // 現在のSessionOptを取得
         var triggeredKey: String? = null
 
         // sessionOpt を座標リストに変換
-        val xyzLists: List<List<Double>> = convertSessionOptToXYZLists(sessionOpt)
-        val (matched, index) = checkXYZisIn(xyzLists, currentXYZ)
+        val xyzLists: List<List<Double>> = sessionOptionUtil.convertSessionOptionToCoordLists(sessionOpt)
+        val (matched, index) = playerPosUtil.XYZisIn(xyzLists, currentXYZ)
         if (matched) {
             sessionOpt.entries.toList()[index].key.let {
                 triggeredKey = it

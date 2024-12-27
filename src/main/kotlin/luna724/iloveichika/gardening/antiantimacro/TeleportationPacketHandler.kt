@@ -1,9 +1,7 @@
 package luna724.iloveichika.gardening.antiantimacro
 
+import luna724.iloveichika.gardening.Gardening.Companion.playerPosUtil
 import luna724.iloveichika.gardening.Gardening.Companion.session
-import luna724.iloveichika.gardening.main.getCurrentRotation
-import luna724.iloveichika.gardening.main.getCurrentXYZ
-import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.lunaclient.sendChat
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import luna724.iloveichika.lunaclient.utils.playSound
@@ -11,7 +9,6 @@ import luna724.iloveichika.lunaclient.utils.showPrimaryTextWindow
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.ChatComponentText
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo
-import tv.twitch.chat.Chat
 import kotlin.math.abs
 
 class TeleportationPacketHandler {
@@ -44,8 +41,8 @@ class TeleportationPacketHandler {
         val atYaw = packet.yaw
         val atPitch = packet.pitch
 
-        val currentXYZ = getCurrentXYZ(4) ?: return false
-        val currentRotation = getCurrentRotation(1) ?: return false
+        val currentXYZ = playerPosUtil.getPlayerPosition(4)
+        val currentRotation = playerPosUtil.getPlayerRotation(1)
         val x = currentXYZ[0]
         val y = currentXYZ[1]
         val z = currentXYZ[2]

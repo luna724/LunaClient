@@ -3,8 +3,8 @@ package luna724.iloveichika.gardening
 import luna724.iloveichika.gardening.pest.PestCounter
 import luna724.iloveichika.gardening.pest.PestInfo
 import luna724.iloveichika.gardening.util.AutoGardenSession
+import luna724.iloveichika.gardening.util.PlayerPosUtil
 import luna724.iloveichika.gardening.util.SessionOptions
-import luna724.iloveichika.gardening.util.ToggleAutoGarden
 import luna724.iloveichika.gardening.util.WarpGardenAlias
 import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
@@ -29,6 +29,7 @@ class Gardening {
         val gardenAlias = WarpGardenAlias()
         val commandLCG = Command()
         val devCommand = DevCommand()
+        playerPosUtil = PlayerPosUtil()
 
         ClientCommandHandler.instance.registerCommand(devCommand)
         ClientCommandHandler.instance.registerCommand(gardenAlias)
@@ -40,7 +41,6 @@ class Gardening {
         val pestCounter = PestCounter()
         autoGarden = AutoGarden()
         session = AutoGardenSession()
-        toggle = ToggleAutoGarden()
 
         MinecraftForge.EVENT_BUS.register(autoGarden)
         MinecraftForge.EVENT_BUS.register(aamInstances)
@@ -57,7 +57,7 @@ class Gardening {
         lateinit var pestInfo: PestInfo
         lateinit var autoGarden: AutoGarden
         lateinit var session: AutoGardenSession
-        lateinit var toggle: ToggleAutoGarden
+        lateinit var playerPosUtil: PlayerPosUtil
 
         const val HEADER: String = "§6[§2Auto-Garden§6]§f: "
 
