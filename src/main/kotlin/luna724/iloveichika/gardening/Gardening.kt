@@ -29,6 +29,7 @@ class Gardening {
         val gardenAlias = WarpGardenAlias()
         val commandLCG = Command()
         val devCommand = DevCommand()
+        sessionOptionUtil = SessionOptions()
         playerPosUtil = PlayerPosUtil()
 
         ClientCommandHandler.instance.registerCommand(devCommand)
@@ -61,6 +62,6 @@ class Gardening {
 
         const val HEADER: String = "§6[§2Auto-Garden§6]§f: "
 
-        val sessionOptionUtil = SessionOptions()
+        lateinit var sessionOptionUtil: SessionOptions
     }
 }

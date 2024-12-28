@@ -12,7 +12,7 @@ class AutoMoveMod {
         autoMoveSettings = AutoMoveSettings(configFile)
 
         // AutoMoveを初期化
-        val rotationManager = RotationManager()
+        rotationManager = RotationManager()
         autoMoveInstance = AutoMove(autoMoveSettings, rotationManager) // autoMove の初期化
 
         // イベントバスに登録してTickイベントを監視
@@ -27,5 +27,6 @@ class AutoMoveMod {
     companion object {
         lateinit var autoMoveInstance: AutoMove
         lateinit var autoMoveSettings: AutoMoveSettings
+        lateinit var rotationManager: RotationManager
     }
 }

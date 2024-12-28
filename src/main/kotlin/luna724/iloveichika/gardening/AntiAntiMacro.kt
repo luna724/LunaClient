@@ -6,12 +6,16 @@ import luna724.iloveichika.gardening.Gardening.Companion.session
 import luna724.iloveichika.lunaclient.LunaClient
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.lunaclient.sentErrorOccurred
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.common.gameevent.TickEvent
 
+@Deprecated("REVAMP THIS!!!")
 class AntiAntiMacro {
     private var previousXYZ: List<Double> = listOf(0.0, -1.0, 0.0)
     private var previousTime: Long? = System.currentTimeMillis()
     private val delay: Long = 3000L
 
+    @Deprecated("REVAMP THIS!!!")
     private fun xyzChecker() {
         if (!LunaClient.isPlayerJoining) return
         if (!session.isEnable()) return
@@ -35,11 +39,15 @@ class AntiAntiMacro {
         //println("XYZ updated, Delay timer reset")
     }
 
-    fun tick() {
+    @SubscribeEvent
+    @Deprecated("REVAMP THIS!!!")
+    fun onTick(event: TickEvent.ClientTickEvent) {
+        // 一時的に無効化
+        return
+
         try {
             if (mc.thePlayer == null) return
 
-            // 座標チェック
             xyzChecker()
         }
         catch (npe: NullPointerException) {

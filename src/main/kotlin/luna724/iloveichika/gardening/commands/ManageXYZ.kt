@@ -1,10 +1,7 @@
 package luna724.iloveichika.gardening.commands
 
-import luna724.iloveichika.gardening.Gardening
-import luna724.iloveichika.gardening.Gardening.Companion
 import luna724.iloveichika.gardening.Gardening.Companion.playerPosUtil
 import luna724.iloveichika.gardening.Gardening.Companion.sessionOptionUtil
-import luna724.iloveichika.gardening.main.*
 import luna724.iloveichika.gardening.util.SessionOpt
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.lunaclient.utils.generateUniqueBase64Key
@@ -185,7 +182,7 @@ class ManageXYZ {
 
         // sessionOpt を座標リストに変換
         val xyzLists: List<List<Double>> = sessionOptionUtil.convertSessionOptionToCoordLists(sessionOpt)
-        val (matched, index) = playerPosUtil.XYZisIn(xyzLists, currentXYZ)
+        val (matched, index) = playerPosUtil.isXYZIn(xyzLists, currentXYZ)
         if (matched) {
             sessionOpt.entries.toList()[index].key.let {
                 triggeredKey = it

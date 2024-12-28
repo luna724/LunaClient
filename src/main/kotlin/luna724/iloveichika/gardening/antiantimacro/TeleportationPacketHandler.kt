@@ -27,9 +27,10 @@ class TeleportationPacketHandler {
      * クライアントに適用させるときは False を返す
      */
     private fun processPacket(packet: S08PacketPlayerPosLook, ci: CallbackInfo): Boolean {
-        sendChat(
-            ChatComponentText("S08PacketPlayerPosLook received on kotlin!")
-        )
+        // TODO: 正式実装
+        //        sendChat(
+//            ChatComponentText("S08PacketPlayerPosLook received on kotlin!")
+//        )
         if (!session.isEnable()) {
             return false
         }
@@ -64,33 +65,33 @@ class TeleportationPacketHandler {
             packetTimestamps.removeIf { timestamp -> currentTime - timestamp > 2000 }
 
             if (packetTimestamps.size <= 10) {
-                sendChat(ChatComponentText(
-                    "[!!IGNORE THIS!!] S08PacketPlayerPosLook received. (maybe admin-check) [!!IGNORE THIS!!]"))
+//                sendChat(ChatComponentText(
+//                    "[!!IGNORE THIS!!] S08PacketPlayerPosLook received. (maybe admin-check) [!!IGNORE THIS!!]"))
                 return false
             }
             else {
-                sendChat(
-                    ChatComponentText(
-                        "§l§o§4[!!READ THIS!!] received many S08PacketPlayerPosLook! (10+ in 2000ms). Enabling blink.. §r§c(React if it looks like you need it!)"
-                    ))
+//                sendChat(
+//                    ChatComponentText(
+//                        "§l§o§4[!!READ THIS!!] received many S08PacketPlayerPosLook! (10+ in 2000ms). Enabling blink.. §r§c(React if it looks like you need it!)"
+//                    ))
                 // TODO: enable blink
                 return false
             }
         }
         else {
             // 誤差が大きい場合
-            sendChat(
-                ChatComponentText(
-                    "received visual-anti-macro packet. Enabling blink and sending Notification.."
-                )
-            )
-            sentErrorOccurred(
-                "[Anti-Macro-Check]: a player received visual-anti-macro packet! (tolerance: $toleranceX, $toleranceY, $toleranceZ, $toleranceYaw, $tolerancePitch)",
-                report = true
-            )
-            showPrimaryTextWindow("LunaClient / Anti-AntiMacro", "You got \"hello, macro check!\"! react on Minecraft!")
+//            sendChat(
+//                ChatComponentText(
+//                    "received visual-anti-macro packet. Enabling blink and sending Notification.."
+//                )
+//            )
+//            sentErrorOccurred(
+//                "[Anti-Macro-Check]: a player received visual-anti-macro packet! (tolerance: $toleranceX, $toleranceY, $toleranceZ, $toleranceYaw, $tolerancePitch)",
+//                report = true
+//            )
+//            showPrimaryTextWindow("LunaClient / Anti-AntiMacro", "You got \"hello, macro check!\"! react on Minecraft!")
 
-            playSound("note.pling", 1.0f, 1.5f)
+//            playSound("note.pling", 1.0f, 1.5f)
             return true
         }
     }

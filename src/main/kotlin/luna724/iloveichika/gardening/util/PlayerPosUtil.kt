@@ -13,11 +13,20 @@ import kotlin.math.pow
  */
 class PlayerPosUtil {
     companion object {
-        var player: EntityPlayerSP = mc.thePlayer ?: throw NullPointerException("Player is null!")
+        var player: EntityPlayerSP? = mc.thePlayer
+    }
+
+    /**
+     * プレイヤーが Null の場合、再生成
+     */
+    private fun updatePlayer() {
+        player ?: run {
+            player = mc.thePlayer
+        }
     }
 
     init {
-
+        updatePlayer()
     }
 
     /**
@@ -44,9 +53,10 @@ class PlayerPosUtil {
      * @return: List<X, Y, Z>
      */
     fun getPlayerPosition(decimalPlace: Int = 2): List<Double> {
-        val x = roundDown(player.posX, decimalPlace)
-        val y = roundDown(player.posY, decimalPlace)
-        val z = roundDown(player.posZ, decimalPlace)
+        updatePlayer()
+        val x = roundDown(player!!.posX, decimalPlace)
+        val y = roundDown(player!!.posY, decimalPlace)
+        val z = roundDown(player!!.posZ, decimalPlace)
 
         return listOf(x, y, z)
     }
@@ -58,8 +68,9 @@ class PlayerPosUtil {
      * @return: List<Yaw, Pitch>
      */
     fun getPlayerRotation(decimalPlaces: Int = 1): List<Double> {
-        val yaw = roundDown(player.rotationYaw.toDouble(), decimalPlaces)
-        val pitch = roundDown(player.rotationPitch.toDouble(), decimalPlaces)
+        updatePlayer()
+        val yaw = roundDown(player!!.rotationYaw.toDouble(), decimalPlaces)
+        val pitch = roundDown(player!!.rotationPitch.toDouble(), decimalPlaces)
 
         return listOf(yaw, pitch)
     }
@@ -71,7 +82,7 @@ class PlayerPosUtil {
      * @return: 一致したかどうか、最初に一致した XYZリストのインデックスをペアで返す
      * 一致しなかった場合は False, -1 のペアを返す
      */
-    fun XYZisIn(
+    fun isXYZIn(
         listXYZ: List<List<Double>>, targetXYZ: List<Double>, forceToleranceXZ: Double? = null, forceToleranceY: Double? = null
     ): Pair<Boolean, Int> {
         val toleranceXZ: Double = forceToleranceXZ ?: config.autoGardenCategory.autoGarden.xzTolerance.toDouble()
@@ -80,7 +91,7 @@ class PlayerPosUtil {
         // ループを用いり最初の一致を検索
         for ((i, xyz) in listXYZ.withIndex()) {
             // ループ内比較には compareXYZ 関数を用いる
-            if (compareXYZ(xyz, targetXYZ, toleranceXZ, toleranceY)) {
+            if (compareXYZ(xyz, targetXYZ, toleranceXZ, toleranceY, acceptIgnoreY = true)) {
                 return Pair(true, i)
             }
         }
@@ -93,10 +104,17 @@ class PlayerPosUtil {
      * @return: 一致したかどうか
      */
     fun compareXYZ(
-        xyz1: List<Double>, xyz2: List<Double>, forceToleranceXZ: Double? = null, forceToleranceY: Double? = null
+        xyz1: List<Double>, xyz2: List<Double>, forceToleranceXZ: Double? = null, forceToleranceY: Double? = null,
+        acceptIgnoreY: Boolean = false
     ): Boolean {
         val toleranceXZ: Double = forceToleranceXZ ?: config.autoGardenCategory.autoGarden.xzTolerance.toDouble()
-        val toleranceY: Double = forceToleranceY ?: config.autoGardenCategory.autoGarden.yTolerance.toDouble()
+        var toleranceY: Double = forceToleranceY ?: config.autoGardenCategory.autoGarden.yTolerance.toDouble()
+
+        if (acceptIgnoreY) {
+            if (xyz1[1] == -1.0 || xyz2[1] == -1.0) {
+                toleranceY = 320.0
+            }
+        }
 
         return compareDoubleWithTolerance(xyz1[0], xyz2[0], toleranceXZ) &&
                 compareDoubleWithTolerance(xyz1[1], xyz2[1], toleranceY) &&

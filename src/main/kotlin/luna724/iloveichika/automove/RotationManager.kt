@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
 プレイヤーの Yaw をいじるクラス
 setTargetYaw を呼び出すことで変更を開始できる
  */
-class RotationManager() {
+class RotationManager {
     private var targetYaw = 0f
     private var startYaw = 0f
     private var ticksRemaining = 0

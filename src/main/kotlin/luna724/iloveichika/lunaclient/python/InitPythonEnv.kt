@@ -29,6 +29,7 @@ class InitPythonEnv {
         val pyResourcePath = this::class.java.getResource("/python")
             ?: throw IllegalArgumentException("Python resource path not found")
         val targetDir = File(configDirectory, "python")
+        targetDir.mkdirs()
         val uri = pyResourcePath.toURI()
         val env = mutableMapOf<String, String>()
 

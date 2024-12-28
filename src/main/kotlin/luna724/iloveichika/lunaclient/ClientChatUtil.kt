@@ -1,7 +1,5 @@
 package luna724.iloveichika.lunaclient
 
-import luna724.iloveichika.discordWebHookUrls.errorReportingServer
-import luna724.iloveichika.discordWebHookUrls.sendTextDataToDiscord
 import net.minecraft.util.ChatComponentText
 
 fun sendChat(i: ChatComponentText? = null) {
@@ -22,14 +20,6 @@ fun sentErrorOccurred(txt: String, report: Boolean = true) {
     previousErrorMessage = txt
     val message = ChatComponentText(LunaClient.ERRHEADER+"§c"+txt)
     LunaClient.mc.thePlayer?.addChatComponentMessage(message) ?: println("NullPointerException Occurred at sentErrorOccurred:thePlayer")
-
-    if (!report) return
-    try {
-        sendTextDataToDiscord(txt, errorReportingServer)
-        return
-    } catch (e: Exception) {
-        return
-    }
 }
 
 /**
