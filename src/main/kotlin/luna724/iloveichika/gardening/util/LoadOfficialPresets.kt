@@ -13,9 +13,6 @@ import java.net.URL
 
 class LoadOfficialPresets {
     companion object {
-        private val availableCloudKeys: List<String> = listOf(
-            "part1", "part2", "part3", "part4"
-        )
         private val availableLocalPresetPart1: List<String> = listOf(
             "nw", "nether_wart", "wheat", "potato", "carrot", "wheat", "part1", "1"
         )
@@ -28,11 +25,6 @@ class LoadOfficialPresets {
         private val availableLocalPresetAIO: List<String> = listOf(
             "aio", "all"
         )
-    }
-
-    fun validateCloudKey(key: String): Boolean {
-
-        return true
     }
 
     fun validateLocalKey(key: String): Boolean {

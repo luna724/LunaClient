@@ -19,7 +19,7 @@ class AutoGardenTab {
         minValue = 0f,
         maxValue = 2f,
         minStep = 0.05f)
-    var xzTolerance: Float = 0.35f
+    var xzTolerance: Float = 0.5f
 
     @ConfigOption(name= "Y Tolerance", desc="tolerance for Auto-Garden Y coordinate check")
     @Expose
@@ -28,5 +28,5 @@ class AutoGardenTab {
         maxValue = 5f,
         minStep = 0.1f
     )
-    var yTolerance: Float = 0.1f
+    var yTolerance: Float = 0.5f
 }
