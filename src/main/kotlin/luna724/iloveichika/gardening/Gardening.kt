@@ -38,16 +38,16 @@ class Gardening {
     }
 
     fun onInit() {
-        val aamInstances = AntiAntiMacro()
+        antiAntiMacro = AntiAntiMacro()
         val pestCounter = PestCounter()
         autoGarden = AutoGarden()
         session = AutoGardenSession()
 
         MinecraftForge.EVENT_BUS.register(autoGarden)
-        MinecraftForge.EVENT_BUS.register(aamInstances)
+        MinecraftForge.EVENT_BUS.register(antiAntiMacro)
         MinecraftForge.EVENT_BUS.register(pestCounter)
 
-        SessionOptions().safetyModule()
+        sessionOptionUtil.safetyModule()
     }
 
     companion object {
@@ -59,9 +59,9 @@ class Gardening {
         lateinit var autoGarden: AutoGarden
         lateinit var session: AutoGardenSession
         lateinit var playerPosUtil: PlayerPosUtil
+        lateinit var antiAntiMacro: AntiAntiMacro
+        lateinit var sessionOptionUtil: SessionOptions
 
         const val HEADER: String = "§6[§2Auto-Garden§6]§f: "
-
-        lateinit var sessionOptionUtil: SessionOptions
     }
 }

@@ -5,6 +5,7 @@ import luna724.iloveichika.automove.changeDirection
 import luna724.iloveichika.automove.startAutoMove
 import luna724.iloveichika.automove.stopAutoMove
 import luna724.iloveichika.gardening.Gardening.Companion.adminConfig
+import luna724.iloveichika.gardening.Gardening.Companion.antiAntiMacro
 import luna724.iloveichika.gardening.Gardening.Companion.playerPosUtil
 import luna724.iloveichika.gardening.Gardening.Companion.session
 import luna724.iloveichika.gardening.Gardening.Companion.sessionOptionUtil
@@ -33,9 +34,13 @@ class AutoGarden {
      */
     private fun swapMovement(
         yaw: Double, pitch: Double, movements: String
-    ) { //TODO: ANtiAntiMacroチェックのいくつかはここに追加される
+    ) {
         // いったん止めて作動させる
         stopAutoMove()
+
+        // AntiAntiMacro
+        val cancelFlag = antiAntiMacro.whenAutoGardenTriggered(yaw, pitch, movements)
+        if (cancelFlag) return
 
         // 移動方向、視点の向きを変換
         changeAutoMoveDirection(movements)

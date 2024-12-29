@@ -168,12 +168,6 @@ tasks.withType(Jar::class) {
     }
 }
 
-tasks.named<JavaExec>("runClient") {
-    javaLauncher.set(javaToolchains.launcherFor {
-        languageVersion.set(JavaLanguageVersion.of(8))
-    })
-}
-
 val remapJar by tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
     archiveClassifier.set("")
     from(tasks.shadowJar)

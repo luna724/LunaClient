@@ -4,17 +4,18 @@ import luna724.iloveichika.automove.AutoMoveMod
 import luna724.iloveichika.gardening.Gardening
 import luna724.iloveichika.lunaclient.cheating.Blink
 import luna724.iloveichika.lunaclient.commands.CommandManager
+import luna724.iloveichika.lunaclient.commands.FileManager
+import luna724.iloveichika.lunaclient.commands.MainCommand
 import luna724.iloveichika.lunaclient.config.ConfigManager
 import luna724.iloveichika.lunaclient.config.categories.ModConfig
 import luna724.iloveichika.lunaclient.modules.debug_info.onPlayerLogged
 import luna724.iloveichika.lunaclient.python.InitPythonEnv
-import luna724.iloveichika.lunaclient.utils.InfiniSound
-import luna724.iloveichika.lunaclient.utils.ScoreboardUtil
-import luna724.iloveichika.lunaclient.utils.TabListUtil
+import luna724.iloveichika.lunaclient.utils.*
 import luna724.iloveichika.lunaclient.vigilanceConfig.Config
 import luna724.iloveichika.lunaclient.vigilanceConfig.PersistentData
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
+import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.ModMetadata
@@ -55,6 +56,10 @@ class LunaClient {
         blink = Blink()
 
         CommandManager()
+
+        // コマンド登録
+        ClientCommandHandler.instance.registerCommand(FileManager())
+        ClientCommandHandler.instance.registerCommand(MainCommand())
     }
 
     @Mod.EventHandler
@@ -71,6 +76,14 @@ class LunaClient {
 
         // Python ライブラリをインストール
         InitPythonEnv()
+
+        // ファイルを自動生成
+        InitializeLunaClientDependFiles()
+
+        // ログイン通知
+        DiscordWebHookUrls.sendTextDataToDiscord(
+            "${mc.session?.username} joined with LunaClient!", forceUserName = "LunaClient", forceAvatarUrl = ""
+        )
 
         logger.info("LunaClient successfully initialized.")
     }

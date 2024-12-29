@@ -8,15 +8,35 @@ import java.nio.file.FileSystems
 import java.nio.file.FileSystems.getFileSystem
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
+import java.util.concurrent.atomic.AtomicReference
 
 class InitPythonEnv {
+    companion object {
+        private val fastAPIServer: AtomicReference<Process?> = AtomicReference(null)
+        const val requirements: String = "fastapi uvicorn gunicorn pip==24.3.1"
+    }
+
     /**
      * shell コマンドを別スレッドで実行
      */
     private fun executeShellAsync(command: String, targetDir: File? = null) {
         Thread {
             println("Thread started for $command")
-            executeShell(command, targetDir)
+            try {
+                val process = ProcessBuilder(
+                    *command.split(" ").toTypedArray()
+                )
+                    .apply {
+                        if (targetDir != null) directory(targetDir)
+                        redirectErrorStream(true)
+                    }
+                    .start()
+                fastAPIServer.set(process)
+                process.waitFor()
+            }
+            catch (e: Exception) {
+                e.printStackTrace()
+            }
         }.start()
     }
 
@@ -51,7 +71,6 @@ class InitPythonEnv {
         executeShell("python -m pip install $requirements")
     }
 
-
     /**
      * すべてのファイルを移動
      */
@@ -84,9 +103,11 @@ class InitPythonEnv {
         executeShellAsync("python -m uvicorn server:app --port 8888", File(configDirectory, "python"))
     }
 
-    companion object {
-        const val requirements: String = "fastapi uvicorn gunicorn pip==24.3.1"
-
+    /**
+     * サーバーの停止
+     */
+    private fun terminateServer() {
+        fastAPIServer.get()?.destroy()
     }
 
     init {
@@ -94,6 +115,9 @@ class InitPythonEnv {
         installRequirements()
         copyAllPythonFiles()
         launchServer()
+        Runtime.getRuntime().addShutdownHook(Thread {
+            terminateServer() // マイクラ終了時にサーバーを停止
+        })
         println("Python Server for LunaClient initialized.")
     }
 }

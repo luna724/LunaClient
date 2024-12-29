@@ -18,6 +18,4 @@ class ModConfig : Config() {
     @Category(name = "AutoGarden", desc = "AutoGarden's Config")
     var autoGardenCategory: AutoGarden = AutoGarden()
 
-//    @Expose
-//    @Category(name = "AutoMove",)
 }
