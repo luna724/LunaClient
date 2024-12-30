@@ -4,6 +4,7 @@ import kotlinx.coroutines.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import luna724.iloveichika.gardening.Gardening.Companion.sessionOptionUtil
+import luna724.iloveichika.lunaclient.LunaClient.Companion.LocalServerIP
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import java.io.BufferedReader
 import java.io.InputStream
@@ -68,7 +69,7 @@ class LoadOfficialPresets {
 
 
     private suspend fun loadJsonRequest(body: String): String = withContext(Dispatchers.IO) {
-        val connection = URL("http://127.0.0.1:8888/gardening_LoadCloudPreset").openConnection() as HttpURLConnection
+        val connection = URL("$LocalServerIP/gardening_LoadCloudPreset").openConnection() as HttpURLConnection
         try {
             connection.requestMethod = "POST"
             connection.setRequestProperty("Content-Type", "application/json")

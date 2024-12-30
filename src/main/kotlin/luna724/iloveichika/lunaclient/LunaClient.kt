@@ -125,6 +125,9 @@ class LunaClient {
         // config
         val config: ModConfig
             get() = configManager.config ?: error("config is null")
+
+
+        const val LocalServerIP: String = "http://127.0.0.1:8888"
     }
 
     @SubscribeEvent

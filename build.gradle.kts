@@ -148,6 +148,11 @@ tasks.processResources {
             )
         }
         rename("(.+_at.cfg)", "META-INF/$1")
+        exclude("**/*.pyx")
+        exclude(".idea/**")
+        exclude("**/__pycache__/**")
+        exclude("**/.idea/**")
+        exclude("**/*.gitignore")
 }
 
 tasks.withType(JavaCompile::class) {

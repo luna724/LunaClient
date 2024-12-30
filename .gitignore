@@ -3,4 +3,5 @@
 run/
 build/
 .gradle/
-
+*.pyx
+__pycache__/

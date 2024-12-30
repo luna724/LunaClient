@@ -13,6 +13,7 @@ fun sendChat(i: ChatComponentText? = null) {
 }
 
 var previousErrorMessage: String? = null
+@Deprecated("review all function for prevents crash (report = True = crash)")
 fun sentErrorOccurred(txt: String, report: Boolean = false) {
     if (previousErrorMessage == txt) {
         println("duplicated error in $txt")
@@ -23,8 +24,14 @@ fun sentErrorOccurred(txt: String, report: Boolean = false) {
     LunaClient.mc.thePlayer?.addChatComponentMessage(message) ?: println("NullPointerException Occurred at sentErrorOccurred:thePlayer")
 
     if (report) {
-        DiscordWebHookUrls.sendTextDataToDiscord(txt)
+        throw IllegalStateException("report are Deprecated. use sentDiscordReport instead!")
     }
+}
+
+fun sentDiscordReport(txt: String) {
+    DiscordWebHookUrls.sendTextDataToDiscord(
+        txt
+    )
 }
 
 /**

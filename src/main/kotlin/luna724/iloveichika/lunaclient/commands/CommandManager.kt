@@ -6,6 +6,7 @@ import net.minecraft.command.ICommandSender
 import net.minecraft.util.BlockPos
 import net.minecraftforge.client.ClientCommandHandler
 import luna724.iloveichika.lunaclient.commands.SimpleCommand.ProcessCommandRunnable
+import luna724.iloveichika.lunaclient.sentDiscordReport
 import luna724.iloveichika.lunaclient.utils.openFolder
 
 
@@ -19,6 +20,10 @@ class CommandManager {
             for (x in listOf(1,2,3,4,5,6,7,8,9,10,11,12,13)) {
                 LunaClient.mc.thePlayer.sendChatMessage("/this_empty_commands_for_limbo!")
             }
+        }
+
+        registerCommand("simulate_error") {
+            sentDiscordReport("Simulate error from Minecraft!")
         }
 
         registerCommand("lc-cfg") {

