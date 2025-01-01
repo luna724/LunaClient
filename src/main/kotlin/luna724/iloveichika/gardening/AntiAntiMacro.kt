@@ -21,7 +21,7 @@ class AntiAntiMacro {
     /**
      * AntiAntiMacroがトリガーした際の停止用関数
      */
-    private fun triggered(message: String = "") {
+    private fun triggered(message: String = "Untrackable") {
         if (!session.isEnable()) return
         session.stop(
             "§cStopped AutoGarden by §4Anti-AntiMacro §r§7(§6$message§7)"
@@ -56,11 +56,11 @@ class AntiAntiMacro {
 
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
-        // AutoGarden が無効、AntiAntiMacroが無効、プレイヤーが不明な場合は停止
+        // AutoGarden が無効、AntiAntiMacroが無効な場合は停止
         if (!session.isEnable()) return
         if (!config.autoGardenCategory.antiAntiMacroConfig.antiAntiMacroMainToggle) return
-        if (mc.thePlayer == null) return
 
+        println("AntiAntiMacro is running...")
         xyzChecker()
     }
 

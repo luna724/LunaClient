@@ -17,6 +17,20 @@ class AntiAntiMacroConfig {
     @ConfigEditorText
     var antiAntiMacroCommand: String = "/lc_file run autogarden/antiantimacro_triggered_commands.txt"
 
+    @ConfigOption(name = "AAM-Triggered message", desc = "message to send when AntiAntiMacro triggered\nempty to run nothing.")
+    @Expose
+    @ConfigEditorText
+    var antiAntiMacroMessage: String = "§cAntiAntiMacro detected"
+
+    @ConfigOption(name = "AAM-Triggered delay (ms)", desc = "delay to execute AntiAntiMacro triggered commands")
+    @Expose
+    @ConfigEditorSlider(
+        minValue = 0f,
+        maxValue = 10000f,
+        minStep = 100f
+    )
+    var antiAntiMacroDelayMS: Float = 1000f
+
     @ConfigOption(name = "XYZ Check", desc = "Track your movements, and stop AutoGarden when you stopped.")
     @Expose
     @ConfigEditorBoolean

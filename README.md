@@ -14,9 +14,19 @@
 
 ## Warning
 - 現在LunaClient v2 と v1.1.4 は同時に導入可能ですが、コマンド名の競合を起こします
-- LunaClientはポート 8888 を Python FastAPI サーバーに使用します
-- LunaClientは `Python 3.10` (テスト環境: 3.10.9) を要求します。また、venvを使用せずに `fastapi uvicorn gunicorn` をインストールします
+- LunaClientはポート 8888 を Python FastAPI サーバーに使用します- LunaClientは `Python 3.9` 以上 (テスト環境: 3.10.9) を要求します。また、venvを使用せずに `fastapi uvicorn pydantic` をインストールします
 
+Modは以下の情報をDiscord Webhookで収集します (LunaClient v2-preview3以降)<br>
+これら情報は[公開サーバー](https://luna724.github.io/luna724_discord_server)にて収集されるため、誰が見てもいいようなものだけを収集します
+
+|           収集するもの           |     しないもの      |
+|:--------------------------:|:--------------:|
+|     LunaClientを入れた人の名前     | プレイヤーのログインデータ  |
+|         いくつかの重大エラー         |    他Modのエラー    |
+|       使っているModのModID       | Modファイル、ログファイル |
+|     BinSniperを使って買ったもの     |    買った時の名前     |
+| Auto-Gardenのセッション時間 (現在無効) |  その他書かれていないもの  |
+|                            |                |
 ## Documentations
 - [Wiki (preparing)](https://luna724.github.io/repo/lunaclient)
 - [インストール方法 / Installations](/docs/install.md)
