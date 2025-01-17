@@ -3,10 +3,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.*
 
 plugins {
-    kotlin("jvm") version "1.9.0"
+    kotlin("jvm") version "1.9.10"
 
     // For serialization: remove if not needed
-    kotlin("plugin.serialization") version "1.7.10"
+    kotlin("plugin.serialization") version "1.9.10"
 
     idea
     java
@@ -93,6 +93,7 @@ dependencies {
     shadowImpl("com.fasterxml.jackson.module:jackson-module-kotlin:2.8.11")
     shadowImpl("com.fasterxml.jackson.core:jackson-databind:2.8.11")
     shadowImpl("com.squareup.okhttp3:okhttp:4.10.0")
+    shadowImpl("com.charleskorn.kaml:kaml:0.67.0")
     shadowImpl("org.json:json:20230227")
     shadowImpl("commons-io:commons-io:2.11.0")
     shadow("io.ktor:ktor-server-core:3.0.2")

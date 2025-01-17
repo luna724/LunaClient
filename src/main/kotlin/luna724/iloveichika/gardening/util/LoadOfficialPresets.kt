@@ -68,9 +68,9 @@ class LoadOfficialPresets {
     }
 
 
-    private suspend fun loadJsonRequest(body: String): String = withContext(Dispatchers.IO) {
+    private fun loadJsonRequest(body: String): String {
         val connection = URL("$LocalServerIP/gardening_LoadCloudPreset").openConnection() as HttpURLConnection
-        try {
+        return try {
             connection.requestMethod = "POST"
             connection.setRequestProperty("Content-Type", "application/json")
             connection.doOutput = true
@@ -92,19 +92,16 @@ class LoadOfficialPresets {
     fun loadCloud(key: String): Boolean? {
         try {
             var returnValue: Boolean? = null
-            runBlocking {
-                val asyncing = async {
-                    loadJsonRequest("{\"key\": \"$key\"}")
-                }
-                val response = asyncing.await()
+            Thread {
+                val response = loadJsonRequest("{\"key\":\"$key\"}")
                 if (response.isEmpty() || response == "") {
                     returnValue = false
-                    return@runBlocking
+                    return@Thread
                 }
                 if (response.startsWith("FATAL ERROR")) {
                     sentErrorOccurred(response)
                     returnValue= false
-                    return@runBlocking
+                    return@Thread
                 }
 
                 val cleanedJson = response
@@ -122,7 +119,6 @@ class LoadOfficialPresets {
         }
         catch (e: Throwable) {
             e.printStackTrace()
-            sentErrorOccurred(e.message ?: "Unknown Error", report=true)
             return null
         }
     }

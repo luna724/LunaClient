@@ -12,8 +12,20 @@
 [![](https://img.shields.io/github/repo-size/luna724/LunaClient?style=flat)](https://github.com/luna724/LunaClient)
 &nbsp;
 
+## LunaClient
+- LunaClient の機能リストです
+
+|      機能       |                     説明                     |    バージョン     |   導入バージョン   |                                        備考                                        |
+|:-------------:|:------------------------------------------:|:------------:|:-----------:|:--------------------------------------------------------------------------------:|
+|  Auto-Garden  |             座標に基づき単純操作を自動化します              |     v1.1     | `LC-v1.1.3` |                [使い方](https://www.youtube.com/watch?v=fpNaX2Qv_-8)                |
+|   BinSniper   |             BINオークションをスナイプします              |     v1.0     |  `LC-β2.0`  |                                      動画作るよ                                       |
+| SkywarsSniper |          Skywarsにて特定プレイヤーをスナイプします          | NOT RELEASED |  `LC-β2.0`  |                                       未実装                                        |
+|    LunaApy    |         ChatTriggerのような拡張言語スクリプトです         | CLOSED BETA  |  `LC-β2.0`  |                                       未実装                                        |
+|   Mo'Events   | サーバーキック時など、マイクラのいくつかの場面に応じて`.py`ファイルを実行します |  OPEN BETA   |  `LC-β2.0`  |                                                                                  |
+|  FileManager  |            マイクラからローカルファイルを実行します            |      α       |  `LC-β2.0`  | [Wiki](https://luna724.com/repo/lunaclient/docs/lc_commands/lc_filemanager.html) |
+
 ## Warning
-- 現在LunaClient v2 と v1.1.4 は同時に導入可能ですが、コマンド名の競合を起こします
+- 現在LunaClient v2 と v1.1.4 は同時に導入可能ですが、コマンド名の競合を起こします。同時導入を行いたい場合は `v1.1.5` を使用し `/lc1_{元コマンド}` として実行することで競合を回避できます
 - LunaClientはポート 8888 を Python FastAPI サーバーに使用します- LunaClientは `Python 3.9` 以上 (テスト環境: 3.10.9) を要求します。また、venvを使用せずに `fastapi uvicorn pydantic` をインストールします
 
 Modは以下の情報をDiscord Webhookで収集します (LunaClient v2-preview3以降)<br>
@@ -27,6 +39,7 @@ Modは以下の情報をDiscord Webhookで収集します (LunaClient v2-preview
 |     BinSniperを使って買ったもの     |    買った時の名前     |
 | Auto-Gardenのセッション時間 (現在無効) |  その他書かれていないもの  |
 |                            |                |
+
 ## Documentations
 - [Wiki (preparing)](https://luna724.github.io/repo/lunaclient)
 - [インストール方法 / Installations](/docs/install.md)

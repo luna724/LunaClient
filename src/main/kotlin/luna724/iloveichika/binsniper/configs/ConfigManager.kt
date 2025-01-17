@@ -1,64 +1,37 @@
-package luna724.iloveichika.lunaclient.config
+package luna724.iloveichika.binsniper.configs
 
-import luna724.iloveichika.lunaclient.config.categories.ModConfig
-import com.google.gson.GsonBuilder
-import com.google.gson.TypeAdapter
-import com.google.gson.stream.JsonReader
-import com.google.gson.stream.JsonWriter
 import io.github.notenoughupdates.moulconfig.gui.GuiScreenElementWrapper
 import io.github.notenoughupdates.moulconfig.gui.MoulConfigEditor
-import io.github.notenoughupdates.moulconfig.observer.PropertyTypeAdapterFactory
 import io.github.notenoughupdates.moulconfig.processor.BuiltinMoulConfigGuis
 import io.github.notenoughupdates.moulconfig.processor.ConfigProcessorDriver
 import io.github.notenoughupdates.moulconfig.processor.MoulConfigProcessor
-import luna724.iloveichika.lunaclient.LunaClient
+import luna724.iloveichika.binsniper.configs.categories.BinSniperConfig
+import luna724.iloveichika.lunaclient.utils.externalobjecttweaker.makeMoulGson
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
-import java.io.BufferedReader
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
+import java.io.*
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
-import java.util.UUID
 
 class ConfigManager {
     companion object {
-        val gson = GsonBuilder().setPrettyPrinting()
-            .excludeFieldsWithoutExposeAnnotation()
-            .serializeSpecialFloatingPointValues()
-            .registerTypeAdapterFactory(PropertyTypeAdapterFactory())
-            .registerTypeAdapter(UUID::class.java, object : TypeAdapter<UUID>() {
-                override fun write(out: JsonWriter, value: UUID) {
-                    out.value(value.toString())
-                }
-
-                override fun read(reader: JsonReader): UUID {
-                    return UUID.fromString(reader.nextString())
-                }
-            }.nullSafe())
-            .enableComplexMapKeySerialization()
-            .create()
+        val gson = makeMoulGson()
     }
 
-    private var configDirectory = File("config/LunaClient")
+    private var configDirectory = File("config/LunaClient/binsniper")
     private var configFile: File
-    var config: ModConfig? = null
+    var config: BinSniperConfig? = null
     private var lastSaveTime = 0L
 
-    private lateinit var processor: MoulConfigProcessor<ModConfig>
+    private lateinit var processor: MoulConfigProcessor<BinSniperConfig>
     private val editor by lazy { MoulConfigEditor(processor) }
 
     init {
         configDirectory.mkdirs()
-        configFile = File(configDirectory, "moulconfig.json")
+        configFile = File(configDirectory, "global_config.json")
 
         if (configFile.isFile) {
             println("Trying to load the config")
@@ -67,7 +40,7 @@ class ConfigManager {
 
         if (config == null) {
             println("Creating a clean config.")
-            config = ModConfig()
+            config = BinSniperConfig()
         }
         val config = config!!
         processor = MoulConfigProcessor(config)
@@ -94,16 +67,16 @@ class ConfigManager {
                 builder.append(line)
                 builder.append("\n")
             }
-            config = gson.fromJson(builder.toString(), ModConfig::class.java)
+            config = gson.fromJson(builder.toString(), BinSniperConfig::class.java)
 
         } catch (e: Exception) {
-            throw Error("Could not load config", e)
+            throw IllegalArgumentException("Could not load config", e)
         }
     }
 
     fun save() {
         lastSaveTime = System.currentTimeMillis()
-        val config = config ?: error("Can not save null config.")
+        val config = config ?: throw IllegalArgumentException("Can not save null config.")
 
         try {
             configDirectory.mkdirs()
@@ -120,7 +93,7 @@ class ConfigManager {
                 StandardCopyOption.ATOMIC_MOVE
             )
         } catch (e: IOException) {
-            throw Error("Could not save config", e)
+            throw IOException("Could not save config", e)
         }
     }
 
