@@ -13,6 +13,18 @@ fun sendChat(i: ChatComponentText? = null) {
 }
 
 var previousErrorMessage: String? = null
+fun sendChatError(txt: String) {
+    if (previousErrorMessage == txt) {
+        println("duplicated error in $txt")
+        return
+    }
+    previousErrorMessage = txt
+    val message = ChatComponentText(LunaClient.ERRHEADER+" §c"+txt)
+    LunaClient.mc.thePlayer?.addChatComponentMessage(message) ?: println("NullPointerException Occurred at sendChatError:thePlayer")
+    println("LunaClient catched ERROR: $txt")
+}
+
+
 @Deprecated("review all function for prevents crash (report = True = crash)")
 fun sentErrorOccurred(txt: String, report: Boolean = false) {
     if (previousErrorMessage == txt) {
@@ -38,6 +50,6 @@ fun sentDiscordReport(txt: String) {
  * need slashes! (/)
  */
 fun sendCommand(s: String? = null) {
-    if (s == null) sentErrorOccurred("NullPointerException at sendCommand")
-    LunaClient.mc.thePlayer?.sendChatMessage(s) ?: sentErrorOccurred("NullPointerException at sendCommand:thePlayer")
+    if (s == null) sendChatError("NullPointerException at sendCommand")
+    LunaClient.mc.thePlayer?.sendChatMessage(s) ?: sendChatError("NullPointerException at sendCommand:thePlayer")
 }

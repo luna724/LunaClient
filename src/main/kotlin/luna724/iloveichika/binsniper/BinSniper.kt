@@ -1,6 +1,7 @@
 package luna724.iloveichika.binsniper
 
 import luna724.iloveichika.binsniper.ah.BinSnipeLogic
+import luna724.iloveichika.binsniper.ah.BinSnipeSession
 import luna724.iloveichika.binsniper.configs.ConfigManager
 import luna724.iloveichika.lunaclient.LunaClient
 import net.minecraft.client.settings.KeyBinding
@@ -22,6 +23,7 @@ class BinSniper {
         ClientRegistry.registerKeyBinding(binSniperKey)
         ClientCommandHandler.instance.registerCommand(RegisterCommands())
 
+        session = BinSnipeSession()
         MinecraftForge.EVENT_BUS.register(BinSnipeLogic())
     }
 
@@ -29,6 +31,7 @@ class BinSniper {
         lateinit var configDirectory: File
         lateinit var binSniperKey: KeyBinding
         lateinit var configManager: ConfigManager
+        lateinit var session: BinSnipeSession
 
         const val HEADER: String = "§f[§9Bin§6Sniper§f]§r: "
         const val VERSION: String = "2.0"

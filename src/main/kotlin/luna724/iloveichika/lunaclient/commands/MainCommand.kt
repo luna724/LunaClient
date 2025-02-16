@@ -1,6 +1,7 @@
 package luna724.iloveichika.lunaclient.commands
 
 import luna724.iloveichika.lunaclient.LunaClient
+import luna724.iloveichika.lunaclient.sendChatError
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import luna724.iloveichika.lunaclient.utils.openFolder
 import net.minecraft.command.CommandBase
@@ -19,7 +20,7 @@ class MainCommand : CommandBase() {
             "gui" -> LunaClient.configManager.openConfigGui()
             "files" -> openFolder(LunaClient.configDirectory.toPath().toAbsolutePath().toString())
 
-            else -> sentErrorOccurred("Unknown subcommand: $trigger", report=false)
+            else -> sendChatError("Unknown subcommand: $trigger")
         }
     }
 }

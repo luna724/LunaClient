@@ -4,6 +4,8 @@ import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import luna724.iloveichika.gardening.Gardening.Companion.configDirectory
 import luna724.iloveichika.gardening.Gardening.Companion.currentSessionOptionsPath
+import luna724.iloveichika.lunaclient.sendChat
+import luna724.iloveichika.lunaclient.sendChatError
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import java.io.File
 import java.io.IOException
@@ -62,14 +64,14 @@ class SessionOptions {
         }
         catch (e: IOException) {
             // IOExceptionはスロー
-            sentErrorOccurred("IOException occurred while reading sessionOption")
+            sendChatError("IOException occurred while reading sessionOption")
             println("IOException in LCG.trySessionOptionIO !!!")
             throw e
         }
         catch (e: SerializationException) {
             // SerializationException はユーザーに警告を発生させ、ファイルをリセットする
-            sentErrorOccurred("SerializationException occurred while reading sessionOption. do you change SessionJson?", report = false)
-            sentErrorOccurred("SessionJson wiped. (backup in config/lunaclient/autogarden/backup_session)", report = false)
+            sendChatError("SerializationException occurred while reading sessionOption. do you change SessionJson?")
+            sendChatError("SessionJson wiped. (backup in config/lunaclient/autogarden/backup_session)")
             val now = LocalDateTime.now()
             val nowTime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-SSS"))
             val fileName: String = "session_backup.$nowTime.json"
@@ -77,16 +79,16 @@ class SessionOptions {
 
             try {
                 if (!currentSessionOptionFile.renameTo(dst)) {
-                    sentErrorOccurred("Failed to move sessionOption file")
+                    sendChatError("Failed to move sessionOption file")
                     throw e
                 }
             }
             catch (e: SecurityException) {
-                sentErrorOccurred("SecurityException occurred while moving sessionOption file", report = false)
+                sendChatError("SecurityException occurred while moving sessionOption file")
                 throw e
             }
             catch (e: IOException) {
-                sentErrorOccurred("IOException occurred while moving sessionOption file", report = false)
+                sendChatError("IOException occurred while moving sessionOption file")
                 throw e
             }
             // ファイルをリセット
@@ -200,7 +202,7 @@ class SessionOptions {
             return dir
         }
 
-        sentErrorOccurred("\"direction\" can only contains l, r, f, b and special trigger. but got $dir", report = false)
+        sendChatError("\"direction\" can only contains l, r, f, b and special trigger. but got $dir")
         return null
     }
 

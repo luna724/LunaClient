@@ -2,6 +2,7 @@ package luna724.iloveichika.gardening
 
 import luna724.iloveichika.gardening.util.LoadOfficialPresets
 import luna724.iloveichika.lunaclient.sendChat
+import luna724.iloveichika.lunaclient.sendChatError
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraft.command.CommandBase
 import net.minecraft.command.ICommandSender
@@ -59,7 +60,7 @@ class DevCommand : CommandBase() {
                         return
                     }
                     else {
-                        sentErrorOccurred("Import Failed from Local. ($key)")
+                        sendChatError("Import Failed from Local. ($key)")
                         return
                     }
                 }
@@ -75,7 +76,7 @@ class DevCommand : CommandBase() {
                         return
                     }
                     else {
-                        sentErrorOccurred("Import Failed from Cloud. ($cloud_key)")
+                        sendChatError("Import Failed from Cloud. ($cloud_key)")
                     }
                 }
             }

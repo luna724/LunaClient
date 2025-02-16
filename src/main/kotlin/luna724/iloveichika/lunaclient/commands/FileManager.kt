@@ -2,6 +2,7 @@ package luna724.iloveichika.lunaclient.commands
 
 import luna724.iloveichika.lunaclient.LunaClient.Companion.configDirectory
 import luna724.iloveichika.lunaclient.sendChat
+import luna724.iloveichika.lunaclient.sendChatError
 import luna724.iloveichika.lunaclient.sendCommand
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraft.command.CommandBase
@@ -19,7 +20,7 @@ class FileManager : CommandBase() {
     override fun getRequiredPermissionLevel() = 0
 
     private fun sendError(error: String) {
-        sentErrorOccurred("§r §7[§6LC-FileManager§7] §r$error")
+        sendChatError("§r §7[§6LC-FileManager§7] §r$error")
     }
 
     override fun processCommand(sender: ICommandSender?, args: Array<out String>?) {
@@ -29,7 +30,7 @@ class FileManager : CommandBase() {
             return
         }
         if (args.size < 2) {
-            sentErrorOccurred("Invalid arguments")
+            sendChatError("Invalid arguments")
             sender.addChatMessage(ChatComponentText(commandUsage))
             return
         }

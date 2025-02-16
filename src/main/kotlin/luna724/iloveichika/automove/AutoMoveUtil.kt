@@ -4,6 +4,7 @@ import luna724.iloveichika.automove.AutoMoveMod.Companion.autoMoveInstance
 import luna724.iloveichika.automove.AutoMoveMod.Companion.autoMoveSettings
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.lunaclient.sendChat
+import luna724.iloveichika.lunaclient.sendChatError
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraft.client.settings.KeyBinding
 import net.minecraft.util.ChatComponentText
@@ -41,7 +42,7 @@ fun changeDirection(
     val availableChar: List<String> = mutableListOf("f", "b", "r", "l")
     if (!containsOnlyAvailableChars(key, availableChar)) {
         val msg = " [§dLC-AutoMove§f]: §cUnknown args§f: $key"
-        sentErrorOccurred(msg, report = false)
+        sendChatError(msg)
         return
     }
 

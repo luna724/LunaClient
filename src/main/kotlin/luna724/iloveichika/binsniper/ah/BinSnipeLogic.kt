@@ -1,6 +1,7 @@
 package luna724.iloveichika.binsniper.ah;
 
 import luna724.iloveichika.binsniper.BinSniper.Companion.binSniperKey
+import luna724.iloveichika.binsniper.BinSniper.Companion.session
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraftforge.client.event.GuiScreenEvent
@@ -22,8 +23,11 @@ class BinSnipeLogic {
             }
             else if ( // 有効時に ESC キーが押されたら停止
                 Keyboard.isKeyDown(1) &&
-                binSniperKey.isPressed
-            )
+                session.isEnable()
+            ) {
+                // TODO: stopsnipe
+                return
+            }
         }
     }
 }

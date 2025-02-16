@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import luna724.iloveichika.gardening.Gardening.Companion.sessionOptionUtil
 import luna724.iloveichika.lunaclient.LunaClient.Companion.LocalServerIP
+import luna724.iloveichika.lunaclient.sendChatError
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import java.io.BufferedReader
 import java.io.InputStream
@@ -99,7 +100,7 @@ class LoadOfficialPresets {
                     return@Thread
                 }
                 if (response.startsWith("FATAL ERROR")) {
-                    sentErrorOccurred(response)
+                    sendChatError(response)
                     returnValue= false
                     return@Thread
                 }

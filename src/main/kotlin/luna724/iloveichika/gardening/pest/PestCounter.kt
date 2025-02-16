@@ -5,6 +5,7 @@ import luna724.iloveichika.gardening.Gardening.Companion.session
 import luna724.iloveichika.lunaclient.LunaClient.Companion.mc
 import luna724.iloveichika.lunaclient.LunaClient.Companion.scoreboardUtil
 import luna724.iloveichika.lunaclient.LunaClient.Companion.tabListUtil
+import luna724.iloveichika.lunaclient.sendChatError
 import luna724.iloveichika.lunaclient.sentErrorOccurred
 import net.minecraft.util.EnumChatFormatting
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -38,14 +39,14 @@ class PestCounter {
         // Garden にいるなら
         var (locateFound, locateString) = tabListUtil.findObjRegex(currentTabList, "Alive:.*")
         if (!locateFound) {
-            sentErrorOccurred("Exception in Parsing current area p2 ($currentTabList)"); return
+            sendChatError("Exception in Parsing current area p2 ($currentTabList)"); return
         }
         locateString = EnumChatFormatting.getTextWithoutFormattingCodes(locateString).replace(
             "Alive: ", ""
         )
         val pestCount: Int = locateString.toIntOrNull() ?: -1
         if (pestCount == -1) {
-            sentErrorOccurred("Failed Parsing PestCount (result: $locateString)")
+            sendChatError("Failed Parsing PestCount (result: $locateString)")
             return
         }
         pestInfo.pestCount = pestCount
@@ -53,7 +54,7 @@ class PestCounter {
         // Repellent Type
         var (repellentFound, repellentString) = tabListUtil.findObjRegex(currentTabList, "Repellent:.*")
         if (!repellentFound) {
-            sentErrorOccurred("Repellent Status Couldn't Found")
+            sendChatError("Repellent Status Couldn't Found")
             return
         }
         repellentString = EnumChatFormatting.getTextWithoutFormattingCodes(repellentString).replace(
@@ -73,7 +74,7 @@ class PestCounter {
             null
         }
         if (repellentType == null) {
-            sentErrorOccurred("Unknown Repellent Status ($repellentString)")
+            sendChatError("Unknown Repellent Status ($repellentString)")
             repellentType = "INACTIVE"
         }
         pestInfo.repellentType = repellentType
@@ -81,7 +82,7 @@ class PestCounter {
         // BONUS
         var (bonusFound, bonusString) = tabListUtil.findObjRegex(currentTabList, "Bonus:.*")
         if (!bonusFound) {
-            sentErrorOccurred("Bonus Status Couldn't Found")
+            sendChatError("Bonus Status Couldn't Found")
             return
         }
         bonusString = bonusString.replace(
